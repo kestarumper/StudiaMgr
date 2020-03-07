@@ -1,0 +1,90 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(48, 364)">
+<g>
+<rect fill="red" height="340" stroke="black" width="21.666666666666664" x="0" y="-340"/>
+<rect fill="red" height="214.84191926056818" stroke="black" width="21.666666666666664" x="21.666666666666664" y="-214.84191926056818"/>
+<rect fill="red" height="136.29577273345114" stroke="black" width="21.66666666666667" x="43.33333333333333" y="-136.29577273345114"/>
+<rect fill="red" height="84.81283131711295" stroke="black" width="21.666666666666657" x="65" y="-84.81283131711295"/>
+<rect fill="red" height="54.144896017398395" stroke="black" width="21.666666666666686" x="86.66666666666666" y="-54.144896017398395"/>
+<rect fill="red" height="35.41878483077341" stroke="black" width="21.666666666666657" x="108.33333333333334" y="-35.41878483077341"/>
+<rect fill="red" height="22.56191382356939" stroke="black" width="21.666666666666686" x="130" y="-22.56191382356939"/>
+<rect fill="red" height="13.429930678265597" stroke="black" width="21.66666666666663" x="151.66666666666669" y="-13.429930678265597"/>
+<rect fill="red" height="8.928639391056137" stroke="black" width="21.666666666666686" x="173.33333333333331" y="-8.928639391056137"/>
+<rect fill="red" height="5.083593856191382" stroke="black" width="21.666666666666686" x="195" y="-5.083593856191382"/>
+<rect fill="red" height="3.114856599157265" stroke="black" width="21.66666666666663" x="216.66666666666669" y="-3.114856599157265"/>
+<rect fill="red" height="2.1258665216800328" stroke="black" width="21.666666666666686" x="238.33333333333331" y="-2.1258665216800328"/>
+<rect fill="red" height="1.1368764442028" stroke="black" width="21.66666666666663" x="260" y="-1.1368764442028"/>
+<rect fill="red" height="0.8873182003534049" stroke="black" width="21.666666666666742" x="281.66666666666663" y="-0.8873182003534049"/>
+<rect fill="red" height="0.59154546690227" stroke="black" width="21.66666666666663" x="303.33333333333337" y="-0.59154546690227"/>
+<rect fill="red" height="0.3235014272121789" stroke="black" width="21.66666666666663" x="325" y="-0.3235014272121789"/>
+<rect fill="red" height="0.2033437542476553" stroke="black" width="21.666666666666742" x="346.66666666666663" y="-0.2033437542476553"/>
+<rect fill="red" height="0.1478863667255675" stroke="black" width="21.66666666666663" x="368.33333333333337" y="-0.1478863667255675"/>
+<rect fill="red" height="0.09242897920347969" stroke="black" width="21.66666666666663" x="390" y="-0.09242897920347969"/>
+<rect fill="red" height="0.07394318336278374" stroke="black" width="21.666666666666742" x="411.66666666666663" y="-0.07394318336278374"/>
+<rect fill="red" height="0" stroke="black" width="21.66666666666663" x="433.33333333333337" y="0"/>
+<rect fill="red" height="0.027728693761043904" stroke="black" width="21.66666666666663" x="455" y="-0.027728693761043904"/>
+<rect fill="red" height="0.009242897920347968" stroke="black" width="21.666666666666742" x="476.66666666666663" y="-0.009242897920347968"/>
+<rect fill="red" height="0.027728693761043904" stroke="black" width="21.66666666666663" x="498.33333333333337" y="-0.027728693761043904"/>
+</g>
+<g>
+<g>
+<line stroke="black" stroke-width="1" x1="67.82608695652173" x2="67.82608695652173" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="158.2608695652174" x2="158.2608695652174" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="248.69565217391303" x2="248.69565217391303" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="339.1304347826087" x2="339.1304347826087" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="429.5652173913044" x2="429.5652173913044" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="520" x2="520" y1="0" y2="10"/>
+</g>
+<line stroke="black" stroke-width="1" x1="0" x2="520" y1="0" y2="0"/>
+<g>
+<text font-size="12" text-anchor="middle" x="67.82608695652173" y="20">
+4
+</text>
+<text font-size="12" text-anchor="middle" x="158.2608695652174" y="20">
+8
+</text>
+<text font-size="12" text-anchor="middle" x="248.69565217391303" y="20">
+12
+</text>
+<text font-size="12" text-anchor="middle" x="339.1304347826087" y="20">
+16
+</text>
+<text font-size="12" text-anchor="middle" x="429.5652173913044" y="20">
+20
+</text>
+<text font-size="12" text-anchor="middle" x="520" y="20">
+24
+</text>
+</g>
+<text font-size="12" text-anchor="middle" x="260" y="30">
+
+</text>
+</g>
+<g>
+<g>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="0" y2="0"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-92.42897920347968" y2="-92.42897920347968"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-184.85795840695937" y2="-184.85795840695937"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-277.28693761043905" y2="-277.28693761043905"/>
+</g>
+<line stroke="black" stroke-width="1" x1="0" x2="0" y1="0" y2="-340"/>
+<g>
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="0">
+0
+</text>
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-92.42897920347968">
+10000
+</text>
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-184.85795840695937">
+20000
+</text>
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-277.28693761043905">
+30000
+</text>
+</g>
+<text font-size="12" text-anchor="middle" transform="rotate(-90 -30 -170)" x="-30" y="-170">
+
+</text>
+</g>
+</g>
+</svg>

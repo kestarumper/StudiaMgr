@@ -2,25 +2,25 @@
 <g transform="translate(48, 364)">
 <g>
 <rect fill="red" height="340" stroke="black" width="26.000000000000007" x="0" y="-340"/>
-<rect fill="red" height="212.5" stroke="black" width="26.000000000000007" x="26.000000000000007" y="-212.5"/>
-<rect fill="red" height="128.95299145299145" stroke="black" width="25.999999999999986" x="52.000000000000014" y="-128.95299145299145"/>
-<rect fill="red" height="83.27457264957265" stroke="black" width="26.00000000000003" x="78" y="-83.27457264957265"/>
-<rect fill="red" height="52.94337606837607" stroke="black" width="25.99999999999997" x="104.00000000000003" y="-52.94337606837607"/>
-<rect fill="red" height="31.784188034188034" stroke="black" width="26" x="130" y="-31.784188034188034"/>
-<rect fill="red" height="21.340811965811966" stroke="black" width="25.99999999999997" x="156" y="-21.340811965811966"/>
-<rect fill="red" height="13.530982905982906" stroke="black" width="26.000000000000085" x="181.99999999999997" y="-13.530982905982906"/>
-<rect fill="red" height="8.445512820512821" stroke="black" width="25.999999999999943" x="208.00000000000006" y="-8.445512820512821"/>
-<rect fill="red" height="6.3568376068376065" stroke="black" width="26" x="234" y="-6.3568376068376065"/>
-<rect fill="red" height="3.6324786324786325" stroke="black" width="26.000000000000057" x="260" y="-3.6324786324786325"/>
-<rect fill="red" height="1.5438034188034189" stroke="black" width="25.999999999999943" x="286.00000000000006" y="-1.5438034188034189"/>
-<rect fill="red" height="1.0897435897435896" stroke="black" width="26" x="312" y="-1.0897435897435896"/>
-<rect fill="red" height="0.8173076923076923" stroke="black" width="25.999999999999943" x="338" y="-0.8173076923076923"/>
-<rect fill="red" height="1.0897435897435896" stroke="black" width="26.000000000000057" x="363.99999999999994" y="-1.0897435897435896"/>
-<rect fill="red" height="0.2724358974358974" stroke="black" width="26.000000000000114" x="390" y="-0.2724358974358974"/>
-<rect fill="red" height="0.2724358974358974" stroke="black" width="25.999999999999886" x="416.0000000000001" y="-0.2724358974358974"/>
+<rect fill="red" height="218.31001076426264" stroke="black" width="26.000000000000007" x="26.000000000000007" y="-218.31001076426264"/>
+<rect fill="red" height="130.016146393972" stroke="black" width="25.999999999999986" x="52.000000000000014" y="-130.016146393972"/>
+<rect fill="red" height="87.19590958019376" stroke="black" width="26.00000000000003" x="78" y="-87.19590958019376"/>
+<rect fill="red" height="50.96340150699677" stroke="black" width="25.99999999999997" x="104.00000000000003" y="-50.96340150699677"/>
+<rect fill="red" height="30.65123789020452" stroke="black" width="26" x="130" y="-30.65123789020452"/>
+<rect fill="red" height="20.58665231431647" stroke="black" width="25.99999999999997" x="156" y="-20.58665231431647"/>
+<rect fill="red" height="12.443487621097955" stroke="black" width="26.000000000000085" x="181.99999999999997" y="-12.443487621097955"/>
+<rect fill="red" height="7.411194833153929" stroke="black" width="25.999999999999943" x="208.00000000000006" y="-7.411194833153929"/>
+<rect fill="red" height="7.045209903121636" stroke="black" width="26" x="234" y="-7.045209903121636"/>
+<rect fill="red" height="4.025834230355221" stroke="black" width="26.000000000000057" x="260" y="-4.025834230355221"/>
+<rect fill="red" height="2.5618945102260495" stroke="black" width="25.999999999999943" x="286.00000000000006" y="-2.5618945102260495"/>
+<rect fill="red" height="1.7384284176533908" stroke="black" width="26" x="312" y="-1.7384284176533908"/>
+<rect fill="red" height="0.5489773950484392" stroke="black" width="25.999999999999943" x="338" y="-0.5489773950484392"/>
+<rect fill="red" height="0.5489773950484392" stroke="black" width="26.000000000000057" x="363.99999999999994" y="-0.5489773950484392"/>
+<rect fill="red" height="0.36598493003229277" stroke="black" width="26.000000000000114" x="390" y="-0.36598493003229277"/>
+<rect fill="red" height="0.36598493003229277" stroke="black" width="25.999999999999886" x="416.0000000000001" y="-0.36598493003229277"/>
 <rect fill="red" height="0" stroke="black" width="26" x="442" y="0"/>
-<rect fill="red" height="0.09081196581196581" stroke="black" width="26" x="468" y="-0.09081196581196581"/>
-<rect fill="red" height="0.09081196581196581" stroke="black" width="26" x="494" y="-0.09081196581196581"/>
+<rect fill="red" height="0" stroke="black" width="26" x="468" y="0"/>
+<rect fill="red" height="0.09149623250807319" stroke="black" width="26" x="494" y="-0.09149623250807319"/>
 </g>
 <g>
 <g>
@@ -55,22 +55,22 @@
 <g>
 <g>
 <line stroke="black" stroke-width="1" x1="0" x2="-10" y1="0" y2="0"/>
-<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-90.8119658119658" y2="-90.8119658119658"/>
-<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-181.6239316239316" y2="-181.6239316239316"/>
-<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-272.43589743589746" y2="-272.43589743589746"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-91.49623250807319" y2="-91.49623250807319"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-182.99246501614638" y2="-182.99246501614638"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-274.4886975242196" y2="-274.4886975242196"/>
 </g>
 <line stroke="black" stroke-width="1" x1="0" x2="0" y1="0" y2="-340"/>
 <g>
 <text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="0">
 0
 </text>
-<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-90.8119658119658">
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-91.49623250807319">
 1000
 </text>
-<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-181.6239316239316">
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-182.99246501614638">
 2000
 </text>
-<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-272.43589743589746">
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-274.4886975242196">
 3000
 </text>
 </g>

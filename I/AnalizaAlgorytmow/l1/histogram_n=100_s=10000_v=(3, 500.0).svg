@@ -1,0 +1,66 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(48, 364)">
+<g>
+<rect fill="red" height="340" stroke="black" width="65" x="0" y="-340"/>
+<rect fill="red" height="96.52922393447174" stroke="black" width="65" x="65" y="-96.52922393447174"/>
+<rect fill="red" height="26.291822851589615" stroke="black" width="65" x="130" y="-26.291822851589615"/>
+<rect fill="red" height="6.513952519783423" stroke="black" width="65" x="195" y="-6.513952519783423"/>
+<rect fill="red" height="1.9353047341385534" stroke="black" width="65" x="260" y="-1.9353047341385534"/>
+<rect fill="red" height="0.3776204359294738" stroke="black" width="65" x="325" y="-0.3776204359294738"/>
+<rect fill="red" height="0.23601277245592114" stroke="black" width="65" x="390" y="-0.23601277245592114"/>
+<rect fill="red" height="0.09440510898236845" stroke="black" width="65" x="455" y="-0.09440510898236845"/>
+</g>
+<g>
+<g>
+<line stroke="black" stroke-width="1" x1="74.28571428571429" x2="74.28571428571429" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="222.85714285714286" x2="222.85714285714286" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="371.42857142857144" x2="371.42857142857144" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="520" x2="520" y1="0" y2="10"/>
+</g>
+<line stroke="black" stroke-width="1" x1="0" x2="520" y1="0" y2="0"/>
+<g>
+<text font-size="12" text-anchor="middle" x="74.28571428571429" y="20">
+2
+</text>
+<text font-size="12" text-anchor="middle" x="222.85714285714286" y="20">
+4
+</text>
+<text font-size="12" text-anchor="middle" x="371.42857142857144" y="20">
+6
+</text>
+<text font-size="12" text-anchor="middle" x="520" y="20">
+8
+</text>
+</g>
+<text font-size="12" text-anchor="middle" x="260" y="30">
+
+</text>
+</g>
+<g>
+<g>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="0" y2="0"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-94.40510898236846" y2="-94.40510898236846"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-188.81021796473692" y2="-188.81021796473692"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-283.2153269471054" y2="-283.2153269471054"/>
+</g>
+<line stroke="black" stroke-width="1" x1="0" x2="0" y1="0" y2="-340"/>
+<g>
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="0">
+0
+</text>
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-94.40510898236846">
+2000
+</text>
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-188.81021796473692">
+4000
+</text>
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-283.2153269471054">
+6000
+</text>
+</g>
+<text font-size="12" text-anchor="middle" transform="rotate(-90 -30 -170)" x="-30" y="-170">
+
+</text>
+</g>
+</g>
+</svg>

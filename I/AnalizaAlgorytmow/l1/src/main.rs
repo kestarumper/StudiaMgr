@@ -50,11 +50,13 @@ fn scenario_1(n: usize, p: f64) -> u32 {
     return result;
 }
 
-fn scenario_2(n: usize, u: f64) -> u32 {
+fn scenario_2(n: usize, u: f64) -> (u32, u32) {
     let mut slot = 0;
+    let mut round = 0;
     let mut result = 0;
     let round_len: i32 = u.log2().ceil() as i32;
     result = loop {
+        round += 1;
         for i in 1..round_len {
             slot += 1;
             let data: Vec<Pair> = one_slot(n, &|| 1f64 / 2f64.powi(i as i32));
@@ -68,7 +70,16 @@ fn scenario_2(n: usize, u: f64) -> u32 {
             break result;
         }
     };
-    return result;
+    return (result, round);
+}
+
+fn expected_value(data: &Vec<f64>) -> f64 {
+    let sum: f64 = data.into_iter().sum();
+    return sum / data.len() as f64;
+}
+
+fn variance(data: &Vec<f64>, ex: f64) -> f64 {
+    return data.into_iter().map(|v| (v - ex).powi(2)).sum::<f64>() / data.len() as f64;
 }
 
 fn main() {
@@ -95,15 +106,16 @@ fn main() {
         .arg(
             Arg::with_name("scenario")
                 .long("scenario")
+                .takes_value(true)
                 .possible_values(&["2", "3"])
-                .default_value("2")
-                .help("Number of samples"),
+                .required(true)
+                .help("Select scenario"),
         )
         .arg(
             Arg::with_name("supremum")
                 .long("supremum")
                 .takes_value(true)
-                .requires("scenario")
+                .required_if("scenario", "3")
                 .help("Supremum"),
         )
         .get_matches();
@@ -127,17 +139,35 @@ fn main() {
 
     let mut data: Vec<f64> = Vec::new();
     let mut max: u32 = 0;
+    let mut total_rounds = 0;
     for _ in 1..samples {
-        let selected_in: u32 = match scenario_arg {
-            2 => scenario_1(n, 1f64 / n as f64),
-            3 => scenario_2(n, u),
-            _ => panic!("Invalid scenario"),
-        };
+        let selected_in: u32;
+        if scenario_arg == 2 {
+            selected_in = scenario_1(n, 1f64 / n as f64);
+        } else if scenario_arg == 3 {
+            let (a, b) = scenario_2(n, u);
+            selected_in = a;
+            total_rounds += b;
+        } else {
+            panic!("Invalid scenario");
+        }
         if max < selected_in {
             max = selected_in;
         }
         data.push(selected_in as f64);
     }
+
+    let lambda: f64 = samples as f64 / total_rounds as f64;
+    let ex = expected_value(&data);
+    let varx = variance(&data, ex);
+    let p: f64 = 1f64 / ex;
+    println!(
+        "EX={}, VarX={}, VarX2={}, Lambda={}",
+        ex,
+        varx,
+        (1f64 - p) / p.powi(2),
+        lambda
+    );
 
     let h = Histogram::from_slice(data.as_slice(), Bins::Count(max as usize))
         .style(Style::new().fill("red"));

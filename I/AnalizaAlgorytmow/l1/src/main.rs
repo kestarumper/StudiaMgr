@@ -12,13 +12,14 @@ enum TimeSlotStatus {
     COLLISION,
 }
 
+#[derive(Debug)]
 struct Pair(f64, f64);
 
 fn timeslot_result(node_probabilities: &Vec<Pair>) -> TimeSlotStatus {
     let number_of_broadcasts =
         node_probabilities
             .into_iter()
-            .map(|p| p.1 > p.0)
+            .map(|p| p.1 >= p.0)
             .fold(0, |acc, curr| match curr {
                 true => acc + 1,
                 false => acc,
@@ -51,26 +52,25 @@ fn scenario_1(n: usize, p: f64) -> u32 {
 }
 
 fn scenario_2(n: usize, u: f64) -> (u32, u32) {
-    let mut slot = 0;
-    let mut round = 0;
+    let mut slot = 1;
+    let mut round = 1;
     let mut result = 0;
-    let round_len: i32 = u.log2().ceil() as i32;
-    result = loop {
-        round += 1;
-        for i in 1..round_len {
-            slot += 1;
-            let data: Vec<Pair> = one_slot(n, &|| 1f64 / 2f64.powi(i as i32));
+    let L: i32 = u.log2().ceil() as i32;
+    return loop {
+        for i in 1..=L {
+            let data: Vec<Pair> = one_slot(n, &|| 0.5f64.powi(i));
             let timeslot = timeslot_result(&data);
             if timeslot == TimeSlotStatus::SINGLE {
                 result = slot;
                 break;
             }
+            slot += 1;
         }
         if result > 0 {
-            break result;
+            break (result, round);
         }
+        round += 1;
     };
-    return (result, round);
 }
 
 fn expected_value(data: &Vec<f64>) -> f64 {

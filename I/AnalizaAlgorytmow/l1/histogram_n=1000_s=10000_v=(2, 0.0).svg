@@ -1,53 +1,50 @@
 <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
 <g transform="translate(48, 364)">
 <g>
-<rect fill="red" height="340" stroke="black" width="22.608695652173914" x="0" y="-340"/>
-<rect fill="red" height="210.7926167209555" stroke="black" width="22.608695652173914" x="22.608695652173914" y="-210.7926167209555"/>
-<rect fill="red" height="138.25190010857764" stroke="black" width="22.608695652173907" x="45.21739130434783" y="-138.25190010857764"/>
-<rect fill="red" height="87.67643865363735" stroke="black" width="22.60869565217392" x="67.82608695652173" y="-87.67643865363735"/>
-<rect fill="red" height="54.08251900108578" stroke="black" width="22.608695652173907" x="90.43478260869566" y="-54.08251900108578"/>
-<rect fill="red" height="35.34744842562432" stroke="black" width="22.608695652173907" x="113.04347826086956" y="-35.34744842562432"/>
-<rect fill="red" height="19.750271444082518" stroke="black" width="22.608695652173935" x="135.65217391304347" y="-19.750271444082518"/>
-<rect fill="red" height="12.828447339847992" stroke="black" width="22.608695652173907" x="158.2608695652174" y="-12.828447339847992"/>
-<rect fill="red" height="8.583061889250814" stroke="black" width="22.608695652173907" x="180.8695652173913" y="-8.583061889250814"/>
-<rect fill="red" height="5.16829533116178" stroke="black" width="22.608695652173907" x="203.47826086956522" y="-5.16829533116178"/>
-<rect fill="red" height="4.060803474484256" stroke="black" width="22.608695652173907" x="226.08695652173913" y="-4.060803474484256"/>
-<rect fill="red" height="2.214983713355049" stroke="black" width="22.608695652173907" x="248.69565217391303" y="-2.214983713355049"/>
-<rect fill="red" height="1.9381107491856677" stroke="black" width="22.60869565217388" x="271.30434782608694" y="-1.9381107491856677"/>
-<rect fill="red" height="1.1074918566775245" stroke="black" width="22.608695652173992" x="293.9130434782608" y="-1.1074918566775245"/>
-<rect fill="red" height="0.5537459283387622" stroke="black" width="22.60869565217388" x="316.5217391304348" y="-0.5537459283387622"/>
-<rect fill="red" height="0.09229098805646037" stroke="black" width="22.608695652173935" x="339.1304347826087" y="-0.09229098805646037"/>
-<rect fill="red" height="0.09229098805646037" stroke="black" width="22.608695652173935" x="361.7391304347826" y="-0.09229098805646037"/>
-<rect fill="red" height="0.09229098805646037" stroke="black" width="22.60869565217388" x="384.34782608695656" y="-0.09229098805646037"/>
-<rect fill="red" height="0" stroke="black" width="22.608695652173935" x="406.95652173913044" y="0"/>
-<rect fill="red" height="0.09229098805646037" stroke="black" width="22.60869565217388" x="429.5652173913044" y="-0.09229098805646037"/>
-<rect fill="red" height="0" stroke="black" width="22.608695652173935" x="452.17391304347825" y="0"/>
-<rect fill="red" height="0" stroke="black" width="22.60869565217388" x="474.7826086956522" y="0"/>
-<rect fill="red" height="0.09229098805646037" stroke="black" width="22.608695652173935" x="497.39130434782606" y="-0.09229098805646037"/>
+<rect fill="red" height="340" stroke="black" width="26.000000000000007" x="0" y="-340"/>
+<rect fill="red" height="209.99468932554436" stroke="black" width="26.000000000000007" x="26.000000000000007" y="-209.99468932554436"/>
+<rect fill="red" height="130.6372809346787" stroke="black" width="25.999999999999986" x="52.000000000000014" y="-130.6372809346787"/>
+<rect fill="red" height="81.88528943175783" stroke="black" width="26.00000000000003" x="78" y="-81.88528943175783"/>
+<rect fill="red" height="50.738183749336166" stroke="black" width="25.99999999999997" x="104.00000000000003" y="-50.738183749336166"/>
+<rect fill="red" height="33.85554965480616" stroke="black" width="26" x="130" y="-33.85554965480616"/>
+<rect fill="red" height="20.674455655868297" stroke="black" width="25.99999999999997" x="156" y="-20.674455655868297"/>
+<rect fill="red" height="11.917153478491768" stroke="black" width="26.000000000000085" x="181.99999999999997" y="-11.917153478491768"/>
+<rect fill="red" height="8.576739245884227" stroke="black" width="25.999999999999943" x="208.00000000000006" y="-8.576739245884227"/>
+<rect fill="red" height="5.326606479022836" stroke="black" width="26" x="234" y="-5.326606479022836"/>
+<rect fill="red" height="3.159851301115242" stroke="black" width="26.000000000000057" x="260" y="-3.159851301115242"/>
+<rect fill="red" height="1.7153478491768455" stroke="black" width="25.999999999999943" x="286.00000000000006" y="-1.7153478491768455"/>
+<rect fill="red" height="1.3542219861922464" stroke="black" width="26" x="312" y="-1.3542219861922464"/>
+<rect fill="red" height="1.1736590546999468" stroke="black" width="25.999999999999943" x="338" y="-1.1736590546999468"/>
+<rect fill="red" height="0.8125331917153479" stroke="black" width="26.000000000000057" x="363.99999999999994" y="-0.8125331917153479"/>
+<rect fill="red" height="0.2708443972384493" stroke="black" width="26.000000000000114" x="390" y="-0.2708443972384493"/>
+<rect fill="red" height="0.2708443972384493" stroke="black" width="25.999999999999886" x="416.0000000000001" y="-0.2708443972384493"/>
+<rect fill="red" height="0.09028146574614976" stroke="black" width="26" x="442" y="-0.09028146574614976"/>
+<rect fill="red" height="0" stroke="black" width="26" x="468" y="0"/>
+<rect fill="red" height="0.2708443972384493" stroke="black" width="26" x="494" y="-0.2708443972384493"/>
 </g>
 <g>
 <g>
-<line stroke="black" stroke-width="1" x1="70.9090909090909" x2="70.9090909090909" y1="0" y2="10"/>
-<line stroke="black" stroke-width="1" x1="165.45454545454547" x2="165.45454545454547" y1="0" y2="10"/>
-<line stroke="black" stroke-width="1" x1="260" x2="260" y1="0" y2="10"/>
-<line stroke="black" stroke-width="1" x1="354.54545454545456" x2="354.54545454545456" y1="0" y2="10"/>
-<line stroke="black" stroke-width="1" x1="449.09090909090907" x2="449.09090909090907" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="82.10526315789474" x2="82.10526315789474" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="191.57894736842104" x2="191.57894736842104" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="301.05263157894734" x2="301.05263157894734" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="410.5263157894737" x2="410.5263157894737" y1="0" y2="10"/>
+<line stroke="black" stroke-width="1" x1="520" x2="520" y1="0" y2="10"/>
 </g>
 <line stroke="black" stroke-width="1" x1="0" x2="520" y1="0" y2="0"/>
 <g>
-<text font-size="12" text-anchor="middle" x="70.9090909090909" y="20">
+<text font-size="12" text-anchor="middle" x="82.10526315789474" y="20">
 4
 </text>
-<text font-size="12" text-anchor="middle" x="165.45454545454547" y="20">
+<text font-size="12" text-anchor="middle" x="191.57894736842104" y="20">
 8
 </text>
-<text font-size="12" text-anchor="middle" x="260" y="20">
+<text font-size="12" text-anchor="middle" x="301.05263157894734" y="20">
 12
 </text>
-<text font-size="12" text-anchor="middle" x="354.54545454545456" y="20">
+<text font-size="12" text-anchor="middle" x="410.5263157894737" y="20">
 16
 </text>
-<text font-size="12" text-anchor="middle" x="449.09090909090907" y="20">
+<text font-size="12" text-anchor="middle" x="520" y="20">
 20
 </text>
 </g>
@@ -58,22 +55,22 @@
 <g>
 <g>
 <line stroke="black" stroke-width="1" x1="0" x2="-10" y1="0" y2="0"/>
-<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-92.29098805646036" y2="-92.29098805646036"/>
-<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-184.58197611292073" y2="-184.58197611292073"/>
-<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-276.87296416938113" y2="-276.87296416938113"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-90.28146574614976" y2="-90.28146574614976"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-180.56293149229953" y2="-180.56293149229953"/>
+<line stroke="black" stroke-width="1" x1="0" x2="-10" y1="-270.8443972384493" y2="-270.8443972384493"/>
 </g>
 <line stroke="black" stroke-width="1" x1="0" x2="0" y1="0" y2="-340"/>
 <g>
 <text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="0">
 0
 </text>
-<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-92.29098805646036">
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-90.28146574614976">
 1000
 </text>
-<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-184.58197611292073">
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-180.56293149229953">
 2000
 </text>
-<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-276.87296416938113">
+<text dominant-baseline="middle" font-size="12" text-anchor="end" x="-15" y="-270.8443972384493">
 3000
 </text>
 </g>

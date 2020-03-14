@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MAX 1000
+#define MAX 344
 #define multiplier 16807LL
 
 int r[MAX];
@@ -35,6 +35,22 @@ int myrand()
     return val >> 1;
 }
 
+int prediction(int j, unsigned int t[])
+{
+    int n = (j - 31) % 344;
+    int m = (j - 3) % 344;
+    int k = j % 344;
+
+    unsigned int result = (t[n] + t[m]) % RAND_MAX;
+    if (result < 0)
+        result += RAND_MAX;
+
+    t[k] = result;
+
+    printf("PREDICTION: t[%d] = t[%d] + t[%d]\n", k, n, m);
+    return result;
+}
+
 int main(int argc, char *argv[])
 {
     int j, r1, r2, r3, r4, nloops, seed;
@@ -51,33 +67,26 @@ int main(int argc, char *argv[])
     srand(seed);
     mysrand(seed);
 
-    int tab[60];
-    printf("seed: %d\n", seed);
-    for (j = 0; j < nloops; j++)
+    unsigned int tab[MAX];
+    unsigned int tab2[MAX];
+    for (j = 0; j < 31; j++)
     {
         r1 = rand();
-        tab[j % 60] = r1;
         r2 = myrand();
+
+        tab[j] = r1;
+        tab2[j] = r1 + 1;
+
         printf("r[%d] = r[%d] + r[%d] | %d / %d\n", _i - 1 % 344, (_i - 1 + 313) % 344, (_i - 1 + 341) % 344, r1, r2);
-        // printf("rand=%d | myrand=%d\n", r1, r2);
     }
 
-    int prediction_1 = (tab[0] + tab[28]) % RAND_MAX;
-    if (prediction_1 < 0)
-        prediction_1 += RAND_MAX;
-
-    int prediction_2 = (tab[1] + tab[29]) % RAND_MAX;
-    if (prediction_2 < 0)
-        prediction_2 += RAND_MAX;
-
-    int next_1 = rand();
-    tab[j++ % 60] = next_1;
-
-    int next_2 = rand();
-    tab[j++ % 60] = next_2;
-
-    printf("TEST: %d == %d\n", prediction_1, next_1);
-    printf("TEST: %d == %d\n", prediction_2, next_2);
+    for (int k = 0; k < nloops; k++)
+    {
+        unsigned int prediction_1 = prediction(j, tab);
+        unsigned int prediction_2 = prediction(j++, tab2);
+        unsigned int next_1 = rand();
+        printf("TEST: %d == %d == %d\n", next_1, prediction_1, prediction_2);
+    }
 
     exit(EXIT_SUCCESS);
 }

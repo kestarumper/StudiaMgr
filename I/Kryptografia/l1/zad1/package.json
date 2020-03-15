@@ -1,0 +1,20 @@
+{
+  "name": "zad1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main2.js",
+  "dependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/mathjs": "^6.0.4",
+    "lodash": "^4.17.15",
+    "mathjs": "^6.6.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

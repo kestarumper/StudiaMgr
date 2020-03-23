@@ -12,7 +12,6 @@ def min_count(multiset, h, k):
         if hash < M[k-1] and (hash not in M):
             M[k-1] = hash
             M = np.sort(M)
-    print(M)
     if M[k-1] == 1.0:
         return np.where(M != 1.0, 1, 0).sum()
     return (k-1) / M[k-1]
@@ -27,15 +26,18 @@ def hash_fn_factory(name):
 
 
 def rand_str(length):
-    return np.random.choice(list(string.ascii_lowercase),  size=length)
+    return np.random.choice(list(string.ascii_lowercase), size=length)
 
 
 def main():
-    multiset = rand_str(100000)
+    multisets = [rand_str(n) for n in range(1, 10001)]
+    ks = [2, 3, 10, 100, 400]
     h = hash_fn_factory('md5')
-    k = 3
-    result = min_count(multiset, h, k)
-    print(result)
+
+    for multiset in multisets:
+        for k in ks:
+            result = min_count(multiset, h, k)
+            print(f"n={len(multiset)}\t|\tk={k}\t|\test={result}")
 
 
 if __name__ == "__main__":

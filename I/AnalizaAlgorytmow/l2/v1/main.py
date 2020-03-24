@@ -28,22 +28,24 @@ def hash_fn_factory(name):
 
 def main():
     parser = argparse.ArgumentParser(description='MinCount.')
-    parser.add_argument("-k", "--hashes", type=int,
-                        help="How many hashes")
+    parser.add_argument("-k", "--hashes", type=int, help="How many hashes")
+    parser.add_argument("-f", "--function", default="md5", required=True,
+                        choices=hashlib.algorithms_available,
+                        help="Hash function")
 
     args = parser.parse_args()
 
     ks = [args.hashes] if args.hashes else [2, 3, 10, 100, 400]
-    # ks = [args.hashes]
-    h = hash_fn_factory('md5')
+    h = hash_fn_factory(args.function)
 
     for k in ks:
-        with open(f"result_{k}.csv", 'w') as out_file:
+        with open(f"{args.function}_{k}.csv", 'w') as out_file:
             for n in range(1, 10001):
                 # multiset = np.random.randint(n, size=n)
                 multiset = range(n)
                 result = min_count(multiset, h, k)
-                print(f"n={len(multiset)}\t|\test={result}")
+                if not n % 100:
+                    print(f"n={len(multiset)}\t|\test={result}") 
                 out_file.write(f"{len(multiset)},{result}\n")
 
 

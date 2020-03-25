@@ -15,6 +15,7 @@ def main():
         data = list(csv.reader(csvfile))
         x = []
         y = []
+        z = []
         for i, d in enumerate(data):
             if i % 25:
                 continue
@@ -22,9 +23,12 @@ def main():
             n_hat = float(approx) / int(n)
             x.append(int(n))
             y.append(n_hat)
+            z.append(float(approx))
 
         plt.plot(x, y)
         plt.savefig(f"{Path(args.file).stem}.png")
+        plt.scatter(x, z, s=0.1)
+        plt.savefig(f"{Path(args.file).stem}_scatter.png")
 
 
 if __name__ == "__main__":

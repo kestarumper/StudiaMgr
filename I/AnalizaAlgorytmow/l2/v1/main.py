@@ -29,6 +29,8 @@ def hash_fn_factory(name):
 def main():
     parser = argparse.ArgumentParser(description='MinCount.')
     parser.add_argument("-k", "--hashes", type=int, help="How many hashes")
+    parser.add_argument("-n", "--number", type=int,
+                        help="How many elements", default=10000)
     parser.add_argument("-f", "--function", default="md5", required=True,
                         choices=hashlib.algorithms_available,
                         help="Hash function")
@@ -39,14 +41,19 @@ def main():
     h = hash_fn_factory(args.function)
 
     for k in ks:
+        successes = 0
         with open(f"{args.function}_{k}.csv", 'w') as out_file:
-            for n in range(1, 10001):
+            for n in range(1, args.number + 1):
                 # multiset = np.random.randint(n, size=n)
                 multiset = range(n)
                 result = min_count(multiset, h, k)
+                if abs((result / float(n)) - 1) < 0.1:
+                    successes += 1
                 if not n % 100:
-                    print(f"n={len(multiset)}\t|\test={result}") 
+                    print(f"n={len(multiset)}\t| n̂={result}")
                 out_file.write(f"{len(multiset)},{result}\n")
+        success_rate = successes / float(n)
+        print(f"k = {k}\t| Success rate of error rate +-10%: {success_rate}")
 
 
 if __name__ == "__main__":

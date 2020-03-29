@@ -3,60 +3,67 @@
 Adrian Mucha
 
 ## Zad 5
+
 a) Obecność powtórzeń faktycznie ma znaczenie gdy chcemy oszacować liczność całego zbioru. W momencie gdy trafiamy na tę samą wartość, generowany jest identyczny hash, przez co "tracimy informację" o jego wystąpieniu. Jeżeli takowy już istnieje w zbiorze **M** to zostanie odrzucony i nie wpłynie na stan zbioru **M**. W skrajnym przypadku gdy ilość powtórzeń będzie mniejsza od parametru **k** otrzymamy przypadek w którym dostaniemy dokładną wartość. **Nie wpływa to jednak na szacowanie liczby unikalnych wartości** (pomijając kolizje hashy).
 
 b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n** a na osi poziomej **n**.
 
 <small>NOTE: click to expand</small>
+
 <details>
     <summary>MD5 (128bit)</summary>
 
 ### MD5
+
 - k=2 ![](losowe/md5/md5_2.png)
 - k=3 ![](losowe/md5/md5_3.png)
 - k=10 ![](losowe/md5/md5_10.png)
 - k=100 ![](losowe/md5/md5_100.png)
 - k=400 ![](losowe/md5/md5_400.png)
-</details>
+  </details>
 
 <details>
     <summary>SHA1 (160bit)</summary>
 
 ### SHA1
+
 - k=2 ![](losowe/sha1/sha1_2.png)
 - k=3 ![](losowe/sha1/sha1_3.png)
 - k=10 ![](losowe/sha1/sha1_10.png)
 - k=100 ![](losowe/sha1/sha1_100.png)
 - k=400 ![](losowe/sha1/sha1_400.png)
-</details>
+  </details>
 
 <details>
     <summary>SHA2 (256bit)</summary>
 
 ### SHA2
+
 - k=2 ![](losowe/sha256/sha256_2.png)
 - k=3 ![](losowe/sha256/sha256_3.png)
 - k=10 ![](losowe/sha256/sha256_10.png)
 - k=100 ![](losowe/sha256/sha256_100.png)
 - k=400 ![](losowe/sha256/sha256_400.png)
-</details>
+  </details>
 
 <details>
     <summary>SHA3 (224bit)</summary>
 
 ### SHA3
+
 - k=2 ![](losowe/sha3_224/sha3_224_2.png)
 - k=3 ![](losowe/sha3_224/sha3_224_3.png)
 - k=10 ![](losowe/sha3_224/sha3_224_10.png)
 - k=100 ![](losowe/sha3_224/sha3_224_100.png)
 - k=400 ![](losowe/sha3_224/sha3_224_400.png)
-</details>
+  </details>
 
 c) Wybór najlepszego parametru **k** drogą eksperymentów, dał następujące wyniki z użyciem funkcji hashującej **md5**:
 
 TYLKO UNIKALNE ELEMENTY
 **n = 10000**  
 Dla 10000 prób wystarczy dobrać `k = 150` aby wyniki nie odbiegały od prawdziwej wartości o ±10% w 95% przypadków. W szczególności prawdopodobnie istnieje `125 < k < 150`, takie że spełnia ten warunek i jest najmniejszym k na tym przedziale.
+
 ```
 # k = 100 | Success rate of error rate ±10%: 0.8924
 # k = 125 | Success rate of error rate ±10%: 0.9406 <<
@@ -69,7 +76,9 @@ Dla 10000 prób wystarczy dobrać `k = 150` aby wyniki nie odbiegały od prawdzi
 # k = 275 | Success rate of error rate ±10%: 0.9994
 # k = 300 | Success rate of error rate ±10%: 0.9998
 ```
+
 **n = 1000**
+
 ```
 # k = 151 | Success rate of error rate ±10%: 0.857
 # k = 201 | Success rate of error rate ±10%: 0.811
@@ -79,19 +88,23 @@ Dla 10000 prób wystarczy dobrać `k = 150` aby wyniki nie odbiegały od prawdzi
 ```
 
 LOSOWE (**n = 10000** elementów, ok 6500 unikalnych):
+
 ```
 k = 200	| Precision (-10% < x < +10%): 0.8147
 k = 250	| Precision (-10% < x < +10%): 0.9083
 k = 260	| Precision (-10% < x < +10%): 0.9559 <<
 k = 275	| Precision (-10% < x < +10%): 0.9999
 ```
+
 W ogólności, dla multizbiorów z powtarzającymi się elementami wystarczy dobrać **k= 260** by w 95% przypadków otrzymać wynik o błędzie względnym ±10%.
 
 ## Zad 6
+
 `b` oznacza ilość bitów do których został obicięty hash  
 `k = 400`  
 `n = 100000`  
 NOTE: Dla algorytmów mających krótsze hashe wybieramy `min(b, hash.max_len)`.
+
 ```
 ============================b=8============================
      md5 | n̂=255	            | n=100000	| err=99.74%
@@ -127,6 +140,7 @@ sha3_224 | n̂=99922.78567801436	| n=100000	| err=0.08%
 ```
 
 ## Zad 7
+
 Na wykresach przedstawiono na osi pionowej wartości `n̂`, a na osi poziomej wartości `n`. Linie pomarańczowe oraz zielone oznaczają ograniczenia postawione przez nierówności Czebyszewa oraz Chernoffa.
 
 `k = 400`  
@@ -137,3 +151,45 @@ Na wykresach przedstawiono na osi pionowej wartości `n̂`, a na osi poziomej wa
 ![](chebyshew_chernoff/md5_400_α_0.05_k_400_n_10000.png)
 
 Na wykresach widzimy, że wyniki teoretyczne pokrywają się z tymi uzyskanymi z eksperymentów i koncentrują się w ograniczeniach postawionych przez nierówności.
+
+## Zad 8
+
+### Success rate | Precision (-10% < x < +10%) within 95%
+
+Użyta funkcja: **md5**
+
+```
+b = 4 | Precision (-10% < x < +10%): 0.2454
+b = 5	| Precision (-10% < x < +10%): 0.3883
+b = 8 | Precision (-10% < x < +10%): 0.9086
+b = 12| Precision (-10% < x < +10%): 1.0
+b = 16| Precision (-10% < x < +10%): 1.0
+```
+
+### Wykresy
+
+Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n** a na osi poziomej **n**.
+
+**b = 4**
+![](hyperloglog/md5_n_10000_b_4_scatter.png)
+![](hyperloglog/md5_n_10000_b_4.png)
+
+**b = 8**
+![](hyperloglog/md5_n_10000_b_8_scatter.png)
+![](hyperloglog/md5_n_10000_b_8.png)
+
+**b = 12**
+![](hyperloglog/md5_n_10000_b_12_scatter.png)
+![](hyperloglog/md5_n_10000_b_12.png)
+
+**b = 16**
+![](hyperloglog/md5_n_10000_b_16_scatter.png)
+![](hyperloglog/md5_n_10000_b_16.png)
+
+### Porównanie błędów względnych
+Wygląda na to, że średnio **MinCount** radzi sobie lepiej.
+Zsumowane błędy względne a następnie je uśredniono. Otrzymano następujące wyniki:
+| algorytm    | uśredniony błąd |
+| ----------- | --------------- |
+| HyperLogLog | 11.73%          |
+| MinCount    | 2.14%           |

@@ -125,3 +125,15 @@ sha3_224 | n̂=99922.78567801436	| n=100000	| err=0.08%
   sha256 | n̂=104750.41479821435	| n=100000	| err=4.75%
 
 ```
+
+## Zad 7
+Na wykresach przedstawiono na osi pionowej wartości `n̂`, a na osi poziomej wartości `n`. Linie pomarańczowe oraz zielone oznaczają ograniczenia postawione przez nierówności Czebyszewa oraz Chernoffa.
+
+`k = 400`  
+`n = 10000`
+
+![](chebyshew_chernoff/md5_400_α_0.005_k_400_n_10000.png)
+![](chebyshew_chernoff/md5_400_α_0.01_k_400_n_10000.png)
+![](chebyshew_chernoff/md5_400_α_0.05_k_400_n_10000.png)
+
+Na wykresach widzimy, że wyniki teoretyczne pokrywają się z tymi uzyskanymi z eksperymentów i koncentrują się w ograniczeniach postawionych przez nierówności.

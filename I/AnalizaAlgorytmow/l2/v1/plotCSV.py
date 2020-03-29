@@ -19,10 +19,9 @@ def main():
         for i, d in enumerate(data):
             if i % 25:
                 continue
-            n, approx = d
-            n_hat = float(approx) / int(n)
+            n, approx, ratio = d
             x.append(int(n))
-            y.append(n_hat)
+            y.append(float(ratio))
             z.append(float(approx))
 
         plt.plot(x, y)

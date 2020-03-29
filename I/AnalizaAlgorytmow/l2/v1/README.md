@@ -3,7 +3,7 @@
 Adrian Mucha
 
 ## Zad 5
-a) Obecność powtórzeń faktycznie ma znaczenie gdy chcemy oszacować liczność całego zbioru. W momencie gdy trafiamy na tę samą wartość, generowany jest identyczny hash, przez co "tracimy informację" o jego wystąpieniu. Jeżeli takowy już istnieje w zbiorze **M** to zostanie odrzucony i nie wpłynie na stan zbioru **M**. W skrajnym przypadku gdy ilość powtórzeń będzie mniejsza od parametru **k** otrzymamy przypadek w którym dostaniemy dokładną wartość. Nie wpływa to jednak na szacowanie liczby unikalnych wartości (pomijając kolizje hashy).
+a) Obecność powtórzeń faktycznie ma znaczenie gdy chcemy oszacować liczność całego zbioru. W momencie gdy trafiamy na tę samą wartość, generowany jest identyczny hash, przez co "tracimy informację" o jego wystąpieniu. Jeżeli takowy już istnieje w zbiorze **M** to zostanie odrzucony i nie wpłynie na stan zbioru **M**. W skrajnym przypadku gdy ilość powtórzeń będzie mniejsza od parametru **k** otrzymamy przypadek w którym dostaniemy dokładną wartość. **Nie wpływa to jednak na szacowanie liczby unikalnych wartości** (pomijając kolizje hashy).
 
 b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n** a na osi poziomej **n**.
 
@@ -12,70 +12,80 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
     <summary>MD5 (128bit)</summary>
 
 ### MD5
-- k=2 ![](jednostajne/md5/md5_2.png)
-- k=3 ![](jednostajne/md5/md5_3.png)
-- k=10 ![](jednostajne/md5/md5_10.png)
-- k=100 ![](jednostajne/md5/md5_100.png)
-- k=400 ![](jednostajne/md5/md5_400.png)
+- k=2 ![](losowe/md5/md5_2.png)
+- k=3 ![](losowe/md5/md5_3.png)
+- k=10 ![](losowe/md5/md5_10.png)
+- k=100 ![](losowe/md5/md5_100.png)
+- k=400 ![](losowe/md5/md5_400.png)
 </details>
 
 <details>
     <summary>SHA1 (160bit)</summary>
 
 ### SHA1
-- k=2 ![](jednostajne/sha1/sha1_2.png)
-- k=3 ![](jednostajne/sha1/sha1_3.png)
-- k=10 ![](jednostajne/sha1/sha1_10.png)
-- k=100 ![](jednostajne/sha1/sha1_100.png)
-- k=400 ![](jednostajne/sha1/sha1_400.png)
+- k=2 ![](losowe/sha1/sha1_2.png)
+- k=3 ![](losowe/sha1/sha1_3.png)
+- k=10 ![](losowe/sha1/sha1_10.png)
+- k=100 ![](losowe/sha1/sha1_100.png)
+- k=400 ![](losowe/sha1/sha1_400.png)
 </details>
 
 <details>
-    <summary>SHA3-224 (224bit)</summary>
+    <summary>SHA2 (256bit)</summary>
 
-### SHA3-224
-- k=2 ![](jednostajne/sha3-224/sha3-224_2.png)
-- k=3 ![](jednostajne/sha3-224/sha3-224_3.png)
-- k=10 ![](jednostajne/sha3-224/sha3-224_10.png)
-- k=100 ![](jednostajne/sha3-224/sha3-224_100.png)
-- k=400 ![](jednostajne/sha3-224/sha3-224_400.png)
+### SHA2
+- k=2 ![](losowe/sha256/sha256_2.png)
+- k=3 ![](losowe/sha256/sha256_3.png)
+- k=10 ![](losowe/sha256/sha256_10.png)
+- k=100 ![](losowe/sha256/sha256_100.png)
+- k=400 ![](losowe/sha256/sha256_400.png)
 </details>
 
 <details>
-    <summary>SHA256 (256bit)</summary>
+    <summary>SHA3 (224bit)</summary>
 
-### SHA256
-- k=2 ![](jednostajne/sha256/sha256_2.png)
-- k=3 ![](jednostajne/sha256/sha256_3.png)
-- k=10 ![](jednostajne/sha256/sha256_10.png)
-- k=100 ![](jednostajne/sha256/sha256_100.png)
-- k=400 ![](jednostajne/sha256/sha256_400.png)
+### SHA3
+- k=2 ![](losowe/sha3_224/sha3_224_2.png)
+- k=3 ![](losowe/sha3_224/sha3_224_3.png)
+- k=10 ![](losowe/sha3_224/sha3_224_10.png)
+- k=100 ![](losowe/sha3_224/sha3_224_100.png)
+- k=400 ![](losowe/sha3_224/sha3_224_400.png)
 </details>
 
 c) Wybór najlepszego parametru **k** drogą eksperymentów, dał następujące wyniki z użyciem funkcji hashującej **md5**:
 
+TYLKO UNIKALNE ELEMENTY
 **n = 10000**  
-Dla 10000 prób wystarczy dobrać `k = 150` aby wyniki nie odbiegały od prawdziwej wartości o +-10% w 95% przypadków. W szczególności prawdopodobnie istnieje `125 < k < 150`, takie że spełnia ten warunek i jest najmniejszym k na tym przedziale.
+Dla 10000 prób wystarczy dobrać `k = 150` aby wyniki nie odbiegały od prawdziwej wartości o ±10% w 95% przypadków. W szczególności prawdopodobnie istnieje `125 < k < 150`, takie że spełnia ten warunek i jest najmniejszym k na tym przedziale.
 ```
-# k = 100 | Success rate of error rate +-10%: 0.8924
-# k = 125 | Success rate of error rate +-10%: 0.9406 <<
-# k = 137 | Success rate of error rate +-10%: 0.9275 !!!
-# k = 150 | Success rate of error rate +-10%: 0.9787 <<
-# k = 175 | Success rate of error rate +-10%: 0.9812
-# k = 200 | Success rate of error rate +-10%: 0.9805
-# k = 225 | Success rate of error rate +-10%: 0.9891
-# k = 250 | Success rate of error rate +-10%: 0.9829
-# k = 275 | Success rate of error rate +-10%: 0.9994
-# k = 300 | Success rate of error rate +-10%: 0.9998
+# k = 100 | Success rate of error rate ±10%: 0.8924
+# k = 125 | Success rate of error rate ±10%: 0.9406 <<
+# k = 137 | Success rate of error rate ±10%: 0.9275 !!!
+# k = 150 | Success rate of error rate ±10%: 0.9787 <<
+# k = 175 | Success rate of error rate ±10%: 0.9812
+# k = 200 | Success rate of error rate ±10%: 0.9805
+# k = 225 | Success rate of error rate ±10%: 0.9891
+# k = 250 | Success rate of error rate ±10%: 0.9829
+# k = 275 | Success rate of error rate ±10%: 0.9994
+# k = 300 | Success rate of error rate ±10%: 0.9998
 ```
 **n = 1000**
 ```
-# k = 151 | Success rate of error rate +-10%: 0.857
-# k = 201 | Success rate of error rate +-10%: 0.811
-# k = 251 | Success rate of error rate +-10%: 0.951 <<
-# k = 255 | Success rate of error rate +-10%: 0.967
-# k = 276 | Success rate of error rate +-10%: 0.997
+# k = 151 | Success rate of error rate ±10%: 0.857
+# k = 201 | Success rate of error rate ±10%: 0.811
+# k = 251 | Success rate of error rate ±10%: 0.951 <<
+# k = 255 | Success rate of error rate ±10%: 0.967
+# k = 276 | Success rate of error rate ±10%: 0.997
 ```
+
+LOSOWE (**n = 10000** elementów, ok 6500 unikalnych):
+```
+k = 200	| Precision (-10% < x < +10%): 0.8147
+k = 250	| Precision (-10% < x < +10%): 0.9083
+k = 260	| Precision (-10% < x < +10%): 0.9559 <<
+k = 275	| Precision (-10% < x < +10%): 0.9999
+```
+W ogólności, dla multizbiorów z powtarzającymi się elementami wystarczy dobrać **k= 260** by w 95% przypadków otrzymać wynik o błędzie względnym ±10%.
 
 ## Zad 6
 `b` oznacza ilość bitów do których został obicięty hash  

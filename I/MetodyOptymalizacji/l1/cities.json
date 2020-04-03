@@ -1,0 +1,392 @@
+[
+  {
+    "from": "Berlin",
+    "to": "Bratysława",
+    "distance": 553
+  },
+  {
+    "from": "Berlin",
+    "to": "Brno",
+    "distance": 433
+  },
+  {
+    "from": "Berlin",
+    "to": "Budapeszt",
+    "distance": 689
+  },
+  {
+    "from": "Berlin",
+    "to": "Koszyce",
+    "distance": 697
+  },
+  {
+    "from": "Berlin",
+    "to": "Lipsk",
+    "distance": 149
+  },
+  {
+    "from": "Berlin",
+    "to": "Praga",
+    "distance": 282
+  },
+  {
+    "from": "Berlin",
+    "to": "Rostok",
+    "distance": 195
+  },
+  {
+    "from": "Bratysława",
+    "to": "Budapeszt",
+    "distance": 162
+  },
+  {
+    "from": "Bratysława",
+    "to": "Koszyce",
+    "distance": 313
+  },
+  {
+    "from": "Brno",
+    "to": "Bratysława",
+    "distance": 122
+  },
+  {
+    "from": "Brno",
+    "to": "Budapeszt",
+    "distance": 261
+  },
+  {
+    "from": "Brno",
+    "to": "Koszyce",
+    "distance": 344
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Berlin",
+    "distance": 403
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Bratysława",
+    "distance": 699
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Brno",
+    "distance": 591
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Budapeszt",
+    "distance": 764
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Koszyce",
+    "distance": 652
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Kraków",
+    "distance": 486
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Lipsk",
+    "distance": 539
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Praga",
+    "distance": 556
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Rostok",
+    "distance": 427
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Szczecin",
+    "distance": 288
+  },
+  {
+    "from": "Gdańsk",
+    "to": "Wrocław",
+    "distance": 377
+  },
+  {
+    "from": "Koszyce",
+    "to": "Budapeszt",
+    "distance": 214
+  },
+  {
+    "from": "Kraków",
+    "to": "Berlin",
+    "distance": 531
+  },
+  {
+    "from": "Kraków",
+    "to": "Bratysława",
+    "distance": 297
+  },
+  {
+    "from": "Kraków",
+    "to": "Brno",
+    "distance": 259
+  },
+  {
+    "from": "Kraków",
+    "to": "Budapeszt",
+    "distance": 293
+  },
+  {
+    "from": "Kraków",
+    "to": "Koszyce",
+    "distance": 177
+  },
+  {
+    "from": "Kraków",
+    "to": "Lipsk",
+    "distance": 552
+  },
+  {
+    "from": "Kraków",
+    "to": "Praga",
+    "distance": 394
+  },
+  {
+    "from": "Kraków",
+    "to": "Rostok",
+    "distance": 698
+  },
+  {
+    "from": "Lipsk",
+    "to": "Bratysława",
+    "distance": 492
+  },
+  {
+    "from": "Lipsk",
+    "to": "Brno",
+    "distance": 384
+  },
+  {
+    "from": "Lipsk",
+    "to": "Budapeszt",
+    "distance": 645
+  },
+  {
+    "from": "Lipsk",
+    "to": "Koszyce",
+    "distance": 699
+  },
+  {
+    "from": "Lipsk",
+    "to": "Praga",
+    "distance": 203
+  },
+  {
+    "from": "Praga",
+    "to": "Bratysława",
+    "distance": 290
+  },
+  {
+    "from": "Praga",
+    "to": "Brno",
+    "distance": 185
+  },
+  {
+    "from": "Praga",
+    "to": "Budapeszt",
+    "distance": 443
+  },
+  {
+    "from": "Praga",
+    "to": "Koszyce",
+    "distance": 516
+  },
+  {
+    "from": "Rostok",
+    "to": "Bratysława",
+    "distance": 748
+  },
+  {
+    "from": "Rostok",
+    "to": "Brno",
+    "distance": 627
+  },
+  {
+    "from": "Rostok",
+    "to": "Budapeszt",
+    "distance": 880
+  },
+  {
+    "from": "Rostok",
+    "to": "Koszyce",
+    "distance": 871
+  },
+  {
+    "from": "Rostok",
+    "to": "Lipsk",
+    "distance": 306
+  },
+  {
+    "from": "Rostok",
+    "to": "Praga",
+    "distance": 474
+  },
+  {
+    "from": "Szczecin",
+    "to": "Berlin",
+    "distance": 127
+  },
+  {
+    "from": "Szczecin",
+    "to": "Bratysława",
+    "distance": 615
+  },
+  {
+    "from": "Szczecin",
+    "to": "Brno",
+    "distance": 493
+  },
+  {
+    "from": "Szczecin",
+    "to": "Budapeszt",
+    "distance": 733
+  },
+  {
+    "from": "Szczecin",
+    "to": "Koszyce",
+    "distance": 703
+  },
+  {
+    "from": "Szczecin",
+    "to": "Kraków",
+    "distance": 527
+  },
+  {
+    "from": "Szczecin",
+    "to": "Lipsk",
+    "distance": 276
+  },
+  {
+    "from": "Szczecin",
+    "to": "Praga",
+    "distance": 373
+  },
+  {
+    "from": "Szczecin",
+    "to": "Rostok",
+    "distance": 177
+  },
+  {
+    "from": "Szczecin",
+    "to": "Wrocław",
+    "distance": 309
+  },
+  {
+    "from": "Warszawa",
+    "to": "Berlin",
+    "distance": 518
+  },
+  {
+    "from": "Warszawa",
+    "to": "Bratysława",
+    "distance": 533
+  },
+  {
+    "from": "Warszawa",
+    "to": "Brno",
+    "distance": 459
+  },
+  {
+    "from": "Warszawa",
+    "to": "Budapeszt",
+    "distance": 545
+  },
+  {
+    "from": "Warszawa",
+    "to": "Gdańsk",
+    "distance": 284
+  },
+  {
+    "from": "Warszawa",
+    "to": "Koszyce",
+    "distance": 391
+  },
+  {
+    "from": "Warszawa",
+    "to": "Kraków",
+    "distance": 252
+  },
+  {
+    "from": "Warszawa",
+    "to": "Lipsk",
+    "distance": 603
+  },
+  {
+    "from": "Warszawa",
+    "to": "Praga",
+    "distance": 518
+  },
+  {
+    "from": "Warszawa",
+    "to": "Rostok",
+    "distance": 629
+  },
+  {
+    "from": "Warszawa",
+    "to": "Szczecin",
+    "distance": 454
+  },
+  {
+    "from": "Warszawa",
+    "to": "Wrocław",
+    "distance": 301
+  },
+  {
+    "from": "Wrocław",
+    "to": "Berlin",
+    "distance": 295
+  },
+  {
+    "from": "Wrocław",
+    "to": "Bratysława",
+    "distance": 330
+  },
+  {
+    "from": "Wrocław",
+    "to": "Brno",
+    "distance": 215
+  },
+  {
+    "from": "Wrocław",
+    "to": "Budapeszt",
+    "distance": 427
+  },
+  {
+    "from": "Wrocław",
+    "to": "Koszyce",
+    "distance": 402
+  },
+  {
+    "from": "Wrocław",
+    "to": "Kraków",
+    "distance": 236
+  },
+  {
+    "from": "Wrocław",
+    "to": "Lipsk",
+    "distance": 326
+  },
+  {
+    "from": "Wrocław",
+    "to": "Praga",
+    "distance": 217
+  },
+  {
+    "from": "Wrocław",
+    "to": "Rostok",
+    "distance": 470
+  }
+]

@@ -11,14 +11,13 @@ def main():
                         help="How many hashes")
     args = parser.parse_args()
 
+    print(f"Processing {args.file}...")
     with open(args.file, newline='') as csvfile:
         data = list(csv.reader(csvfile))
         x = []
         y = []
         z = []
-        for i, d in enumerate(data):
-            if i % 25:
-                continue
+        for d in data:
             n, approx, ratio = d
             x.append(int(n))
             y.append(float(ratio))

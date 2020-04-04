@@ -24,10 +24,10 @@ minimize Cost:
 # s.t. w2{dest in Cities, type in CaravanType}:
 #         Demands[dest, type] - (sum{src in Cities} x[src, dest, type]) == 0;
 
-s.t. w1{i in Cities}:
-        Demands[i, 'Vip'] - (
-                sum{j in Cities} x[j, i, 'Vip'] - (
-                        Demands[i, 'Standard'] - sum{j in Cities} x[j, i, 'Standard']
+s.t. w1{dest in Cities}:
+        Demands[dest, 'Vip'] - (
+                sum{src in Cities} x[src, dest, 'Vip'] - (
+                        Demands[dest, 'Standard'] - sum{src in Cities} x[src, dest, 'Standard']
                 )
         ) == 0;
 

@@ -2,13 +2,13 @@ set Cities;                         # travel endpoints
 set CaravanType;                   # types of caravans
 set E within Cities cross Cities;   # travel paths E_1 x E_2
 
-param Substitutions{CaravanType, CaravanType} >= 0;
+# param Substitutions{CaravanType, CaravanType} >= 0;
 
 param CostMultipliers{CaravanType} >= 0;
 
-param Demands{Cities, CaravanType} >= 0;   # Demand for each city and type
-param Supplies{Cities, CaravanType} >= 0;  # Supply for each city and type
-param Distances{E} >= 0;                 # Distances between city pairs
+param Demands{Cities, CaravanType} integer, >= 0;   # Demand for each city and type
+param Supplies{Cities, CaravanType} integer, >= 0;  # Supply for each city and type
+param Distances{E}, integer >= 0;                 # Distances between city pairs
 
 # Check that supply are enough for demand
 check   sum{city in Cities, type in CaravanType} Demands[city, type] <=
@@ -31,15 +31,23 @@ s.t. w1{i in Cities}:
                 )
         ) == 0;
 
-s.t. standard_demand{i in Cities}:
-        Demands[i, 'Standard'] - sum{j in Cities} x[j, i, 'Standard'] >= 0;
+s.t. standard_demand{dest in Cities}:
+        Demands[dest, 'Standard'] - sum{src in Cities} x[src, dest, 'Standard'] >= 0;
 
 s.t. suppliers{src in Cities, type in CaravanType}:
         Supplies[src, type] - (sum{dest in Cities} x[src, dest, type]) >= 0;
 
 solve;
 
-display{(src, dest) in E, type in CaravanType}:x[src, dest, type];
+for {type in CaravanType, (src, dest) in E}
+{
+   for {{0}: x[src, dest, type] != 0} {
+        printf "[%s --> %s] %d x %s\n", src, dest, x[src, dest, type],type;
+   }
+}
+for {type in CaravanType} {
+    printf "Total moved %s: %d\n", type, sum{(src, dest) in E} x[src, dest, type];
+}
 display Cost;
 
 data;
@@ -47,10 +55,10 @@ data;
 set Cities := Warszawa Gdansk Szczecin Wroclaw Krakow Berlin Rostok Lipsk Praga Brno Bratyslawa Koszyce Budapeszt;
 set CaravanType := Standard Vip;
 
-param Substitutions: Standard Vip :=
-        Standard    1   0
-        Vip         1   1
-;
+# param Substitutions: Standard Vip :=
+#         Standard    1   0
+#         Vip         1   1
+# ;
 
 param CostMultipliers := Standard 1.0 Vip 1.15;
 

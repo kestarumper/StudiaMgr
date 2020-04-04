@@ -40,7 +40,7 @@ def main():
         delta_chernoff = getDeltaChernoff(10000, alpha)
 
         for d in data:
-            n, approx = d
+            n, approx, _ = d
             n = int(n)
             approx = float(approx)
 
@@ -59,7 +59,7 @@ def main():
         plt.scatter(x, y_chernoff_upper, color="C2", label="Chernoff", s=0.1)
         plt.scatter(x, y_chernoff_lower, color="C2", s=0.1)
         plt.legend()
-        plt.title(f"α = {alpha}")
+        plt.title(f"{Path(args.file).stem} α = {alpha}")
         plt.savefig(f"{Path(args.file).stem}_α_{alpha}_k_{k}_n_{10000}.png")
 
 

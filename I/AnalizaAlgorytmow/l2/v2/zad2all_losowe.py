@@ -55,6 +55,7 @@ def main():
     k = args.k
     n = args.n
 
+    np.random.seed(0)
     multiset = np.random.randint(0, n, size=n)
     n = np.unique(multiset).size
 

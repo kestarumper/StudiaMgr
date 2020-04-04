@@ -16,11 +16,11 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
 
 ### MD5
 
-- k=2 ![](losowe/md5/md5_2.png)
-- k=3 ![](losowe/md5/md5_3.png)
-- k=10 ![](losowe/md5/md5_10.png)
-- k=100 ![](losowe/md5/md5_100.png)
-- k=400 ![](losowe/md5/md5_400.png)
+- k=2 ![](losowe/md5/md5_2_scatter.png)
+- k=3 ![](losowe/md5/md5_3_scatter.png)
+- k=10 ![](losowe/md5/md5_10_scatter.png)
+- k=100 ![](losowe/md5/md5_100_scatter.png)
+- k=400 ![](losowe/md5/md5_400_scatter.png)
   </details>
 
 <details>
@@ -28,11 +28,11 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
 
 ### SHA1
 
-- k=2 ![](losowe/sha1/sha1_2.png)
-- k=3 ![](losowe/sha1/sha1_3.png)
-- k=10 ![](losowe/sha1/sha1_10.png)
-- k=100 ![](losowe/sha1/sha1_100.png)
-- k=400 ![](losowe/sha1/sha1_400.png)
+- k=2 ![](losowe/sha1/sha1_2_scatter.png)
+- k=3 ![](losowe/sha1/sha1_3_scatter.png)
+- k=10 ![](losowe/sha1/sha1_10_scatter.png)
+- k=100 ![](losowe/sha1/sha1_100_scatter.png)
+- k=400 ![](losowe/sha1/sha1_400_scatter.png)
   </details>
 
 <details>
@@ -40,11 +40,11 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
 
 ### SHA2
 
-- k=2 ![](losowe/sha256/sha256_2.png)
-- k=3 ![](losowe/sha256/sha256_3.png)
-- k=10 ![](losowe/sha256/sha256_10.png)
-- k=100 ![](losowe/sha256/sha256_100.png)
-- k=400 ![](losowe/sha256/sha256_400.png)
+- k=2 ![](losowe/sha256/sha256_2_scatter.png)
+- k=3 ![](losowe/sha256/sha256_3_scatter.png)
+- k=10 ![](losowe/sha256/sha256_10_scatter.png)
+- k=100 ![](losowe/sha256/sha256_100_scatter.png)
+- k=400 ![](losowe/sha256/sha256_400_scatter.png)
   </details>
 
 <details>
@@ -52,54 +52,28 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
 
 ### SHA3
 
-- k=2 ![](losowe/sha3_224/sha3_224_2.png)
-- k=3 ![](losowe/sha3_224/sha3_224_3.png)
-- k=10 ![](losowe/sha3_224/sha3_224_10.png)
-- k=100 ![](losowe/sha3_224/sha3_224_100.png)
-- k=400 ![](losowe/sha3_224/sha3_224_400.png)
+- k=2 ![](losowe/sha3_224/sha3_224_2_scatter.png)
+- k=3 ![](losowe/sha3_224/sha3_224_3_scatter.png)
+- k=10 ![](losowe/sha3_224/sha3_224_10_scatter.png)
+- k=100 ![](losowe/sha3_224/sha3_224_100_scatter.png)
+- k=400 ![](losowe/sha3_224/sha3_224_400_scatter.png)
   </details>
 
 c) Wybór najlepszego parametru **k** drogą eksperymentów, dał następujące wyniki z użyciem funkcji hashującej **md5**:
 
-TYLKO UNIKALNE ELEMENTY
-**n = 10000**  
-Dla 10000 prób wystarczy dobrać `k = 150` aby wyniki nie odbiegały od prawdziwej wartości o ±10% w 95% przypadków. W szczególności prawdopodobnie istnieje `125 < k < 150`, takie że spełnia ten warunek i jest najmniejszym k na tym przedziale.
-
-```
-# k = 100 | Success rate of error rate ±10%: 0.8924
-# k = 125 | Success rate of error rate ±10%: 0.9406 <<
-# k = 137 | Success rate of error rate ±10%: 0.9275 !!!
-# k = 150 | Success rate of error rate ±10%: 0.9787 <<
-# k = 175 | Success rate of error rate ±10%: 0.9812
-# k = 200 | Success rate of error rate ±10%: 0.9805
-# k = 225 | Success rate of error rate ±10%: 0.9891
-# k = 250 | Success rate of error rate ±10%: 0.9829
-# k = 275 | Success rate of error rate ±10%: 0.9994
-# k = 300 | Success rate of error rate ±10%: 0.9998
-```
-
-**n = 1000**
-
-```
-# k = 151 | Success rate of error rate ±10%: 0.857
-# k = 201 | Success rate of error rate ±10%: 0.811
-# k = 251 | Success rate of error rate ±10%: 0.951 <<
-# k = 255 | Success rate of error rate ±10%: 0.967
-# k = 276 | Success rate of error rate ±10%: 0.997
-```
-
 LOSOWE (**n = 10000** elementów, ok 6500 unikalnych):
+Dla 10000 prób wystarczy dobrać `k = 285` aby wyniki nie odbiegały od prawdziwej wartości o ±10% w 95% przypadków.
+
 
 ```
-k = 200	| Precision (-10% < x < +10%): 0.8147
-k = 250	| Precision (-10% < x < +10%): 0.9083
-k = 260	| Precision (-10% < x < +10%): 0.9559 <<
-k = 275	| Precision (-10% < x < +10%): 0.9999
+k = 260	| Precision (-10% < x < +10%): 0.909
+k = 280	| Precision (-10% < x < +10%): 0.9465
+k = 285	| Precision (-10% < x < +10%): 0.9551 <<
+k = 300	| Precision (-10% < x < +10%): 0.9701
 ```
-
-W ogólności, dla multizbiorów z powtarzającymi się elementami wystarczy dobrać **k= 260** by w 95% przypadków otrzymać wynik o błędzie względnym ±10%.
 
 ## Zad 6
+Poniżej znajdują się wyniki szacowania liczby unikalnych elementów gdy dodatkowo obetniemy bity funkcji hashującej. Porównano iteracje różniące się 8 bitami (1 bajtem). Możemy zauważyć, że dla 8 bitów błąd jest prawie 100%, co świadczy o dużej liczbie kolizji hashy. Stopniowo gdy zwiększamy ilość bitów, błąd zmniejsza się i to bardzo szybko. Wystarczy użyć dwóch bajtów by zredukować ten błąd do 36%. Dodanie kolejnych 8 bitów powoduje osiągnięcie pewnej granicy błędu dla każdej z czterech funkcji hashujących. Możemy z tego wywnioskować, że jest to wystarczająca długość hasha aby zminimalizować ilość jego kolizji dla `n = 100000`.
 
 `b` oznacza ilość bitów do których został obicięty hash  
 `k = 400`  
@@ -108,35 +82,35 @@ NOTE: Dla algorytmów mających krótsze hashe wybieramy `min(b, hash.max_len)`.
 
 ```
 ============================b=8============================
-     md5 | n̂=255	            | n=100000	| err=99.74%
-    sha1 | n̂=255	            | n=100000	| err=99.74%
-sha3_224 | n̂=255	            | n=100000	| err=99.74%
-  sha256 | n̂=255	            | n=100000	| err=99.74%
+     md5 | n̂=255	            | n=63291	| err=99.60%
+    sha1 | n̂=255	            | n=63291	| err=99.60%
+sha3_224 | n̂=255	            | n=63291	| err=99.60%
+  sha256 | n̂=255	            | n=63291	| err=99.60%
 ============================b=16============================
-     md5 | n̂=51779.13861386138	| n=100000	| err=48.22%
-    sha1 | n̂=50971.666666666664	| n=100000	| err=49.03%
-sha3_224 | n̂=54475.96875	    | n=100000	| err=45.52%
-  sha256 | n̂=51985.01988071571	| n=100000	| err=48.01%
+     md5 | n̂=40290.392912172574	| n=63291	| err=36.34%
+    sha1 | n̂=41837.543999999994	| n=63291	| err=33.90%
+sha3_224 | n̂=40290.392912172574	| n=63291	| err=36.34%
+  sha256 | n̂=41308.79146919431	| n=63291	| err=34.73%
 ============================b=24============================
-     md5 | n̂=107799.10439949758	| n=100000	| err=7.80%
-    sha1 | n̂=101174.48741007195	| n=100000	| err=1.17%
-sha3_224 | n̂=99672.55974449457	| n=100000	| err=0.33%
-  sha256 | n̂=103226.09115021049	| n=100000	| err=3.23%
+     md5 | n̂=65439.896621502725	| n=63291	| err=3.40%
+    sha1 | n̂=66299.31052412646	| n=63291	| err=4.75%
+sha3_224 | n̂=56763.408674637496	| n=63291	| err=10.31%
+  sha256 | n̂=65202.781690140844	| n=63291	| err=3.02%
 ============================b=32============================
-     md5 | n̂=107798.71749966944	| n=100000	| err=7.80%
-    sha1 | n̂=101175.31772959797	| n=100000	| err=1.18%
-sha3_224 | n̂=99922.79085339198	| n=100000	| err=0.08%
-  sha256 | n̂=104750.42061767158	| n=100000	| err=4.75%
+     md5 | n̂=65451.2700728324	| n=63291	| err=3.41%
+    sha1 | n̂=66461.15402364318	| n=63291	| err=5.01%
+sha3_224 | n̂=56763.353758619836	| n=63291	| err=10.31%
+  sha256 | n̂=65202.299319453276	| n=63291	| err=3.02%
 
 .
 .
 .
 
 ============================b=256============================
-     md5 | n̂=107798.71457918668	| n=100000	| err=7.80%
-    sha1 | n̂=101175.31354223097	| n=100000	| err=1.18%
-sha3_224 | n̂=99922.78567801436	| n=100000	| err=0.08%
-  sha256 | n̂=104750.41479821435	| n=100000	| err=4.75%
+     md5 | n̂=65451.2700728324	| n=63291	| err=3.41%
+    sha1 | n̂=66461.15402364318	| n=63291	| err=5.01%
+sha3_224 | n̂=56763.353758619836	| n=63291	| err=10.31%
+  sha256 | n̂=65202.299319453276	| n=63291	| err=3.02%
 
 ```
 
@@ -147,9 +121,9 @@ Na wykresach przedstawiono na osi pionowej wartości `n̂`, a na osi poziomej wa
 `k = 400`  
 `n = 10000`
 
-![](chebyshew_chernoff/md5_400_α_0.005_k_400_n_10000.png)
-![](chebyshew_chernoff/md5_400_α_0.01_k_400_n_10000.png)
-![](chebyshew_chernoff/md5_400_α_0.05_k_400_n_10000.png)
+![](chebyshew_chernoff/sha256_400_α_0.005_k_400_n_10000.png)
+![](chebyshew_chernoff/sha256_400_α_0.01_k_400_n_10000.png)
+![](chebyshew_chernoff/sha256_400_α_0.05_k_400_n_10000.png)
 
 Na wykresach widzimy, że wyniki teoretyczne pokrywają się z tymi uzyskanymi z eksperymentów i koncentrują się w ograniczeniach postawionych przez nierówności.
 

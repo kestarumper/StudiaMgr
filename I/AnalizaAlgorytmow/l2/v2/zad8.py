@@ -82,15 +82,15 @@ def main():
     assert p(test_val) == 33
 
     args = parser.parse_args()
+    np.random.seed(0)
 
     b = args.b
     m = 2 ** b
     h = hash_fn_factory(args.f)
 
     successes = 0
-    with open(f"{args.f}_n_{args.number}_b_{b}.csv", 'w') as out_file:
+    with open(f"hll_{args.f}_n_{args.number}_b_{b}_m_{m}.csv", 'w') as out_file:
         for nAll in range(1, args.number + 1):
-            np.random.seed(0)
             multiset = np.random.randint(0, nAll, size=nAll)
             n = np.unique(multiset).size
 

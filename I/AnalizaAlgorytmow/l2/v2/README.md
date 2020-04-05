@@ -118,6 +118,8 @@ sha3_224 | n̂=56763.353758619836	| n=63291	| err=10.31%
 
 ```
 
+Spodziewałem się, że funkcja hashująca md5 będzie miała dużą ilość kolizji, natomiast z wyników przedstawionych wyżej, poradziła sobie jako jedna z lepszych. W teorii jest tak, że funkcje posiadające kolizje powinny dawać gorsze wyniki.
+
 ## Zad 7
 
 Na wykresach przedstawiono na osi pionowej wartości `n̂`, a na osi poziomej wartości `n`. Linie pomarańczowe oraz zielone oznaczają ograniczenia postawione przez nierówności Czebyszewa oraz Chernoffa.
@@ -142,44 +144,63 @@ Linie na wykresie to wartości `n - nδ` oraz `n + nδ`. Ograniczenia te mówią
 Na wykresach widzimy, że wyniki teoretyczne pokrywają się z tymi uzyskanymi z eksperymentów i koncentrują się w ograniczeniach postawionych przez nierówności.
 
 ## Zad 8
-
-### Success rate | Precision (-10% < x < +10%) within 95%
-
-Użyta funkcja: **md5**
+Poniższa tabela przedstawia wyniki HyperLogLog dla `n = 10000` gdy użyjemy `b` bitów (`m = 2^b`). Użyty algorytm haszowania: `md5`.
 
 ```
-b = 4 | Precision (-10% < x < +10%): 0.2454
-b = 5	| Precision (-10% < x < +10%): 0.3883
-b = 8 | Precision (-10% < x < +10%): 0.9086
-b = 12| Precision (-10% < x < +10%): 1.0
-b = 16| Precision (-10% < x < +10%): 1.0
+b = 4	| Precision (-10% < x < +10%):  0.3057
+b = 5	| Precision (-10% < x < +10%):  0.4684
+b = 8	| Precision (-10% < x < +10%):  0.9242
+b = 12  | Precision (-10% < x < +10%):  1.0
+b = 16  | Precision (-10% < x < +10%):  1.0
 ```
 
 ### Wykresy
+Wykresy przedstawiające eksperymenty. Na osi pionowej mamy estymację **n̂** a na osi poziomej **n**.
 
-Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n** a na osi poziomej **n**.
+**b = 4**  
+![](hyperloglog/md5/hll_md5_n_10000_b_4_m_16_scatter.png)
 
-**b = 4**
-![](hyperloglog/md5_n_10000_b_4_scatter.png)
-![](hyperloglog/md5_n_10000_b_4.png)
 
-**b = 8**
-![](hyperloglog/md5_n_10000_b_8_scatter.png)
-![](hyperloglog/md5_n_10000_b_8.png)
+**b = 8**  
+![](hyperloglog/md5/hll_md5_n_10000_b_8_m_256_scatter.png)
 
-**b = 12**
-![](hyperloglog/md5_n_10000_b_12_scatter.png)
-![](hyperloglog/md5_n_10000_b_12.png)
+**b = 12**  
+![](hyperloglog/md5/hll_md5_n_10000_b_12_m_4096_scatter.png)
 
-**b = 16**
-![](hyperloglog/md5_n_10000_b_16_scatter.png)
-![](hyperloglog/md5_n_10000_b_16.png)
+**b = 16**  
+![](hyperloglog/md5/hll_md5_n_10000_b_16_m_65536_scatter.png)
 
 ### Porównanie błędów względnych
 
-Wygląda na to, że średnio **MinCount** radzi sobie lepiej.
+**MinCount**  
+`md5`  
+`k = 400`, `n = 10000`,  
+`b = 32`
+
+**HyperLogLog**  
+`md5`  
+`n = 10000`, `b = 5`, `m = 32`
+
 Zsumowane błędy względne a następnie je uśredniono. Otrzymano następujące wyniki:
 | algorytm | uśredniony błąd |
 | ----------- | --------------- |
-| HyperLogLog | 11.73% |
-| MinCount | 2.14% |
+| HyperLogLog | 12.23% |
+| MinCount | 2.76% |
+
+Najprawdopodobniej źle przeprowadzam obcinanie bitów na algorytmie MinCount, przez co nie wpływa to na jego precyzję. Nie potrafię obcinać bitów na typie `float` w pythonie. Natomiast porównując wykresy
+
+**MinCount**  
+`md5`  
+`k = 400`, `n = 10000`,  
+`b = 128`
+
+**HyperLogLog**  
+`md5`  
+`n = 10000`, `m = 4096`
+
+#### MinCount
+![](copare_mc_hll/mc.png)
+#### HyperLogLog
+![](copare_mc_hll/hll.png)
+
+Możemy śmiało powiedzieć, że w ogólności, HyperLogLog daje lepsze wyniki, bardziej dokładne. Ma lepszą koncentrację swojego estymatora.

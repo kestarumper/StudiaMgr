@@ -53,6 +53,7 @@ def main():
                         help="Hash function")
 
     args = parser.parse_args()
+    np.random.seed(0)
 
     k = args.k
     b = args.b
@@ -61,7 +62,6 @@ def main():
     successes = 0
     with open(f"{args.f}_{k}_b_{b}.csv", 'w') as out_file:
         for nAll in range(1, args.n + 1):
-            np.random.seed(0)
             multiset = np.random.randint(0, nAll, size=nAll)
             n = np.unique(multiset).size
 

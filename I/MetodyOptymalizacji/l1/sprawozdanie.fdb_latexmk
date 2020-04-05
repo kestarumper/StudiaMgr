@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1586105584 "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.tex" "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.pdf" "sprawozdanie" 1586105672
+["pdflatex"] 1586108730 "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.tex" "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.pdf" "sprawozdanie" 1586108730
   "/etc/texmf/web2c/texmf.cnf" 1572612600 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.aux" 1586105584 8 a94a2480d3289e625eea47cd1b285758 ""
-  "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.tex" 1586105671 9318 a5b579fdf898ad60102f58596bc0cb48 ""
+  "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.aux" 1586108730 216 2991caf195a43e3202b4afaa7b466d47 ""
+  "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.tex" 1586108729 11779 d2cf908cd71480fcc96f4b8f210f61f2 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm" 1480098696 3584 929cdff2b7a8c11bd4d49fd68cb0ae70 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
@@ -30,6 +30,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1480098733 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1480098733 32587 1788b0c1c5b39540c96f5e42ccd6dae8 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1480098733 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb" 1480098733 30273 87a352d78b6810ae5cfdc68d2fb827b2 ""
   "/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty" 1480098815 1458 43ab4710dc82f3edeabecd0d099626b2 ""
   "/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty" 1463608860 7612 729a8cc22a1ee0029997c7f74717ae05 ""
@@ -157,11 +158,11 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1551226139 34566 ab5be96bde1a5acfd4f881dbe566b5fb ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1573382919 3236060 fd056e42459c13cbcb0cc6e0a7cae8d4 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1573382940 4225810 851bdc5d0a932b2bf431a8db10faca03 ""
-  "sprawozdanie.aux" 1586105584 8 a94a2480d3289e625eea47cd1b285758 ""
-  "sprawozdanie.tex" 1586105671 9318 a5b579fdf898ad60102f58596bc0cb48 ""
+  "sprawozdanie.aux" 1586108730 216 2991caf195a43e3202b4afaa7b466d47 ""
+  "sprawozdanie.tex" 1586108729 11779 d2cf908cd71480fcc96f4b8f210f61f2 ""
   (generated)
   "sprawozdanie.aux"
-  "sprawozdanie.log"
   "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.pdf"
-  "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.log"
+  "sprawozdanie.log"
   "sprawozdanie.pdf"
+  "/home/adrian/magister/I/MetodyOptymalizacji/l1/sprawozdanie.log"

@@ -11,7 +11,7 @@ var x{i in range} >= 0;
 
 minimize Cost: sum{i in range} x[i] * c[i];
 
-s.t. sjdkaj{i in range} : sum{j in range} x[j]*A[i, j]=b[i];
+s.t. w1{i in range} : sum{j in range} x[j]*A[i, j]=b[i];
 
 solve;
 

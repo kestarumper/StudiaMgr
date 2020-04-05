@@ -76,6 +76,63 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \maketitle
 
 \section*{Problem 1 (Sysło, Deo, Kowalik 1993, macierz Hilberta)}
+Jednym z testów na dokładność i odporność algorytmów LP jest następujące zagadnienie
+$$ \min \emph{c}^T\emph{x} $$
+Przy warunkach
+$$ A\emph{x} = \emph{b}, \emph{x}\geq\emph{0}, $$
+gdzie
+$$ a_{ij} = \frac{1}{i + j - 1}, i,j = 1,\ldots,n, $$
+$$ c_i = b_i = \sum_{j=1}^n\frac{1}{i + j - 1}, i = 1,\ldots,n $$
+
+Rozwiązaniem tego zagadnienia jest $x_i = 1, i = 1,\ldots, n$. Macierz A występująca w tym
+teście, zwana macierzą Hilberta, powoduje złe uwarunkowanie zagadnienia nawet dla niezbyt
+dużych $n$.
+
+Zadaniem jest określenie rozmiaru problemu $n$ jaki można rozwiązać z dokładnością do co najmniej 2 cyfr.
+
+\subsection*{Model}
+Model przyjmuje jako parametr $n$ i generuje macierz Hilberta opisaną powyższym wzorem.
+
+\subsubsection*{Zmienne decyzyjne}
+$$x_i: i = 1,\ldots,n$$ będący rozwiązaniem równania.
+
+\subsubsection*{Ograniczenia}
+Równości postawione przez warunki
+$$ \sum_{j=1}^n x_j a_{ij} = b_i, i = 1,\ldots,n$$
+
+\subsubsection*{Funkcja celu}
+Minimalizujemy funkcję
+$$ \sum_{i = 1}^n x_i c_i $$
+
+\subsubsection*{Wyniki}
+Jak pokazuje tabela \ref{table1}, zaburzenia stają się znaczące dla $n\geq8$.
+\begin{table}
+    \begin{center}
+        \begin{tabular}{ |l|l|l| }
+            \hline
+            $n$ & $\frac{\left\|x - \widetilde{x}\right\|_2}{\left\|x\right\|_2}$ \\
+            \hline
+            $2$ & $1.05325004057301 \cdot 10^{-15}$                        \\
+            \hline
+            $3$ & $3.67157765110227 \cdot 10^{-15}$                        \\
+            \hline
+            $4$ & $3.27016385075681 \cdot 10^{-13}$                        \\
+            \hline
+            $5$ & $3.35139916635905 \cdot 10^{-12}$                        \\
+            \hline
+            $6$ & $6.83335790676898 \cdot 10^{-11}$                        \\
+            \hline
+            $7$ & $1.67868542192291 \cdot 10^{-8}$                         \\
+            \hline
+            $8$ & $0.514058972177268$                                      \\
+            \hline
+            $9$ & $0.682911338087722$                                      \\
+            \hline
+        \end{tabular}
+        \caption{Błędy względne w zależności od $n$.}
+        \label{table1}
+    \end{center}
+\end{table}
 
 \section*{Problem 2 (Kampery)}
 Rozważmy problem przemieszczenia pewnych kamperów między miastami. Kampery różnych typów $t\in T$ (rozróżniamy 'Standard' i 'Vip') należy przemieścić w zależności od zapotrzebowania $d_{c,t}$ i/lub nadmiaru $s_{c,t}$ do innych miast $c\in C$ gdzie $C$ jest zbiorem wszystkich miast, by doprowadzić do równowagi. Odpowiednio $d_{c,t}$ oznacza zapotrzebowania (zamawiający) w mieście $c$ na kampery typu $t$ oraz $s_{c,t}$ oznacza nadmiary (dostawcy). Dodatkowo kampery typu Standard można zastąpić kamperami typu Vip, ale nie na odwrót.
@@ -93,17 +150,17 @@ $$
 \subsubsection*{Ograniczenia}
 \begin{enumerate}
     \item Ilość wyjeżdżających przyczep z miasta nie może być większa niż jest w nadmiarze w danym mieście
-    $$
-        \forall c_1\in C, \forall t\in T: s_{c_1,t} \geq \sum_{c_2\in C} x_{c_1, c_2, t}
-    $$
+          $$
+              \forall c_1\in C, \forall t\in T: s_{c_1,t} \geq \sum_{c_2\in C} x_{c_1, c_2, t}
+          $$
     \item Ilość przyjeżdżających przyczep z miasta nie może być większa niż jest zapotrzebowanie w danym mieście
-    $$
-        \forall c_1\in C, \forall t\in T: d_{c_1,t} \geq \sum_{c_2\in C} x_{c_2, c_1, t}
-    $$
+          $$
+              \forall c_1\in C, \forall t\in T: d_{c_1,t} \geq \sum_{c_2\in C} x_{c_2, c_1, t}
+          $$
     \item Zapotrzebowanie powinno zostać wyeliminowane, a kampery typu 'Standard' można uzupełnić kamperami 'Vip'.
-    $$
-        \forall c_1\in C: d_{c_1, \text{Vip}} = \sum_{c_2\in C} x_{c_2,c_1,\text{Vip}} - (d_{c_1,\text{Standard}} - \sum_{c_3\in C} x_{c_3,c_1,\text{Standard}})
-    $$
+          $$
+              \forall c_1\in C: d_{c_1, \text{Vip}} = \sum_{c_2\in C} x_{c_2,c_1,\text{Vip}} - (d_{c_1,\text{Standard}} - \sum_{c_3\in C} x_{c_3,c_1,\text{Standard}})
+          $$
 \end{enumerate}
 
 \subsubsection*{Funkcja kosztu}
@@ -140,7 +197,7 @@ Rozwiązaniem problemu są odpowiedzi na następujące pytania:
     \item Ile zakupić surowców (1, 2, 3)?
     \item Jaką część surowców przeznaczyć do produkcji jakiego produktu (A, B, C, D)?
     \item Jaką część odpadów z produkcji produktów A i B zniszczyć, a jaką przeznaczyć do
-    produkcji produktów drugorzędnych?
+          produkcji produktów drugorzędnych?
 \end{enumerate}
 
 \subsection*{Model}
@@ -162,40 +219,40 @@ Niech $d_{s, p'}$ oznacza koszt zniszczenia odpadu surowca $s$ powstałego z wyt
 \subsubsection*{Ograniczenia}
 \begin{enumerate}
     \item Ograniczenie kupna surowców
-    $$
-        \forall s\in S: \textit{Minimum}_s \leq k_s \leq \textit{Maximum}_s
-    $$
+          $$
+              \forall s\in S: \textit{Minimum}_s \leq k_s \leq \textit{Maximum}_s
+          $$
     \item Zużyj nie więcej surowca niż kupiłeś
-    $$
-        \forall s\in S: \sum_{p\in P} x_{s,p} \leq k_{s}
-    $$
+          $$
+              \forall s\in S: \sum_{p\in P} x_{s,p} \leq k_{s}
+          $$
     \item Na produkty drugorzędne przeznacz odpadów nie więcej niż wyprodukowałeś
-    $$
-        \forall s\in S, \forall p'\in P': z_{s, p'} \leq x_{s,p'}o_{s,p'}
-    $$
+          $$
+              \forall s\in S, \forall p'\in P': z_{s, p'} \leq x_{s,p'}o_{s,p'}
+          $$
     \item Pozbądź się wszystkich powstałych odpadów za pomocą niszczenia lub przeznaczenia na produkty drugorzędne
-    $$
-        \forall s\in S, \forall p'\in P': x_{s,p'}o_{s,p'} = y_{s,p'} + z_{s,p'}
-    $$
+          $$
+              \forall s\in S, \forall p'\in P': x_{s,p'}o_{s,p'} = y_{s,p'} + z_{s,p'}
+          $$
     \item Produkcja A wymaga tego aby mieszanka zachowywała odpowiednie proporcje
-    \begin{gather*}
-        x_{1, \text{'A'}} \geq 0.2 \cdot \sum_{s\in S} x_{s,\text{'A'}} \\
-        x_{2, \text{'A'}} \geq 0.4 \cdot \sum_{s\in S} x_{s,\text{'A'}} \\
-        x_{3, \text{'A'}} \leq 0.1 \cdot \sum_{s\in S} x_{s,\text{'A'}}
-    \end{gather*}
+          \begin{gather*}
+              x_{1, \text{'A'}} \geq 0.2 \cdot \sum_{s\in S} x_{s,\text{'A'}} \\
+              x_{2, \text{'A'}} \geq 0.4 \cdot \sum_{s\in S} x_{s,\text{'A'}} \\
+              x_{3, \text{'A'}} \leq 0.1 \cdot \sum_{s\in S} x_{s,\text{'A'}}
+          \end{gather*}
     \item Produkcja B wymaga tego aby mieszanka zachowywała odpowiednie proporcje
-    \begin{gather*}
-        x_{1, \text{'B'}} \geq 0.1 \cdot \sum_{s\in S} x_{s,\text{'B'}} \\
-        x_{3, \text{'B'}} \leq 0.3 \cdot \sum_{s\in S} x_{s,\text{'B'}}
-    \end{gather*}
+          \begin{gather*}
+              x_{1, \text{'B'}} \geq 0.1 \cdot \sum_{s\in S} x_{s,\text{'B'}} \\
+              x_{3, \text{'B'}} \leq 0.3 \cdot \sum_{s\in S} x_{s,\text{'B'}}
+          \end{gather*}
     \item Produkcja C wymaga tego aby mieszanka zachowywała odpowiednie proporcje
-    $$
-        x_{1, \text{'C'}} = 0.2 \cdot (x_{1, \text{'C'}} + \sum_{s\in S} z_{s,\text{'A'}})
-    $$
+          $$
+              x_{1, \text{'C'}} = 0.2 \cdot (x_{1, \text{'C'}} + \sum_{s\in S} z_{s,\text{'A'}})
+          $$
     \item Produkcja D wymaga tego aby mieszanka zachowywała odpowiednie proporcje
-    $$
-        x_{2, \text{'D'}} = 0.3 \cdot (x_{2, \text{'D'}} + \sum_{s\in S} z_{s,\text{'B'}})
-    $$
+          $$
+              x_{2, \text{'D'}} = 0.3 \cdot (x_{2, \text{'D'}} + \sum_{s\in S} z_{s,\text{'B'}})
+          $$
 \end{enumerate}
 
 \subsubsection*{Funkcja zysku}
@@ -204,7 +261,7 @@ Należy maksymalizować zysk z procesu produkcji opisanego następującą funkcj
 \begin{multline*}
     zysk(k, x, y, z) = \sum_{p'\in P'} \sum_{s \in S} w_{p'} x_{s, p'} (1 - o_{s, p'}) + (\sum_{s\in S} z_{s, \text{'A'}} + x_{1, \text{'C'}}) \cdot w_{\text{'C'}} + (\sum_{s\in S} z_{s, \text{'B'}} + x_{2, \text{'D'}}) \cdot w_{\text{'D'}} \\
     - (
-        \sum_{s\in S} k_s c_s + \sum_{s\in S} \sum_{p'\in P'} y_{s,p'}d_{s,p'}
+    \sum_{s\in S} k_s c_s + \sum_{s\in S} \sum_{p'\in P'} y_{s,p'}d_{s,p'}
     )
 \end{multline*}
 

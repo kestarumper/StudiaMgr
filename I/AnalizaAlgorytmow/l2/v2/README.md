@@ -21,7 +21,8 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
 - k=10 ![](losowe/md5/md5_10_scatter.png)
 - k=100 ![](losowe/md5/md5_100_scatter.png)
 - k=400 ![](losowe/md5/md5_400_scatter.png)
-  </details>
+
+</details>
 
 <details>
     <summary>SHA1 (160bit)</summary>
@@ -33,7 +34,8 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
 - k=10 ![](losowe/sha1/sha1_10_scatter.png)
 - k=100 ![](losowe/sha1/sha1_100_scatter.png)
 - k=400 ![](losowe/sha1/sha1_400_scatter.png)
-  </details>
+
+</details>
 
 <details>
     <summary>SHA2 (256bit)</summary>
@@ -45,7 +47,8 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
 - k=10 ![](losowe/sha256/sha256_10_scatter.png)
 - k=100 ![](losowe/sha256/sha256_100_scatter.png)
 - k=400 ![](losowe/sha256/sha256_400_scatter.png)
-  </details>
+
+</details>
 
 <details>
     <summary>SHA3 (224bit)</summary>
@@ -57,13 +60,13 @@ b) Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n*
 - k=10 ![](losowe/sha3_224/sha3_224_10_scatter.png)
 - k=100 ![](losowe/sha3_224/sha3_224_100_scatter.png)
 - k=400 ![](losowe/sha3_224/sha3_224_400_scatter.png)
-  </details>
+
+</details>
 
 c) Wybór najlepszego parametru **k** drogą eksperymentów, dał następujące wyniki z użyciem funkcji hashującej **md5**:
 
 LOSOWE (**n = 10000** elementów, ok 6500 unikalnych):
 Dla 10000 prób wystarczy dobrać `k = 285` aby wyniki nie odbiegały od prawdziwej wartości o ±10% w 95% przypadków.
-
 
 ```
 k = 260	| Precision (-10% < x < +10%): 0.909
@@ -73,6 +76,7 @@ k = 300	| Precision (-10% < x < +10%): 0.9701
 ```
 
 ## Zad 6
+
 Poniżej znajdują się wyniki szacowania liczby unikalnych elementów gdy dodatkowo obetniemy bity funkcji hashującej. Porównano iteracje różniące się 8 bitami (1 bajtem). Możemy zauważyć, że dla 8 bitów błąd jest prawie 100%, co świadczy o dużej liczbie kolizji hashy. Stopniowo gdy zwiększamy ilość bitów, błąd zmniejsza się i to bardzo szybko. Wystarczy użyć dwóch bajtów by zredukować ten błąd do 36%. Dodanie kolejnych 8 bitów powoduje osiągnięcie pewnej granicy błędu dla każdej z czterech funkcji hashujących. Możemy z tego wywnioskować, że jest to wystarczająca długość hasha aby zminimalizować ilość jego kolizji dla `n = 100000`.
 
 `b` oznacza ilość bitów do których został obicięty hash  
@@ -118,6 +122,16 @@ sha3_224 | n̂=56763.353758619836	| n=63291	| err=10.31%
 
 Na wykresach przedstawiono na osi pionowej wartości `n̂`, a na osi poziomej wartości `n`. Linie pomarańczowe oraz zielone oznaczają ograniczenia postawione przez nierówności Czebyszewa oraz Chernoffa.
 
+Aby przystąpić to analizy konentracji estymatora i nanieść ograniczenia na wykres obliczono `δ_1` oraz `δ_2` reprezentujące kolejno deltę z nierówności Czebyszewa oraz Chernoffa.
+
+Linie na wykresie to wartości `n - nδ` oraz `n + nδ`. Ograniczenia te mówią o tym, że wyniki powinny znajdować się pomiędzy dwiema nierównościami. W szczególności nierówność Chernoffa (linia niebieska) bardzo dobrze szacuje te wyniki.
+
+### Nierówność Czebyszewa
+![](chebyshew_chernoff/czebyszew.png)
+
+### Nierówność Chernoffa
+![](chebyshew_chernoff/chernoff.png)
+
 `k = 400`  
 `n = 10000`
 
@@ -162,9 +176,10 @@ Wykresy przedstawiające eksperymenty. Na osi pionowej mamy stosunek **n̂/n** a
 ![](hyperloglog/md5_n_10000_b_16.png)
 
 ### Porównanie błędów względnych
+
 Wygląda na to, że średnio **MinCount** radzi sobie lepiej.
 Zsumowane błędy względne a następnie je uśredniono. Otrzymano następujące wyniki:
-| algorytm    | uśredniony błąd |
+| algorytm | uśredniony błąd |
 | ----------- | --------------- |
-| HyperLogLog | 11.73%          |
-| MinCount    | 2.14%           |
+| HyperLogLog | 11.73% |
+| MinCount | 2.14% |

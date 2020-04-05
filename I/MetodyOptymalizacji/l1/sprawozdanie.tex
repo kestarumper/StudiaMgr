@@ -20,6 +20,7 @@
 \geometry{left=25mm,right=25mm,%
 bindingoffset=0mm, top=20mm,bottom=20mm}
 
+\usepackage{amsmath}
 
 \linespread{1.3}
 
@@ -117,6 +118,94 @@ gdzie $x_{c_1, c_2, t}$ oznacza liczbę transportowanych kamperów typu $t$ z mi
 
 
 \section*{Problem 3 (Przedsiębiorstwo)}
+Pewna firma produkuje cztery mieszanki - produkty końcowe $P$. Dwa z nich są produktami podstawowymi $P'\subset P$ powstającymi jako mieszanka trzech surowców $S$.
+Surowce te miesza się w odpowiednich proporcjach by wytworzyć produkt $P$. Każdy z tych produktów ma swoją cenę zbytu $w_s$ za kg jak i również każdy surowiec ma swoją cenę kupna $c_s$. Jednocześnie są nałożone ograniczenia na minimalną oraz maksymalną ilość surowców jaką można kupić.
 
+Z samej natury procesu produkcji wynika fakt, że tylko pewna część każdego z surowców
+użytych do produkcji produktów podstawowych $P'$ wchodzi bezpośrednio do tych produktów.
+Reszta (odpady), których ilość wyraża się każdorazowo poprzez znany współczynnik strat
+$o_{s, p'}$, może być albo użyta ponownie - do produkcji produktów drugorzędnych 'C' i 'D' -
+albo zniszczona na koszt firmy. Kosz niszczenia surowca z produktu opisuje $d_{s,p'}$.
+
+Drugorzędny produkt 'C' otrzymuje się poprzez wymieszanie dowolnych ilości odpadów z
+surowców 1, 2, 3 otrzymanych przy wyrobie produktu A z oryginalnym surowcem 1, przy
+czym ten ostatni musi stanowić (wagowo) dokladnie $20\%$ mieszanki. Podobnie, drugorzędny
+produkt D otrzymuje się poprzez wymieszanie dowolnych ilości odpadów z surowców 1, 2,
+3 otrzymanych przy wyrobie produktu B z oryginalnym surowcem 2, przy czym ten ostatni
+musi stanowić (wagowo) dokładnie $30\%$ mieszanki. Przy produkcji produktów drugorzędnych
+nie powstają żadne odpady.
+
+Rozwiązaniem problemu są odpowiedzi na następujące pytania:
+\begin{enumerate}
+    \item Ile zakupić surowców (1, 2, 3)?
+    \item Jaką część surowców przeznaczyć do produkcji jakiego produktu (A, B, C, D)?
+    \item Jaką część odpadów z produkcji produktów A i B zniszczyć, a jaką przeznaczyć do
+    produkcji produktów drugorzędnych?
+\end{enumerate}
+
+\subsection*{Model}
+Zdefiniujmy zbiory. Niech $S$ oznacza zbiór dostępnych surowców, $P$ oznacza zbiór produktów powstałych z wymieszania surowców $S$, a $P'\subset P$ oznacza zbiór produktów podstawowych, które generują odpady.
+
+Określmy parametry.
+Niech $w_p: p\in P$ oznacza zysk za kg wyprodukowanego produktu $p$.
+Niech $c_s: s\in S$ oznacza cenę za kg surowca $s$.
+Niech $\textit{Minimum}_s$ oraz $\textit{Maximum}_s$ oznaczają minimalną (maksymalną) ilość surowca $s\in S$ jaki trzeba (można) zakupić.
+Niech $o_{s, p'}$ oznacza procent produkowanego odpadu z surowca $s$ podczas wytwarzania produktu $p'$.
+Niech $d_{s, p'}$ oznacza koszt zniszczenia odpadu surowca $s$ powstałego z wytworzenia produktu $p'$.
+\subsubsection*{Zmienne decyzyjne}
+\begin{enumerate}
+    \item $k_s: s\in S$ ile kupić kg surowca $s$
+    \item $x_{s,p}: s\in S, p\in P$ ile użyć surowca $s$ do wykonania produktu $p$
+    \item $y_{s,p'}: s\in S, p'\in P'$ ile odpadu powstałego z surowca $s$ i produktu $p'$ zniszczyć
+    \item $z_{s,p'}: s\in S, p'\in P'$ ile odpadu powstałego z surowca $s$ i produktu $p'$ przeznaczyć na tworzenie produktów drugorzędnych $p"\in P\setminus P'$
+\end{enumerate}
+\subsubsection*{Ograniczenia}
+\begin{enumerate}
+    \item Ograniczenie kupna surowców
+    $$
+        \forall s\in S: \textit{Minimum}_s \leq k_s \leq \textit{Maximum}_s
+    $$
+    \item Zużyj nie więcej surowca niż kupiłeś
+    $$
+        \forall s\in S: \sum_{p\in P} x_{s,p} \leq k_{s}
+    $$
+    \item Na produkty drugorzędne przeznacz odpadów nie więcej niż wyprodukowałeś
+    $$
+        \forall s\in S, \forall p'\in P': z_{s, p'} \leq x_{s,p'}o_{s,p'}
+    $$
+    \item Pozbądź się wszystkich powstałych odpadów za pomocą niszczenia lub przeznaczenia na produkty drugorzędne
+    $$
+        \forall s\in S, \forall p'\in P': x_{s,p'}o_{s,p'} = y_{s,p'} + z_{s,p'}
+    $$
+    \item Produkcja A wymaga tego aby mieszanka zachowywała odpowiednie proporcje
+    \begin{gather*}
+        x_{1, \text{'A'}} \geq 0.2 \cdot \sum_{s\in S} x_{s,\text{'A'}} \\
+        x_{2, \text{'A'}} \geq 0.4 \cdot \sum_{s\in S} x_{s,\text{'A'}} \\
+        x_{3, \text{'A'}} \leq 0.1 \cdot \sum_{s\in S} x_{s,\text{'A'}}
+    \end{gather*}
+    \item Produkcja B wymaga tego aby mieszanka zachowywała odpowiednie proporcje
+    \begin{gather*}
+        x_{1, \text{'B'}} \geq 0.1 \cdot \sum_{s\in S} x_{s,\text{'B'}} \\
+        x_{3, \text{'B'}} \leq 0.3 \cdot \sum_{s\in S} x_{s,\text{'B'}}
+    \end{gather*}
+    \item Produkcja C wymaga tego aby mieszanka zachowywała odpowiednie proporcje
+    $$
+        x_{1, \text{'C'}} = 0.2 \cdot (x_{1, \text{'C'}} + \sum_{s\in S} z_{s,\text{'A'}})
+    $$
+    \item Produkcja D wymaga tego aby mieszanka zachowywała odpowiednie proporcje
+    $$
+        x_{2, \text{'D'}} = 0.3 \cdot (x_{2, \text{'D'}} + \sum_{s\in S} z_{s,\text{'B'}})
+    $$
+\end{enumerate}
+
+\subsubsection*{Funkcja zysku}
+Należy maksymalizować zysk z procesu produkcji opisanego następującą funkcją zysku
+
+\begin{multline*}
+    zysk(k, x, y, z) = \sum_{p'\in P'} \sum_{s \in S} w_{p'} x_{s, p'} (1 - o_{s, p'}) + (\sum_{s\in S} z_{s, \text{'A'}} + x_{1, \text{'C'}}) \cdot w_{\text{'C'}} + (\sum_{s\in S} z_{s, \text{'B'}} + x_{2, \text{'D'}}) \cdot w_{\text{'D'}} \\
+    - (
+        \sum_{s\in S} k_s c_s + \sum_{s\in S} \sum_{p'\in P'} y_{s,p'}d_{s,p'}
+    )
+\end{multline*}
 
 \end{document}

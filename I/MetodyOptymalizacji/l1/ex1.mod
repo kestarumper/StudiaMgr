@@ -16,8 +16,9 @@ s.t. sjdkaj{i in range} : sum{j in range} x[j]*A[i, j]=b[i];
 solve;
 
 display x;
+display (sqrt(sum{i in range} (x[i] - 1) ^ 2) / sqrt(n));
 
 data;
 
-param n := 100;
+param n := 8;
 end;

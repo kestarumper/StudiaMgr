@@ -1,0 +1,23 @@
+{
+  "name": "zad1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adrian Mucha",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^13.11.0",
+    "@types/tmp": "^0.1.0",
+    "@types/yargs": "^15.0.4",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "tmp": "^0.1.0",
+    "yargs": "^15.3.1"
+  }
+}

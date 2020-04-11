@@ -1,48 +1,52 @@
-import * as crypto from "crypto";
-import * as fs from "fs";
-import * as zlib from "zlib";
-import * as yargs from "yargs";
-import * as tmp from "tmp";
+import crypto from "crypto";
+import fs from "fs";
+import zlib from "zlib";
+import yargs from "yargs";
+import tmp from "tmp";
+
+import { getKey } from "./store";
 
 const argv = yargs.options({
   dec: { type: "boolean" },
   mode: { type: "string", demandOption: true, choices: ["OFB", "CTR", "CBC"] },
   file: { type: "string", demandOption: true },
+  storeFile: { type: "string", demandOption: true },
+  password: { type: "string", demandOption: true },
   key: { type: "string", demandOption: true },
 }).argv;
 
 const algorithm = `aes-256-${argv.mode.toLowerCase()}`;
-const key = Buffer.alloc(32, 1);
 const iv = Buffer.alloc(16, 0);
 
-function encryptFile(fin: fs.ReadStream, fout: fs.WriteStream) {
+async function encryptFile(key: Buffer, fin: fs.ReadStream, fout: fs.WriteStream) {
   const zip = zlib.createGzip();
   const encrypt = crypto.createCipheriv(algorithm, key, iv);
   return fin.pipe(zip).pipe(encrypt).pipe(fout);
 }
 
-function decryptFile(fin: fs.ReadStream, fout: fs.WriteStream) {
+async function decryptFile(key: Buffer, fin: fs.ReadStream, fout: fs.WriteStream) {
   const decrypt = crypto.createDecipheriv(algorithm, key, iv);
   const unzip = zlib.createGunzip();
   return fin.pipe(decrypt).pipe(unzip).pipe(fout);
 }
 
-const tmpFile = tmp.fileSync();
-try {
-  const r = fs.createReadStream(argv.file);
-  const w = fs.createWriteStream(tmpFile.name);
+(async () => {
+  const tmpFile = tmp.fileSync();
+  try {
+    const r = fs.createReadStream(argv.file);
+    const w = fs.createWriteStream(tmpFile.name);
+    const key = await getKey(argv.storeFile, argv.key, argv.password);
 
-  if (argv.dec) {
-    console.log("DEC")
-    decryptFile(r, w);
-  } else {
-    console.log("ENC")
-    encryptFile(r, w);
+    if (argv.dec) {
+      await decryptFile(key, r, w);
+    } else {
+      await encryptFile(key, r, w);
+    }
+    console.log(iv.toString('hex'))
+
+    fs.renameSync(tmpFile.name, argv.file);
+  } catch (error) {
+    tmpFile.removeCallback();
+    console.log(error);
   }
-
-  fs.unlinkSync(argv.file);
-  fs.renameSync(tmpFile.name, argv.file);
-} catch (error) {
-  tmpFile.removeCallback();
-  console.log(error);
-}
+})().catch(console.error);

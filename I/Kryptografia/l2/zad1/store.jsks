@@ -1,0 +1,10 @@
+{
+  "secret": {
+    "metadata": {
+      "nonce": "v/8+FKs1HJ/OvKDGRFwR9p5b5XGZsAl4",
+      "iterations": 10000
+    },
+    "public": {},
+    "private": "BDqlx44zl5Xcvd6GCkkFcHSNIxcOqiS+HhBEwg9EEz3G60mJ7mJSi867D4NkQ72HOpP8pWdSm3lUpMt1mwM+unOZODAtvp7WcK9xEVDSiBkgrQ=="
+  }
+}

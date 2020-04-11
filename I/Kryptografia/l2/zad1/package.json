@@ -17,6 +17,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "key-store": "^1.1.0",
     "tmp": "^0.1.0",
     "yargs": "^15.3.1"
   }

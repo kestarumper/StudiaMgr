@@ -29,6 +29,20 @@ def unique_sum(multiset, h, m):
     return (m - 1) / sum(M)
 
 
+def unique_mean(multiset, h, m):
+    M = [math.inf] * m
+    N = [math.inf] * m
+    for s in multiset:
+        (i, yi) = s
+        for k in range(m):
+            u = h(concat_bits(i, k))
+            logu = -math.log(u)
+            M[k] = min(M[k], logu / yi)
+            N[k] = min(N[k], logu) # yi = 1, count unique elements
+    approx_sum = (m - 1) / sum(M)
+    approx_count = (m - 1) / sum(N)
+    return approx_sum / approx_count
+
 __infinite_sequence = count(0, 1)
 
 

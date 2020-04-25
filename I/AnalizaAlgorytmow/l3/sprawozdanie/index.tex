@@ -84,7 +84,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 Generowane multizbiory (każdy eksperyment, dla każdego $n$) zawierają zdarzenia niezależne od siebie. Każdy element posiada unikalne \texttt{id}, które są kolejnymi liczbami naturalnymi.
 
-Wartości cech są generowane według zdefiniowanych parametryzowanych strategii, które zostały podzielone na sekcje i opisane poniżej.
+Wartości cech $\lambda_i$ są generowane według zdefiniowanych parametryzowanych strategii, które zostały podzielone na sekcje i opisane poniżej.
 
 Do uzyskania losowości funkcji haszującej rzutującej na zbiór $[0, 1]$ użyto funkcji \texttt{md5}, \texttt{sha1}, \texttt{sha3}. Zbadano wyniki dla różnych wartości parametru $m$ oznaczającego ilość rejestrów.
 
@@ -118,5 +118,23 @@ W tej strategii wszystkie cechy są ustawione na $1$. W tym przypadku algorytm z
 \subsection*{Wartości odstające}
 Wartość cechy losowana jest ze zbioru $[1,2,1,2,\ldots]$, którego $1\%$ stanowi wartość odstająca (duża liczba, np. $1000$).
 \input{odd_99_[1_2]_1_[1000].tex}
+
+\subsection*{Zad 10}
+Średnią wartość cech $\lambda_i$ wyliczamy następująco. Możemy zauważyć, że gdy $\forall i \lambda_i = 1$, to aproksymacja ich sumy staje się aproksymacją liczebności unikalnych elementów $\hat{n}$. Modyfikujemy więc pierwotny algorytm i dodatkowo przetrzymujemy tablicę wartości $-log(u)$ ($\lambda_i = 1$). Wartość zwracaną przez pierwotny algorytm dzielimy przez liczność elementów i otrzymujemy aproksymację $\frac{\hat{\Lambda}}{\hat{n}}$ średniej wartości cechy $\lambda_i$.
+\begin{figure}[H]
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=1.0\linewidth, height=5cm]{mean/mean_uniform_1_1000_md5_64_m_64_a_0_5.png}
+        \caption{$\alpha = 0.5$, $m = 64$}
+        \label{fig:subim2}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=1.0\linewidth, height=5cm]{mean/mean_uniform_1_1000_md5_128_m_128_a_0_5.png}
+        \caption{$\alpha = 0.05$, $m = 128$}
+        \label{fig:subim2}
+    \end{subfigure}
+
+    \caption{Wykresy przedstawiają wyniki aproksymacji średniej wartości cechy $\lambda_i$.}
+    \label{fig:uniform_md5}
+\end{figure}
 
 \end{document}

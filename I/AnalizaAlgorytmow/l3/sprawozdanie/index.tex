@@ -1,0 +1,122 @@
+%%% Template originaly created by Karol Kozioł (mail@karol-koziol.net) and modified for ShareLaTeX use
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+\usepackage{float}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+\newtheoremstyle{mytheor}
+    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definition}
+
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{Analiza Algorytmów, lab 3}
+\cfoot{}
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+\graphicspath{ {../png/} }
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Analiza Algorytmów, lab 3}
+
+\author{Adrian Mucha, Politechnika Wrocławska, WPPT}
+
+\date{25/04/2020}
+
+\maketitle
+
+\section*{Zad 9}
+
+Generowane multizbiory (każdy eksperyment, dla każdego $n$) zawierają zdarzenia niezależne od siebie. Każdy element posiada unikalne \texttt{id}, które są kolejnymi liczbami naturalnymi.
+
+Wartości cech są generowane według zdefiniowanych parametryzowanych strategii, które zostały podzielone na sekcje i opisane poniżej.
+
+Do uzyskania losowości funkcji haszującej rzutującej na zbiór $[0, 1]$ użyto funkcji \texttt{md5}, \texttt{sha1}, \texttt{sha3}. Zbadano wyniki dla różnych wartości parametru $m$ oznaczającego ilość rejestrów.
+
+Zgodnie z intuicją, obserwujemy że im większy parametr $m$, tym dokładniejsze są wartości aproksymacji sumy.
+
+Dobrane funkcje haszujące nie dają różnicy pomiędzy eksperymentami. Należy jednak zaznaczyć, że ich odporność na kolizje ma znaczący wpływ na ogólną precyzję algorytmu.
+
+\subsection*{Nierówność Czebyszewa}
+\begin{gather*}
+    P(|X - \mathbb{E}(X)| < \delta) > 1 - \alpha \\
+    X = \frac{\hat{\Lambda}}{\Lambda}, \mathbb{E}(X) = 1 \\
+    \alpha = \frac{\text{Var}(\frac{\hat{\Lambda}}{\Lambda})}{\delta^2}, 
+    \text{Var}(\frac{\hat{\Lambda}}{\Lambda}) = \frac{1}{m - 2} \\
+    \alpha = \frac{\frac{1}{m - 2}}{\delta^2}, 
+    \delta = \sqrt{\frac{1}{\alpha(m - 2)}}
+\end{gather*}
+\input{czebyszew.tex}
+
+\subsection*{Rozkład jednostajny na $[1, 1000]$}
+Strategia generowania cech, to próbkowanie z zakresu $[1, 1000]$.
+\input{uniform_1_1000.tex}
+
+\subsection*{Rozkład jednostajny na $[400, 600]$}
+Strategia generowania cech, to próbkowanie z zakresu $[400, 600]$. Brak znaczących różnic w porównaniu do zbioru $[1, 1000]$.
+\input{uniform_400_600.tex}
+
+\subsection*{Jednakowe cechy}
+W tej strategii wszystkie cechy są ustawione na $1$. W tym przypadku algorytm zachowuje się podobnie jak \texttt{MinCount} i zlicza unikalne wystąpienia, lecz daje gorsze wyniki.
+\input{single.tex}
+
+\subsection*{Wartości odstające}
+Wartość cechy losowana jest ze zbioru $[1,2,1,2,\ldots]$, którego $1\%$ stanowi wartość odstająca (duża liczba, np. $1000$).
+\input{odd_99_[1_2]_1_[1000].tex}
+
+\end{document}

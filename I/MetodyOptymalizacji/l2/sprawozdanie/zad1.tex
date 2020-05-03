@@ -1,3 +1,5 @@
+\section{Chmura rozproszonych danych}
+
 \subsection{Model}
 Dane są następujące parametry:
 \begin{itemize}
@@ -16,7 +18,7 @@ $$ \forall_{i\in[n]} (\sum_{j=1}^{k} x_j \cdot q_{ij} \geq 1) $$
 
 \subsubsection{Funkcja kosztu}
 Dążymi do minimalizowania czasów dostępu do wszystkich serwerów tak aby odczytać wszystkie cechy. Koszt opisuje następująca funkcja
-$$ \textit{min}\sum_{j=1}^{k} T_j \cdot x_j $$
+$$ f(T, x) = \textit{min}\sum_{j=1}^{k} T_j \cdot x_j $$
 
 \subsection{Przykładowe dane}
 Dla następujących danych:
@@ -25,5 +27,5 @@ Dla następujących danych:
     \item $q = \left( \begin{matrix} 1 & 0 & 1 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 1 & 0 & 1 \\ 0 & 1 & 0 & 1 \\ 1 & 0 & 1 & 0 \end{matrix} \right) $
 \end{itemize}
 
-solver GLPK znalazł rozwiązanie
+solver GLPK znalazł następujące rozwiązanie o koszcie $f(T, x) = 6$
 $$ x = [1,0,0,1] $$

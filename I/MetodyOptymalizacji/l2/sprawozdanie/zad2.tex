@@ -1,0 +1,41 @@
+\section{Biblioteka podprogramów}
+
+\subsection{Model}
+Dane są następujące parametry, znajdź optymalny zestaw podprogramów $P_{ij}$ rozwiązujący program $P$ składający się z funkcji $I$ minimalizując czas przy jednoczesnym ograniczeniu pamięci:
+\begin{itemize}
+    \item $m$ - ilość funkcji
+    \item $n$ - ilość podprogramów
+    \item $M$ - górne ograniczenie pamięci programu $P$
+    \item $P_{ij}$ - biblioteka $j$-tych podprogramów obliczających $i$-tą funkcję, $i\in[m], j\in[n]$
+    \item $r_{ij}$ - pamięć zużywana przez podprogram $P_{ij}$
+    \item $t_{ij}$ - czas wykonania podprogramu $P_{ij}$
+    \item $I \subseteq \{1,\ldots,m\}$ - funkcje składające się na program $P$
+\end{itemize}
+
+\subsubsection{Zmienne decyzyjne}
+Zmienną decyzyjną jest wektor $\mathbf{x}$ o wymiarach $m \times n$ przechowującą informację o wykorzystanych podprogramach w celu wykonania programu $P$.  Mianowicie $x_{ij} = 1$ oznacza wykorzystanie podprogramu $P_{ij}$ do obliczenia $i$-tej funkcji, oraz $x_{ij} = 0$ w p.p.
+
+\subsubsection{Ograniczenia}
+\begin{itemize}
+    \item Uwzględniaj tylko zlecone funkcje, jeden podprogram na funkcję $$ \forall_{i\in I} \sum_{j=1}^{n} x_{ij} = 1 $$
+    \item Nie wykorzystaj więcej pamięci niż $M$ podczas całej pracy programu $P$
+    $$ \sum_{i=1}^{m} \sum_{j=1}^{n} x_{ij} \cdot r_{ij} \leq M $$
+\end{itemize}
+
+\subsubsection{Funkcja kosztu}
+Minimalizujemy czas pracy programu $P$
+$$ f(t, x) = \textit{min} \sum_{i=1}^{m} \sum_{j=1}^{n} x_{ij} \cdot t_{ij} $$
+
+\subsection{Przykładowe dane}
+Dla parametrów
+\begin{itemize}
+    \item $m=3$
+    \item $n=4$
+    \item $M=10$
+    \item $I = [1, 3]$ 
+\end{itemize}
+wygenerowano bibliotekę funkcji $P_{ij}$ w następujący sposób
+$$ r_{ij} = i \cdot j, \hspace{10pt} t_{ij} = \Biggl\lfloor \frac{100}{r_{ij}} \Biggr\rfloor $$
+
+solver GLPK znalazł następujące rozwiązanie o koszcie (czasie) $f(T, x) = 41$
+$$ x = \left( \begin{matrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \end{matrix} \right) $$

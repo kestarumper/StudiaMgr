@@ -90,7 +90,7 @@ Dane są następujące parametry:
 Zmienną decyzyjną jest wektor $\mathbf{x}$ o długości $k$ odpowiadającej liczności serwerów. Wektor decyduje czy w ostatecznym przeszukiwaniu uwzględniany jest $j$-ty serwer ($x_j = 1$) czy nie ($x_j = 0$).
 
 \subsubsection{Ograniczenia}
-Dostęp do każdej cechy w conajmniej jednym wybranym serwerze
+Przynajmniej jeden wybrany serwer $j$ zawiera dostęp do cechy $i$-tej
 $$ \forall_{i\in[n]} (\sum_{j=1}^{k} x_j \cdot q_{ij} \geq 1) $$
 
 \subsubsection{Funkcja kosztu}

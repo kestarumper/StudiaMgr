@@ -28,7 +28,7 @@ function cloud(T::Vector, q::Array{Int,2}, verbose = true)
 	# minimalizacja sumy czasów dostępów do serwerów
 	@objective(model, Min, sum(T[j] * x[j] for j in Serwery))
 	
-	# dostęp do każdej cechy w conajmniej jednym wybranym serwerze
+	# przynajmniej jeden wybrany serwer j zawiera dostęp do cechy i-tej
 	for i in Cechy
 		@constraint(model, sum(x[j] * q[i,j] for j in Serwery) >= 1)
 	end

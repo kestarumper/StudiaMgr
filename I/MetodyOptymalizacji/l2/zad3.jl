@@ -9,6 +9,9 @@
 
 using JuMP
 using Cbc
+using DataFrames, Gadfly
+import Cairo, Fontconfig
+
 
 function zad3(d::Matrix{Int}, verbose = true)
 	#  m - liczba zadan
@@ -93,4 +96,52 @@ if status == MOI.OPTIMAL
 	println("Cmax: ", cmax)
 else
     println("Status: ", status)
+end
+
+function gantt(czasy)
+	lines = []
+    for (j, col) in enumerate(eachcol(czasy))
+        println(j, col)
+		perm = sortperm(col)
+		result = []
+		for i in perm
+			push!(result, (i, col[i], col[i] + d[i, j]))
+        end
+        println(result)
+		push!(lines, result)
+	end
+	return lines
+end
+
+lines = gantt(Int.(ceil.(czasy)))
+
+function printTask(task)
+    (id, tstart, tend) = task
+    duration = tend - tstart + 1
+    for i in 1:duration
+        print(id)
+    end
+end
+
+function printEmpty(n)
+    for i in 1:n
+        print(" ")
+    end
+end
+
+for line in lines
+    printEmpty(line[1][2])
+    for i in eachindex(line)
+        if i < length(line)
+            a = line[i]
+            (id1, tstart1, tend1) = a
+            b = line[i+1]
+            (id2, tstart2, tend2) = b
+            diff = tstart2 - tend1
+            printTask(a)
+            printEmpty(diff)
+        end
+    end
+    printTask(line[length(line)])
+    println("")
 end

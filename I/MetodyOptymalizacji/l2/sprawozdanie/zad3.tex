@@ -12,7 +12,7 @@ Zdefiniowano następujące zmienne decyzyjne
 \begin{itemize}
     \item macierz $\mathbf{t}$ o wymiarach $m \times n$ przechowująca czasy rozpoczęcia $i$-tego zadania na $j$-tym procesorze.
     \item $C_{\text{max}}$ - czas zakonczenia wszystkich zadań (w szczególności ostatniego zadania na trzecim procesorze)
-    \item $x_{ijk}$ - pomocnicza zmienna określająca kolejność wykonywanych zadań, $i\in[n],\hspace{4pt}j,k\in[m]$
+    \item $x_{jik}$ - pomocnicza zmienna określająca kolejność wykonywanych zadań, $j\in[n],\hspace{3pt}i,k\in[m]$
 \end{itemize}
 
 \subsubsection{Ograniczenia}
@@ -20,8 +20,8 @@ Zdefiniowano następujące zmienne decyzyjne
     \item moment rozpoczecia $i$-tego zadania na $j+1$-tym procesorze może zacząć się dopiero gdy $i$-te zadanie skończy się na $j$-tej
     $$ \forall_{i\in[m], j\in[n], i < n} \hspace{5pt} t_{i, j+1} \geq t_{ij} + d_{ij} $$
     \item tylko jedno zadanie wykonywane jest w danym momencie na $j$-tym procesorze ($B$ oznacza bardzo dużą liczbę, pełniącą funkcję strażnika)
-    $$ t_{ij} - t_{kj} + B \cdot x_{ijk} \geq d_{kj} $$
-    $$ t_{kj} - t_{ij} + B \cdot (1 - x_{ijk}) \geq d_{ij} $$
+    $$ t_{ij} - t_{kj} + B \cdot x_{jik} \geq d_{kj} $$
+    $$ t_{kj} - t_{ij} + B \cdot (1 - x_{jik}) \geq d_{ij} $$
     \item $C_{\text{max}}$ jest ostatnim wykonanym zadaniem na trzecim procesorze
     $$ t_{in} + d_{in} \leq C_{\text{max}} $$
 \end{enumerate}

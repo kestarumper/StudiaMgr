@@ -1,7 +1,9 @@
-# *********************************************
+# *******************************************************
 # Author: Adrian Mucha
-# Szukanie informacji w rozproszonej chmurze
-# *********************************************
+# Optymalny zestaw podprogramow do obliczenia
+# zadanych funkcji skladajacych sie na caly program
+# z ograniczeniem pamieci i minimalizacja czasu wykonania
+# *******************************************************
 
 
 using JuMP
@@ -13,11 +15,10 @@ struct SubProgram
     t::Int
 end
 
-function zad2(P::Array{SubProgram, 2}, I::Vector{Int}, M::Int, verbose = true)
-    #  n - liczba zadan
-    #  k - liczba serwerów
-    #  Tj - czas przeszukiwania serwera j
-    #  qij - czy i'ta cecha znajduje się na j'tym serwerze
+function zad2(P::Matrix{SubProgram}, I::Vector{Int}, M::Int, verbose = true)
+    # P - biblioteka podprogramow
+    # I - pozdbior funkcji do obliczenia
+    # M - górne ograniczenie na pamięć
     # verbose - true, to kominikaty solvera na konsole	
 	
     # wybor solvera

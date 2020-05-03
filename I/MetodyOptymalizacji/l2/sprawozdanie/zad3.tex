@@ -1,0 +1,52 @@
+\section{Gantt}
+
+\subsection{Model}
+\begin{itemize}
+    \item $m$ - ilość zadań
+    \item $n$ - ilość procesorów
+    \item $d_{ij}$ - macierz $m\times n$ zawierajaca czasy wykonania $i$-tego zadania na $j$-tym procesorze, $i\in[m], j\in[n]$
+\end{itemize}
+
+\subsubsection{Zmienne decyzyjne}
+Zdefiniowano następujące zmienne decyzyjne
+\begin{itemize}
+    \item macierz $\mathbf{t}$ o wymiarach $m \times n$ przechowująca czasy rozpoczęcia $i$-tego zadania na $j$-tym procesorze.
+    \item $C_{\text{max}}$ - czas zakonczenia wszystkich zadań (w szczególności ostatniego zadania na trzecim procesorze)
+    \item $x_{ijk}$ - pomocnicza zmienna określająca kolejność wykonywanych zadań, $i\in[n],\hspace{4pt}j,k\in[m]$
+\end{itemize}
+
+\subsubsection{Ograniczenia}
+\begin{enumerate}
+    \item moment rozpoczecia $i$-tego zadania na $j+1$-tym procesorze może zacząć się dopiero gdy $i$-te zadanie skończy się na $j$-tej
+    $$ \forall_{i\in[m], j\in[n], i < n} \hspace{5pt} t_{i, j+1} \geq t_{ij} + d_{ij} $$
+    \item tylko jedno zadanie wykonywane jest w danym momencie na $j$-tym procesorze ($B$ oznacza bardzo dużą liczbę, pełniącą funkcję strażnika)
+    $$ t_{ij} - t_{kj} + B \cdot x_{ijk} \geq d_{kj} $$
+    $$ t_{kj} - t_{ij} + B \cdot (1 - x_{ijk}) \geq d_{ij} $$
+    \item $C_{\text{max}}$ jest ostatnim wykonanym zadaniem na trzecim procesorze
+    $$ t_{in} + d_{in} \leq C_{\text{max}} $$
+\end{enumerate}
+
+\subsubsection{Funkcja kosztu}
+Minimalizujemy $C_{\text{max}}$
+$$ C_{\text{max}} = C_{\pi(n)} \longrightarrow \text{min} $$
+dla pewnej permutacji zadań $\pi$, gdzie $\pi(n)$ oznacza ostatnie w kolejności wykonywania zadanie.
+
+\subsection{Przykładowe dane}
+\begin{itemize}
+    \item $a$ - czas trwania zadań na procesorze 1
+    \item $b$ - czas trwania zadań na procesorze 2
+    \item $c$ - czas trwania zadań na procesorze 3
+\end{itemize}
+$$
+a = [3,9,9,4,6,6,7], \hspace{10pt}
+b = [3,3,8,8,10,3,10], \hspace{10pt}
+c = [2,8,5,4,3,1,3]
+$$
+$$ d = [a\hspace{1pt}b\hspace{1pt}c] $$
+
+otrzymujemy wynik (czasy rozpoczęcia zadań), w danej kolumnie, ułożone zostały spermutowane czasy rozpoczęcia zadań. Aby otrzymać permutację etykiet, należy posortować czasy w kolumnie i odczytać kolejność zadań
+
+$$ t = \left( \begin{matrix} 41 & 44 & 48 \\ 17 & 32 & 35 \\ 26 & 35 & 43 \\ 0 & 4 & 12 \\ 11 & 22 & 32 \\ 35 & 47 & 50 \\ 4 & 12 & 29 \end{matrix} \right) $$
+
+gdy posortujemy pierwszą (dowolną) kolumnę rosnąco otrzymamy następującą permutację zadań
+$ Z = [4, 7, 5, 2, 3, 6, 1] $ w której $C_{\text{max}} = 51$

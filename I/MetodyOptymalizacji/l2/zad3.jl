@@ -1,65 +1,78 @@
 # *********************************************
-# Author: Adrian Mucha
-# Szukanie informacji w rozproszonej chmurze
+# Author: Pawel Zielinski
+# Danych jest m zadan i n maszyn oraz
+# czasy wykonania i-tego zadania na j-tej maszynie
+# i=1,..,m, j=1,...,n.
+# Kazde zadanie musi byc wykonane najpierw na maszynie 1 potem na 2
+# i tak do n.
+# Podac harmonogram wykonania wszystkich zadan tak aby czas 
+# zakonczenia calego procesu byl najmniejszy 
 # *********************************************
 
-
 using JuMP
-using GLPK
+# using CPLEX 
+# using GLPK
+using Cbc
 
-function zad3(n::Int, a::Vector, b::Vector, c::Vector, verbose = true)
-    #  n - liczba zadan
-    #  k - liczba serwerów
-    #  Tj - czas przeszukiwania serwera j
-    #  qij - czy i'ta cecha znajduje się na j'tym serwerze
-    # verbose - true, to kominikaty solvera na konsole 		
-	
-    # wybor solvera
-    model = Model(GLPK.Optimizer) # GLPK
-	# model = Model(Cbc.Optimizer) # Cbc the solver for mixed integer programming
-	
-    Zadania = 1:n
-    Procesory = 1:3
 
-    # permutacje zadań
-    # @variable(model, 1 <= x[Zadania] <= n, Int)
-    
-    # rozpoczęcie zadań na osi oczasu
-    @variable(model, 0 <= timeStart[Procesory, Zadania], Int)
-    
-	# minimalizacja czasu zakończenia ostatniego zadania 
-    # @objective(model, Min, sum(x[i] for i in Zadania))
-    @objective(model, Min, timeStart[3, n])
-    
-    
-    # permutacja wykorzystuje wszystkie zadania
-    # for i in Zadania
-    #     @constraint(model, count(v -> (v == i), x) == 1)
-    # end
+
+function jobshop(d::Matrix{Int};
+	             verbose = true)
+    (m, n) = size(d)
 	
-    # zadania nie nachodzą na siebie
-    for (j, t) in zip(Procesory, [a, b, c])
-        for i in Zadania
-            if i == length(Zadania)
-                break
-            end
-            # @constraint(model, timeStart[j, x[i]] + t[x[i]] <= timeStart[j, x[i+1]])
-            @constraint(model, timeStart[j, i] + t[i] <= timeStart[j, i+1])
-        end
+#  m - liczba zadan
+#  n - liczba maszyn
+#  d - macierz mxn zawierajaca czasy wykonania i-tego zadania na j-tej maszynie
+# verbose - true, to kominikaty solvera na konsole 
+
+
+    B = sum(d) # duza liczba wraz z inicjalizacja
+	
+ # wybor solvera
+ # model = Model(CPLEX.Optimizer) # CPLEX		
+#  model = Model(GLPK.Optimizer) # GLPK
+    model = Model(Cbc.Optimizer) # Cbc the solver for mixed integer programming
+  
+    Task = 1:m
+    Machine = 1:n
+    Precedence = [(j, i, k) for j in Machine, i in Task, k in Task if i < k]
+	
+	#  zmienne moment rozpoczecia i-tego zadania na j-tej maszynie
+	@variable(model, t[Task,Machine] >= 0) 
+	# zmienna czas zakonczenia wykonawania wszystkich zadan - makespan 
+	@variable(model, ms >= 0)
+	
+	# zmienne pomocnicze 
+	# potrzebne przy zamienia ograniczen zasobowych
+	@variable(model, y[Precedence], Bin) 
+	
+	# minimalizacja czasu zakonczenia wszystkich zadan
+	@objective(model,Min, ms) 
+	
+	
+  # moment rozpoczecia i-tego zadania na j+1-szej maszynie 
+  # musi >= od momentu zakonczenia i-tego zadania na j-tej maszynie   
+	for i in Task, j in Machine
+	  if j < n
+			@constraint(model, t[i,j + 1] >= t[i,j] + d[i,j])
+			 # t_ij>=t_kj+d_kj lub t_kj>=t_ij+d_ij 
+		end
+	end
+	
+	
+  # ograniczenia zosobowe tj,. tylko jedno zadanie wykonywane jest
+  # w danym momencie na j-tej maszynie 
+	for (j, i, k) in Precedence 
+	  @constraint(model, t[i,j] - t[k,j] + B * y[(j, i, k)]         >= d[k,j])                
+	  @constraint(model, t[k,j] - t[i,j] + B * (1 - y[(j, i, k)])   >= d[i,j])                
     end
-    
-    # nie rozpoczynaj zadania nim sie nie zakonczy na poprzednim procesorze
-    for (j, t) in zip(Procesory, [a, b, c])
-        if j == length(Procesory)
-            break
-        end
-        for i in Zadania
-            # @constraint(model, timeStart[j, x[i]] + t[x[i]] <= timeStart[j + 1, x[i]])
-            @constraint(model, timeStart[j, i] + t[i] <= timeStart[j + 1, i])
-        end
-    end
-    
+	# ms rowna sie czas zakonczenia wszystkich zadan na ostatniej maszynie	
+	for i in Task
+		 @constraint(model, t[i,n] + d[i,n] <= ms)
+	end
+	
 	print(model) # drukuj model
+	
     # rozwiaz egzemplarz
 	if verbose
 		optimize!(model)		
@@ -72,24 +85,35 @@ function zad3(n::Int, a::Vector, b::Vector, c::Vector, verbose = true)
 	status = termination_status(model)
 
 	if status == MOI.OPTIMAL
-		 return status, objective_value(model), value.(timeStart)
+		 return status, objective_value(model), value.(t)
 	 else
 		 return status, nothing, nothing
 	 end
+	
+	
+
+end # jobshop
+
+
+a = [3,9,9,4,6,6,7]		# P1
+b = [3,3,8,8,10,3,10]	# P2
+c = [2,8,5,4,3,1,3]		# P3
+
+# czasy wykonia i-tego zadania na j-tej maszynie 
+d =  [a b c]       
+
+println(d)
+(status, makespan, czasy) = jobshop(d)
+
+function getPermutation(m)
+	return sortperm(Array(m[:,1]))
 end
 
-# ile zadań
-n = 10
-
-a = [i for i in 1:n]
-b = [i for i in 1:n]
-c = [i for i in 1:n]
-
-(status, fcelu, permutacja) = zad3(n, a, b, c, true)
 
 if status == MOI.OPTIMAL
-    println("funkcja celu: ", fcelu)
-    println("Które permutacja: ", permutacja)
+	println("makespan: ", makespan)
+    println("czasy rozpoczecia zadan: ", czasy)
+	println("kolejność zadań: ", getPermutation(czasy))
 else
     println("Status: ", status)
 end

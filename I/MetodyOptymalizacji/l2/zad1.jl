@@ -1,5 +1,6 @@
 # *********************************************
 # Author: Adrian Mucha
+# Indeks: 236526
 # Szukanie informacji w rozproszonej chmurze
 # *********************************************
 
@@ -7,7 +8,7 @@
 using JuMP
 using GLPK
 
-function cloud(T::Vector{Float64}, q::Array{Int,2}, verbose = true)
+function cloud(T::Vector, q::Array{Int,2}, verbose = true)
     #  n - liczba zadan
     #  k - liczba serwerów
     #  Tj - czas przeszukiwania serwera j
@@ -21,9 +22,6 @@ function cloud(T::Vector{Float64}, q::Array{Int,2}, verbose = true)
 	n, k = size(q)
 	Cechy = 1:n
 	Serwery = 1:k
-
-	println("cechy", Cechy)
-	println("serwery", Serwery)
 
 	@variable(model, x[Serwery], Bin)
 	
@@ -55,14 +53,15 @@ function cloud(T::Vector{Float64}, q::Array{Int,2}, verbose = true)
 end
 
 # czasy przeszukiwania j'tego serwera
-T = [1.0, 2.0, 3.0]
+T = [1, 2, 5, 5]
 
 # znajdowanie się cechy i'tej w j'tym serwerze
 q = [
-    1 0 1;
-    0 0 1;
-	0 1 0;
-	0 1 0;
+    1 0 1 0;
+    0 0 1 1;
+	0 1 0 1;
+	0 1 0 1;
+	1 0 1 0;
 ]
 
 

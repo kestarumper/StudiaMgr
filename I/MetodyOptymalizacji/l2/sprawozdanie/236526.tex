@@ -1,0 +1,110 @@
+%%% Template originaly created by Karol Kozioł (mail@karol-koziol.net) and modified for ShareLaTeX use
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+\usepackage{amsmath}
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+\newtheoremstyle{mytheor}
+    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definition}
+
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{Laboratorium 2}
+\cfoot{}
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Metody optymalizacji – laboratorium 2}
+
+\author{Adrian Mucha, Politechnika Wrocławska}
+
+\date{03/05/2020}
+
+\maketitle
+
+\section{Chmura rozproszonych danych}
+
+\subsection{Model}
+Dane są następujące parametry:
+\begin{itemize}
+    \item $T_j$ - wektor zawierający czasy potrzebne na przeszukanie $j$-tego serwera.
+    \item $q_{ij}$ - macierz zawierająca informację o tym, które cechy $i$ zawiera $j$-ty serwer ($1$ - obecność informacji, $0$ - brak informacji).
+    \item $k$ - ilość serwerów (wnioskowana na podstawie wektora $T_j$)
+    \item $n$ - ilość cech (wnioskowana na podstawie wektora $q_{ij}$)
+\end{itemize}
+
+\subsubsection{Zmienne decyzyjne}
+Zmienną decyzyjną jest wektor $\mathbf{x}$ o długości $k$ odpowiadającej liczności serwerów. Wektor decyduje czy w ostatecznym przeszukiwaniu uwzględniany jest $j$-ty serwer ($x_j = 1$) czy nie ($x_j = 0$).
+
+\subsubsection{Ograniczenia}
+Dostęp do każdej cechy w conajmniej jednym wybranym serwerze
+$$ \forall_{i\in[n]} (\sum_{j=1}^{k} x_j \cdot q_{ij} \geq 1) $$
+
+\subsubsection{Funkcja kosztu}
+Dążymi do minimalizowania czasów dostępu do wszystkich serwerów tak aby odczytać wszystkie cechy. Koszt opisuje następująca funkcja
+$$ \textit{min}\sum_{j=1}^{k} T_j \cdot x_j $$
+
+\subsection{Przykładowe dane}
+Dla następujących danych:
+\begin{itemize}
+    \item $T = [1, 2, 5, 5]$
+    \item $q = \left( \begin{matrix} 1 & 0 & 1 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 1 & 0 & 1 \\ 0 & 1 & 0 & 1 \\ 1 & 0 & 1 & 0 \end{matrix} \right) $
+\end{itemize}
+
+solver GLPK znalazł rozwiązanie
+$$ x = [1,0,0,1] $$
+
+\end{document}

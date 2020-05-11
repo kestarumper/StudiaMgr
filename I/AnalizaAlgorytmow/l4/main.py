@@ -18,7 +18,14 @@ def digNBlocks(n, success_rate):
     return tries
 
 
-def experiment(n, q, samples):
+def digTries(t, success_rate):
+    blocks = 0
+    for _ in range(t):
+        blocks += digBlock(success_rate)
+    return blocks
+
+
+def experiment_old(n, q, samples):
     assert q < 0.5, f"0 < q < 0.5"
     p = 1 - q
     adversary_success = 0
@@ -30,8 +37,20 @@ def experiment(n, q, samples):
     return adversary_success / samples
 
 
+def experiment(n, q, samples):
+    assert q < 0.5, f"0 < q < 0.5"
+    p = 1 - q
+    adversary_success = 0
+    for _ in range(samples):
+        userTries = digNBlocks(n, p)
+        adversaryBlocks = digTries(userTries, q)
+        if adversaryBlocks >= n:
+            adversary_success += 1
+    return adversary_success / samples
+
+
 if __name__ == "__main__":
-    samples = 1000
+    samples = 10000
     ns = [1, 3, 6, 12, 24, 48]
     for i, n in enumerate(ns):
         print(f"n={n}")

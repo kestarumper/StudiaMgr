@@ -9,10 +9,16 @@ def main():
     parser = argparse.ArgumentParser(description='Plotter.')
     parser.add_argument("-t", "--title",
                         help="Title")
+    parser.add_argument("-x", "--xlabel", default="q",
+                        help="Title")
+    parser.add_argument("-y", "--ylabel", default="adversary success rate",
+                        help="Title")
     parser.add_argument("-f", "--file",
                         help="File to be processed")
     args = parser.parse_args()
 
+    xlabel = args.xlabel
+    ylabel = args.ylabel
     title = args.title
     if not title:
         title = args.file
@@ -27,11 +33,14 @@ def main():
             x.append(float(q))
             y.append(float(rate))
         plt.title(title)
-        # plt.ylim(0.0, 0.8)
-        plt.xlabel("q")
-        plt.ylabel("adversary success rate")
-        plt.annotate(f"{max(y) * 100:.2f}%", xy=(
-            x[-1], y[-1]), xytext=(-25, 10), textcoords='offset points', va='center')
+
+        ymax = max(y)
+        if ymax <= 1:
+            plt.annotate(f"{ymax * 100:.2f}%", xy=(
+                x[-1], y[-1]), xytext=(-25, 10), textcoords='offset points', va='center')
+
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
         plt.plot(x, y, c="red")
         plt.savefig(f"{Path(args.file).stem}.png")
 

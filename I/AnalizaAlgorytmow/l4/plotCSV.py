@@ -46,6 +46,7 @@ def main():
     parser = argparse.ArgumentParser(description='Plotter.')
     parser.add_argument("-t", "--title",
                         help="Title")
+    parser.add_argument("--log-scale", help="Set logarithmic scale", action='store_true')
     parser.add_argument("-x", "--xlabel", default="q",
                         help="Arguments label")
     parser.add_argument("-y", "--ylabel", default="adversary success rate",
@@ -75,6 +76,9 @@ def main():
         if ymax <= 1:
             plt.annotate(f"{ymax * 100:.2f}%", xy=(
                 x[-1], y[-1]), xytext=(-25, 10), textcoords='offset points', va='center')
+
+        if args.log_scale:
+            plt.yscale('log')
 
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)

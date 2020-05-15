@@ -1,2 +1,31 @@
 \section*{Zad 2}
 
+\subsection*{Opis glibc random}
+Na początek przybliżymy metodę działania \texttt{glibc}. Dla zadanego ziarna $s$, wektor inicjalizujący $r_0,r_1,\ldots,r_33$ jest obliczany według następującego schematu:
+
+\begin{itemize}
+    \item $r_0 = s$
+    \item $\forall_{i\in \{1,\ldots,30\}}\hspace{8pt} r_i = (16807 \cdot r_{i-1}) \mod (2^{31} - 1)$
+    \item $\forall_{i\in \{31,\ldots,33\}}\hspace{4pt} r_i = r_{i - 31}$
+\end{itemize}
+
+Następnie, sekwencja pseudolosowa $r_{34},r_{35},\ldots$ jest generowana dzięki pętli liniowego sprzężenia zwrotnego
+
+\begin{itemize}
+    \item $\forall_{i\geq 34}\hspace{8pt} r_i = (r_{i-3} + r_{i-31}) \mod 2^{32}$
+\end{itemize}
+
+$r_0,\ldots,r_{343}$ dezintegrujemy, a $i$-tym wyjściem $o_i$ funkcji \texttt{myrand()} jest
+
+\begin{itemize}
+    \item $o_i = r_{i+344} >> 1$
+\end{itemize}
+
+$>>$ jest tutaj przesunięciem bitowym w prawo (pozbywamy się najmniejznaczącego bitu).
+
+\subsection*{Liniowość}
+Pomimo odrzucanego ostatniego bitu, mamy prawie liniową zależność otrzymywanej sekwencji wychodzącej. Mamy więc $\forall_{i\geq 31}$
+$$ o_i = o_{i-31} + o_{i-3} \mod 2^{31} - 1 $$
+lub
+$$ o_i = o_{i-31} + o_{i-3} + 1 \mod 2^{31} - 1 $$
+Nasz \textit{distinguisher} potrafi więc odgadnąć wynik funkcji \texttt{glibc random}.

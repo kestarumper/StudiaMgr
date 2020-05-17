@@ -1,0 +1,176 @@
+%%% Template originaly created by Karol Kozioł (mail@karol-koziol.net) and modified for ShareLaTeX use
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+\usepackage{float}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+\newtheoremstyle{mytheor}
+ {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+ {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definition}
+
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{Kryptografia, Lista 2}
+\cfoot{}
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+\graphicspath{ {../png/} }
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Kryptografia, Lista 2}
+
+\author{Adrian Mucha, Politechnika Wrocławska, WPPT}
+
+\date{17/05/2020}
+
+\maketitle
+
+\section*{AES vs. DES}
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+    \begin{tabular}{|p{0.5\textwidth}|p{0.5\textwidth}|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf{AES}}                                                 & \multicolumn{1}{c|}{\textbf{DES}}                                                                         \\ \hline
+        AES: Advanced Encryption Standard                                                  & DES: Data Encryption Standard                                                                             \\ \hline
+        Klucze mają długość 128, 192 lub 256 bitów                                         & Długość klucza to 56 bitów.                                                                               \\ \hline
+        Liczba rund w zależności od klucza: 10(128-bitów), 12(192-bitów) lub 14(256-bitów) & 16 rund identycznych operacji                                                                             \\ \hline
+        Struktura opiera się o sieć substytucyjno-permutacyjną.                            & Struktura opiera się o sieci Feistela.                                                                    \\ \hline
+        AES jest bezpieczniejszy niż DES i jest światowym standardem.                      & DES może być łatwo złamany i ma wiele znanych słabości. Istnieje 3DES który jest bezpieczniejszy niż DES. \\ \hline
+        Koduje 128 bitów tekstu jawnego.                                                   & Koduje 64 bity tekstu jawnego.                                                                            \\ \hline
+        Brak znanych ataków crypto-analitycznych prócz ataków side channel.                & Znane ataki: Brute-force, Linear crypt-analysis oraz Differential crypt-analysis.                         \\ \hline
+    \end{tabular}
+    \label{tab:my-table}
+\end{table}
+
+\section*{Tryby AES}
+AES obsługuje różne tryby operowania na danych, które posiadają różne właściwości i stopnie bezpieczeństwa oraz szybkości działania czy możliwości pracy równoległej na wielu blokach.
+
+\begin{table}[H]
+    \begin{tabular}{|p{0.1\textwidth}|p{0.45\textwidth}|p{0.45\textwidth}|}
+        \hline
+        \multicolumn{1}{|c}{\textbf{Tryb}} & \multicolumn{1}{|c|}{\textbf{Zalety}} & \multicolumn{1}{|c|}{\textbf{Wady}}
+        \\ \hline
+        ECB & \begin{itemize}
+            \setlength\itemsep{-0.5em}
+            \item Prosty
+            \item Szybki
+            \item Równoległy
+        \end{itemize} & \begin{itemize}
+            \setlength\itemsep{-0.8em}
+            \item Powtórzenia tekstu jawnego będą widoczne w szyfrze
+            \item Uszkodzony szyfr będzie mieć wpływ na tekst jawny
+            \item Brak odporności na \textit{replay attacks}
+            \item Nie powinno się go używać
+        \end{itemize}
+        \\ \hline
+
+        CBC & \begin{itemize}
+            \setlength\itemsep{-0.5em}
+            \item Równoległe odszyfrowywanie
+            \item Powtórzenia nie będą widoczne w szyfrze
+        \end{itemize} & \begin{itemize}
+            \setlength\itemsep{-0.8em}
+            \item Brak równoległego szyfrowania
+            \item Uszkodzony blok wpływa na kolejne bloki
+        \end{itemize}
+        \\ \hline
+
+        CFB & \begin{itemize}
+            \setlength\itemsep{-0.5em}
+            \item Brak wyrównania (no padding)
+            \item Równoległe odszyfrowywanie
+        \end{itemize} & \begin{itemize}
+            \setlength\itemsep{-0.8em}
+            \item Brak równoległego szyfrowania
+            \item Brak odporności na \textit{replay attack}
+            \item Uszkodzony blok wpływa na kolejne bloki
+        \end{itemize}
+        \\ \hline
+
+        OFB & \begin{itemize}
+            \setlength\itemsep{-0.5em}
+            \item Brak wyrównania (no padding)
+            \item Szyfrowanie i deszyfrowanie używa tego samego schematu
+            \item Uszkodzony blok nie wpływa na inne
+        \end{itemize} & \begin{itemize}
+            \setlength\itemsep{-0.8em}
+            \item Brak równoległego szyfrowania
+            \item Adwersarz może zmienić uszkodzić część szyfru by zmienić tekst jawny
+        \end{itemize}
+        \\ \hline
+        
+        CTR & \begin{itemize}
+            \setlength\itemsep{-0.5em}
+            \item Brak wyrównania (no padding)
+            \item Równoległe szyfrowanie i deszyfrowanie
+            \item Szyfrowanie i deszyfrowanie używa tego samego schematu
+            \item Uszkodzony blok nie wpływa na inne
+        \end{itemize} & \begin{itemize}
+            \setlength\itemsep{-0.8em}
+            \item Adwersarz może zmienić uszkodzić część szyfru by zmienić tekst jawny
+        \end{itemize}
+        \\ \hline
+    \end{tabular}
+    \label{tab:my-table}
+\end{table}
+
+\end{document}

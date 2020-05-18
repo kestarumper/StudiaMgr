@@ -69,8 +69,6 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \renewcommand{\footrulewidth}{0pt}
 %
 
-\graphicspath{ {../png/} }
-
 %%%----------%%%----------%%%----------%%%----------%%%
 
 \begin{document}
@@ -102,9 +100,45 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \end{table}
 
 \section*{Tryby AES}
-AES obsługuje różne tryby operowania na danych, które posiadają różne właściwości i stopnie bezpieczeństwa oraz szybkości działania czy możliwości pracy równoległej na wielu blokach.
+AES obsługuje różne tryby operowania na danych, które posiadają różne właściwości i stopnie bezpieczeństwa oraz szybkości działania czy możliwości pracy równoległej na wielu blokach. Tabela \ref{tab:aesmodes} przedstawia zalety i wady różnych trybów operowania.
 
-\begin{table}[H]
+\subsection*{Słabość w trybie ECB}
+Przykład słabości szyfrowania w trybie ECB. Gołym okiem widać powtarzające się szyfrogramy oraz wzorce na obrazku \ref{fig:compare}.
+
+\begin{figure}[]
+    \begin{subfigure}{0.33\textwidth}
+        \includegraphics[width=1.0\linewidth]{logo_original.png}
+        \caption{Zdjęcie oryginalne}
+        \label{fig:original}
+    \end{subfigure}
+    \begin{subfigure}{0.33\textwidth}
+        \includegraphics[width=1.0\linewidth]{logo_des_ecb.png}
+        \caption{ECB}
+        \label{fig:ecb}
+    \end{subfigure}
+    \begin{subfigure}{0.33\textwidth}
+        \includegraphics[width=1.0\linewidth]{logo_des_cbc.png}
+        \caption{CBC}
+        \label{fig:cbc}
+    \end{subfigure}
+
+    \caption{Obrazy przedstawiają różnice w kodowaniu przykładowego obrazu za pomocą ECB oraz CBC. Można zauważyć, że tryb ECB zawiera powtórzenia w szyfrogramach jeżeli w tekście jawnym również takowe się znajdują.}
+    \label{fig:compare}
+\end{figure}
+
+\subsection*{Bezpieczeństwo CBC}
+Tryb CBC jest wystawiony na \textit{atak z wybranym tekstem jawnym} jeżeli wektor inicjalizujący \texttt{IV} nie będzie wybierany losowo przez nadawcę. Jeżeli adwersarz potrafi przewidzieć \texttt{IV} to będzie mógł zastosować wyżej wymieniony atak. Atak przedstawia obrazek \ref{fig:cpa}.
+
+\begin{figure}[]
+    \begin{subfigure}{\textwidth}
+        \includegraphics[width=1.0\linewidth]{cbc_atak_cpa.png}
+    \end{subfigure}
+
+    \caption{Atak z wybranym tekstem jawnym (CPA) na tryb szyfrowania CBC.}
+    \label{fig:cpa}
+\end{figure}
+
+\begin{table}[]
     \begin{tabular}{|p{0.1\textwidth}|p{0.45\textwidth}|p{0.45\textwidth}|}
         \hline
         \multicolumn{1}{|c}{\textbf{Tryb}} & \multicolumn{1}{|c|}{\textbf{Zalety}} & \multicolumn{1}{|c|}{\textbf{Wady}}
@@ -170,7 +204,38 @@ AES obsługuje różne tryby operowania na danych, które posiadają różne wł
         \end{itemize}
         \\ \hline
     \end{tabular}
-    \label{tab:my-table}
+    \caption{Wady i zalety różnych trybów AES.}
+    \label{tab:aesmodes}
 \end{table}
+
+\section*{Zad 1 \& 2}
+\subsection*{Program szyfrujący/deszyfrujący oraz keystore}
+Program \texttt{index.ts} korzysta z mechanizmów szyfrujących dostarczanych przez \texttt{OpenSSL}. W szczególności używa dostępnych trybów \texttt{AES} (\texttt{CBC, OFB, CTR}) o długości klucza $256$ bitów. Do celów demonstracyjnych \texttt{IV} jest stałe ($0...0$) - nie powinno się tak robić.
+
+Pliki są przetwarzane strumieniowo dzięki czemu możemy przetwarzać dane dowolnej wielkości bez potrzeby ładowania całości do pamięci. Przed szyfrowaniem pliki są dodatkowo kompresowane za pomocą \texttt{Gzip}. Zaletą programu jest to, że operuje na plikach tymczasowych i na końcu zastępuje szyfrowany plik, przez co unikamy możliwości uszkodzenia oryginalnego pliku gdyby wystąpił błąd podczas pracy programu i całość podmieniana jest już z gotowym zaszyfrowanym plikiem.
+
+Program używa biblioteki opensource \texttt{key-store} do obsługi keystore'a i przechowuje klucze w pliku \texttt{store.jsks}. Plik \texttt{store.ts} jest odpowiedzialny za odczyt/zapis keystore'a. Nowe klucze można dodawać za pomocą skryptu \texttt{newKey.ts}.
+
+Program obsługuje argumenty linii komend, które można wyświetlić za pomocą \texttt{----help}.
+
+\subsubsection*{Uruchamianie}
+Wymagane środowisko \texttt{Node.js} w wersji \texttt{10 >=}.
+\begin{enumerate}
+    \item \texttt{npm install} - instaluje zależności
+    \item \texttt{npm run encrypt ---- [lista argumentów]}
+\end{enumerate}
+
+\subsection*{Oracle \& challenge}
+Plik \texttt{oracle.ts} można uruchomić jako serwer nasłuchujący na porcie $3000$ na zapytania typu \texttt{POST}, który jako odpowiedź zwraca zaszyfrowane wiadomości. \texttt{IV} jest celowo zwiększane o $1$ z każdą zaszyfrowaną wiadomością.
+
+Skrypt \texttt{zad2.ts} jest atakiem CPA wykorzystującym \textit{,,lukę w systemie"} dzięki której jest w stanie przewidywać następne \texttt{IV} i z powodzeniem rozróżnić wiadomości zakodowane w challenge'u. Atak został przedstawiony na schemacie \ref{fig:cpa}.
+
+\subsubsection*{Uruchamianie}
+Wymagane środowisko \texttt{Node.js} w wersji \texttt{10 >=}.
+\begin{enumerate}
+    \item \texttt{npm install} - instaluje zależności
+    \item \texttt{npm start} - uruchamia wyrocznię oraz challenge
+    \item \texttt{npm run crack} - uruchamia skrypt wygrywający atak CPA na \texttt{AES-256-CBC} gdy \texttt{IV} jest przewidywalne
+\end{enumerate}
 
 \end{document}

@@ -1,0 +1,140 @@
+%%% Template originaly created by Karol Kozioł (mail@karol-koziol.net) and modified for ShareLaTeX use
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+\newtheoremstyle{mytheor}
+    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definition}
+
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\cfoot{}
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+% code listing settings
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    aboveskip={1.0\baselineskip},
+    belowskip={1.0\baselineskip},
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.627,0.126,0.941},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{01,0,0},
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t,
+    escapeinside={\%*}{*)}
+}
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Geometria obliczeniowa - Ćwiczenia}
+
+\author{Adrian Mucha 236526, Politechnika Wrocławska WPPT}
+
+\date{19.05.2020}
+
+\maketitle
+
+\section*{Zadanie 11}
+Podaj algorytm liniowy obliczający 3-kolorowanie striangulowanego wielokąta prostego.
+\subsubsection*{Rozwiązanie}
+Niech $T_P$ będzie traingulacją wielokąta $P$. Wybierzemy podzbiór wierzchołków $P$ taki, że każdy trójkąt w $T_P$ ma co najmniej jeden wybrany wierzchołek i umieścimy w tych wierzchołkach kamery. Każdemu wierzchołkowi nadamy jeden z kolorów \texttt{czarny}, \texttt{szary} lub \texttt{biały} w taki sposób by dowolne dwa wierzchołki połączone krawędzią lub przekątną miały różne kolory. Każdy trójkąt wielokąta ma wierzchołek \texttt{czarny}, \texttt{szary} oraz \texttt{biały}. Kamery umieścimy we wszystkich wierzchołkach tego samego koloru, który jest najmniej liczny dzięki czemu możemy chronić $P$, używając co najwyżej $\lfloor\frac{n}{3}\rfloor$ kamer.
+
+Aby dokonać 3-kolorowania wielokąta, wykorzystamy graf dualny $T_P$, oznaczmy go jako $G(T_P)$. Wierzchołkami grafu będą trójkąty w $T_P$. Trójkąt odpowiadający węzłowi $v$ oznaczamy jako $t(v)$. Krawędź między węzłami $v$ i $\mu$ istnieje gdy $t(v)$ i $t(\mu)$ rozdziela przekątna. Krawędź w $G(T_P)$ odpowiada przekątnej w $T_P$. $G(T_P)$ jest drzewem. Kolorowanie grafu możemy zatem znaleźć za pomocą przeszukiwania w głąb. Podczas przeszukiwania w głąb zachowujemy następujący niezmiennik: \textbf{wszystkie wierzchołki napotkanych dotąd trójkątów zostały pomalowane na biało, szaro, lub czarno i żadne dwa połączone wierzchołki nie otrzymały tego samego koloru}. Przechodząc z wierzchołka $\mu$ do wierzchołka $v$, $t(v)$ oraz $t(\mu)$ rozdziela przekątna. Ponieważ wierzchołki $t(\mu)$ zostały już pomalowane, więc tylko jeden wierzchołek $t(v)$ został do pokolorowania (można to zrobić na jeden sposób). \\
+
+\begin{algorithm}
+    \begin{algorithmic}[1]
+        \Function{VisitNode}{\textit{Wierzchołek} $\mu$}
+        % \State wybierz dowolny wierzchołek startowy $\mu \in G(T_P)$
+        \State oznacz $\mu$ jako odwiedzony
+        \For{dla każdego wierzchołka $v \in$ \texttt{neighbours}($\mu$)}
+        \If{$v$ jest nieodwiedzony}
+        \State pokoloruj przeciwległy wierzchołek na pozostały kolor niekolidujący z wierzchołkami na krawędzi dzielącej $t(v)$ oraz $t(\mu)$
+        \State VisitNode($v$)
+        \EndIf
+        \EndFor
+        \EndFunction
+        
+        \Function{DepthFirstSearch}{\textit{Graf} $G$}
+        \For{dla każdego wierzchołka $\mu \in G$}
+        \State oznacz $\mu$ jako nieodwiedzony
+        \EndFor
+        \State wybierz dowolny $\mu \in G$
+        \State pokoloruj wierzchołki trójkąta $t(\mu)$
+        \State VisitNode($\mu$)
+        \EndFunction \\\\
+        \Call{DepthFirstSearch}{$G(T_P)$}\\
+        \Return ilość wierzchołków koloru najmniej licznego
+    \end{algorithmic}
+    \caption{3-kolorowanie striangulowanego wielokąta}
+    Procedura \texttt{DepthFirstSearch} ma złożoność $\mathcal{O}(|V|)$ gdyż wraz z podprocedurą $\texttt{VisitNode}$ odwiedzają każdy wierzchołek jeden raz. Obliczenie \textit{trzeciego brakującego koloru} odbywa się w czasie $\mathcal{O}(1)$.
+\end{algorithm}
+
+\end{document}

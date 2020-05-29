@@ -22,10 +22,6 @@ function readData(pathToFile)
   end
 end
 
-function d(graph, vertice)
-	return
-end
-
 function solveIterativeModel(c, p, T, verbose = true)
   m, n = size(c)
   M = 1:m

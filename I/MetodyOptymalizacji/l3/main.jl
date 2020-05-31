@@ -2,6 +2,7 @@
 # Metody optymalizacji - Lista 3
 using JuMP
 using GLPK
+using LatexPrint
 
 function readLineInts(file)
   return hcat(map(x -> parse(Int, x), split(readline(file)))...)
@@ -82,31 +83,59 @@ function solveIterativeModel(c, p, T, verbose = true)
 		degree = length([e for e in graph if e[1] == i])
 		!(degree == 1 || (degree == 2 && (sum([solution[i, j] for j in Jobs]) >= 1)))
 	end
-	print("\rITER_COUNT: $(iterCount)")
 	iterCount += 1
   end
-  println("")
-  return F
+  return F, iterCount
 end
 
 println("")
 filenames = ["gap$(i).txt" for i in 1:12]
+table = []
 for fname in filenames
 	problems = readData("dataset/$(fname)")
 	@show fname
 	for problem in problems
 	  p, m, n, costs, resources, capacity = problem
-	  F = solveIterativeModel(deepcopy(costs), deepcopy(resources), deepcopy(capacity))
-	  totalCost = mapreduce(((i, j),) -> costs[i, j], +, F)
+
+	  time = @elapsed F, iterCount = solveIterativeModel(deepcopy(costs), deepcopy(resources), deepcopy(capacity))
+
 	  for i in 1:m
 		  tasks = filter(x -> x[1] == i, F)
 		  if length(tasks) > 0
 			  resourceSum = sum(resources[x[1], x[2]] for x in tasks)
-			  println(i, " ", tasks, " ", resourceSum, " ", capacity[i], " ", resourceSum > 2 * capacity[i] ? "<===========" : "")
+			  # println(i, " ", tasks, " ", resourceSum, " ", capacity[i], " ", resourceSum > 2 * capacity[i] ? "<===========" : "")
 			  @assert resourceSum <= 2 * capacity[i] "< 2Ti dont hold"
 		  end
 	  end
-	  println("c", m, n, "-", p, "\t", totalCost)
+
+	  resourceSums = [(i, capacity[i], sum(resources[x[1], x[2]] for x in F if x[1] == i), sum(resources[x[1], x[2]] for x in F if x[1] == i) / capacity[i]) for i in 1:m]
+
+    # totalCost = mapreduce(((i, j),) -> costs[i, j], +, F)
+	  # resourcesUsed = mapreduce(((i, j),) -> resources[i, j], +, F)
+	  # totalCapacity = sum(capacity)
+	  # ratio = resourcesUsed / totalCapacity
+	  # avgResourcesUsed = resourcesUsed / length(capacity)
+	  # avgCapacity = totalCapacity / length(capacity)
+	  problemString = string("c", m, n, "-", p)
+
+    maxRatio = -1
+    maxResources = -1
+    maxCapacity = -1
+    for x in resourceSums
+      (i, c, r, ratio) = x
+      if maxRatio < ratio
+        maxRatio = ratio
+        maxResources = r
+        maxCapacity = c
+      end
+    end
+
+	  entry = (fname, problemString, iterCount, maxResources, maxCapacity, maxRatio, string(Int(round(time, digits=3) * 1000), "ms"))
+	  @show entry
+	  push!(table, entry)
 	end
 	println(repeat('-', 100))
 end
+
+table = vcat([hcat([i for i in row]...) for row in table]...)
+tabular(table)

@@ -1,18 +1,15 @@
 package main
 
 import (
+	"container/list"
 	"fmt"
 	"math"
-	"sync"
-	"time"
 )
 
-var GlobalMutex = &sync.Mutex{}
-
 type Data struct {
-	initialState []int
-	state        []int
-	steps        int
+	state       []int
+	permutation []int
+	steps       int
 }
 
 func makeCopy(src []int) []int {
@@ -25,7 +22,7 @@ func stateUUID(state []int) int {
 	n := len(state)
 	index := 0
 	for i := n - 1; i >= 0; i-- {
-		index += state[i] * int(math.Pow(float64(n), float64(n-i-1)))
+		index += state[i] * int(math.Pow(float64(n+1), float64(n-i-1)))
 	}
 	return index
 }
@@ -80,10 +77,8 @@ func checkStabilization(state []int) bool {
 	return true
 }
 
-func runProcesor(i int, state []int) []int {
-	n := len(state)
-	result := make([]int, n)
-	copy(result, state)
+func runProcesor(i int, result []int) {
+	n := len(result)
 	if i == 0 {
 		if result[0] == result[n-1] {
 			result[0] = (result[n-1] + 1) % (n + 1)
@@ -93,62 +88,116 @@ func runProcesor(i int, state []int) []int {
 			result[i] = result[i-1]
 		}
 	}
+}
+
+func nextPerm(p []int) {
+	for i := len(p) - 1; i >= 0; i-- {
+		if i == 0 || p[i] < len(p)-i-1 {
+			p[i]++
+			return
+		}
+		p[i] = 0
+	}
+}
+
+func getPerm(orig, p []int) []int {
+	result := append([]int{}, orig...)
+	for i, v := range p {
+		result[i], result[i+v] = result[i+v], result[i]
+	}
 	return result
 }
 
-func worker(in chan Data, next chan<- bool, checkedStates []int, nProcesors int, wg *sync.WaitGroup) {
-	fmt.Println(">> WORKERK")
-	defer wg.Done()
+func factorial(number int) int {
+	result := 1
+	for i := 2; i <= number; i++ {
+		result *= i
+	}
+	return result
+}
 
-	var state []int
-	var steps int
+func makeRange(min, max int) []int {
+	a := make([]int, max-min+1)
+	for i := range a {
+		a[i] = min + i
+	}
+	return a
+}
 
-	for {
-		select {
-		case data := <-in:
-			state = data.state
-			steps = data.steps
-			fmt.Println(">>", data)
-		case <-time.After(1 * time.Second):
-			fmt.Println("Self destruct <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-			return
+func generateAllPermutations(n int) [][]int {
+	orig := makeRange(0, n-1)
+	list := make([][]int, factorial(n))
+	i := 0
+	for p := make([]int, len(orig)); p[0] < len(p); nextPerm(p) {
+		list[i] = getPerm(orig, p)
+		i++
+	}
+	return list
+}
+
+func compareStates(a, b []int) bool {
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func worker(originalState, checkedStates []int, permutations [][]int, steps, nProcesors int) {
+	// struktury Data wsadzamy do kolejki
+	// wsadzamy je do struktury Data
+	queue := list.New()
+	for _, permutation := range permutations {
+		queue.PushBack(Data{makeCopy(originalState), permutation, steps})
+	}
+
+	// dopoki kolejka nie jest pusta
+	for queue.Len() > 0 {
+		// zdejmij strukture Data
+		d := queue.Front()
+		data := d.Value.(Data)
+
+		// dla kazdego elementu z rundy for [0, 2, 3, 1]
+		newStep := data.steps
+		newState := data.state
+		flag := true
+		for _, procesorID := range data.permutation {
+			// sprawdz czy jest sukces lub czy jestes w znanym stanie
+			if checkStabilization(newState) {
+				// sprobuj wpisac dlugosc do listy odwiedzonych checkedStates[i] = max(checkedStates[i], length)
+				markVisited(originalState, checkedStates, newStep)
+				flag = false
+				break
+			} else if !compareStates(newState, originalState) && isVisited(newState, checkedStates) {
+				uid := stateUUID(newState)
+				markVisited(originalState, checkedStates, newStep+checkedStates[uid])
+				flag = false
+				break
+			}
+			// zmien wartosc procesorow
+			oldState := makeCopy(newState)
+			runProcesor(procesorID, newState)
+			if !compareStates(oldState, newState) {
+				// zwieksz glebokosc drzewa o jeden jesli stan sie zmienil
+				newStep++
+			}
 		}
 
-		originalState := makeCopy(state)
-
-		stabilized := checkStabilization(originalState)
-		if stabilized {
-			if steps == 0 {
-				markVisited(originalState, checkedStates, 0)
-			}
-			continue
-		}
-
-		queue := make(chan Data)
-		for procID := 0; procID < nProcesors; procID++ {
-			state = runProcesor(procID, originalState)
-			steps++
-
-			if isVisited(state, checkedStates) {
-				continue
-			}
-
-			stabilized = checkStabilization(state)
-			if stabilized {
-				markVisited(originalState, checkedStates, steps)
-			} else {
-				d := Data{originalState, state, steps}
-				queue <- d
+		if flag {
+			// wygeneruj wszystkie rundy i wrzuc nowe Data do kolejki
+			for _, permutation := range permutations {
+				queue.PushBack(Data{makeCopy(newState), permutation, newStep})
 			}
 		}
+
+		queue.Remove(d) // Dequeue
 	}
 }
 
 func markVisited(state []int, checkedStates []int, value int) {
-	GlobalMutex.Lock()
 	uuid := stateUUID(state)
 	checkedStates[uuid] = int(math.Max(float64(checkedStates[uuid]), float64(value)))
-	GlobalMutex.Unlock()
 }
 
 func isVisited(state []int, checkedStates []int) bool {
@@ -158,7 +207,7 @@ func isVisited(state []int, checkedStates []int) bool {
 }
 
 func main() {
-	n := 3
+	n := 4
 
 	numberOfStates := int(math.Pow(float64(n+1), float64(n))) // (n+1)^n
 
@@ -167,19 +216,11 @@ func main() {
 		checkedStates[i] = -1
 	}
 
-	input := make(chan Data, n*numberOfStates+1)
+	// generujemy wszystkie mozlwie rundy (permutacje listy [0...n-1])
+	permutations := generateAllPermutations(n)
 	for state := make([]int, n); state != nil; state = incState(state) {
-		input <- Data{state, state, 0}
+		worker(makeCopy(state), checkedStates, permutations, 0, n)
 	}
 
-	next := make(chan bool, numberOfStates)
-
-	var wg sync.WaitGroup
-	for i := 0; i < n; i++ {
-		wg.Add(1)
-		go worker(input, next, checkedStates, n, &wg)
-	}
-
-	wg.Wait()
 	fmt.Println("Longest path:", maxSteps(checkedStates))
 }

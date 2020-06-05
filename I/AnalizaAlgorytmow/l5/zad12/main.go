@@ -6,19 +6,19 @@ import (
 	"math"
 )
 
-type Data struct {
+type Item struct {
 	state       []int
 	permutation []int
 	steps       int
 }
 
-func makeCopy(src []int) []int {
+func copyArray(src []int) []int {
 	dst := make([]int, len(src))
 	copy(dst, src)
 	return dst
 }
 
-func stateUUID(state []int) int {
+func getStateID(state []int) int {
 	n := len(state)
 	index := 0
 	for i := n - 1; i >= 0; i-- {
@@ -27,7 +27,7 @@ func stateUUID(state []int) int {
 	return index
 }
 
-func incState(state []int) []int {
+func nextState(state []int) []int {
 	n := len(state)
 
 	end := true
@@ -42,23 +42,20 @@ func incState(state []int) []int {
 		return nil
 	}
 
-	result := make([]int, n)
-	copy(result, state)
-
 	carry := 1
 	for i := 0; i < n; i++ {
-		result[i] = (result[i] + carry) % (n + 1)
-		if result[i] == 0 {
+		state[i] = (state[i] + carry) % (n + 1)
+		if state[i] == 0 {
 			carry = 1
 		} else {
 			break
 		}
 	}
 
-	return result
+	return state
 }
 
-func maxSteps(arr []int) int {
+func findMaxSteps(arr []int) int {
 	max := arr[0]
 	for _, v := range arr {
 		if max < v {
@@ -68,7 +65,7 @@ func maxSteps(arr []int) int {
 	return max
 }
 
-func checkStabilization(state []int) bool {
+func isStabilized(state []int) bool {
 	for i := 0; i < len(state)-1; i++ {
 		if state[i] != state[i+1] {
 			return false
@@ -77,15 +74,15 @@ func checkStabilization(state []int) bool {
 	return true
 }
 
-func runProcesor(i int, result []int) {
+func processorAction(procID int, result []int) {
 	n := len(result)
-	if i == 0 {
+	if procID == 0 {
 		if result[0] == result[n-1] {
 			result[0] = (result[n-1] + 1) % (n + 1)
 		}
 	} else {
-		if result[i] != result[i-1] {
-			result[i] = result[i-1]
+		if result[procID] != result[procID-1] {
+			result[procID] = result[procID-1]
 		}
 	}
 }
@@ -124,7 +121,7 @@ func makeRange(min, max int) []int {
 	return a
 }
 
-func generateAllPermutations(n int) [][]int {
+func buildPermutations(n int) [][]int {
 	orig := makeRange(0, n-1)
 	list := make([][]int, factorial(n))
 	i := 0
@@ -135,7 +132,7 @@ func generateAllPermutations(n int) [][]int {
 	return list
 }
 
-func compareStates(a, b []int) bool {
+func areStatesEqual(a, b []int) bool {
 	for i, v := range a {
 		if v != b[i] {
 			return false
@@ -144,50 +141,45 @@ func compareStates(a, b []int) bool {
 	return true
 }
 
-func worker(originalState, checkedStates []int, permutations [][]int, steps, nProcesors int) {
-	// struktury Data wsadzamy do kolejki
-	// wsadzamy je do struktury Data
+func processState(originalState, visitedStates []int, permutations [][]int, steps, nProcesors int) {
 	queue := list.New()
 	for _, permutation := range permutations {
-		queue.PushBack(Data{makeCopy(originalState), permutation, steps})
+		queue.PushBack(Item{copyArray(originalState), permutation, steps})
 	}
 
-	// dopoki kolejka nie jest pusta
 	for queue.Len() > 0 {
-		// zdejmij strukture Data
 		d := queue.Front()
-		data := d.Value.(Data)
+		data := d.Value.(Item)
 
-		// dla kazdego elementu z rundy for [0, 2, 3, 1]
-		newStep := data.steps
-		newState := data.state
+		// foreach permutation
+		step := data.steps
+		state := data.state
 		flag := true
 		for _, procesorID := range data.permutation {
-			// sprawdz czy jest sukces lub czy jestes w znanym stanie
-			if checkStabilization(newState) {
-				// sprobuj wpisac dlugosc do listy odwiedzonych checkedStates[i] = max(checkedStates[i], length)
-				markVisited(originalState, checkedStates, newStep)
+			if isStabilized(state) {
+				markVisited(originalState, visitedStates, step)
 				flag = false
 				break
-			} else if !compareStates(newState, originalState) && isVisited(newState, checkedStates) {
-				uid := stateUUID(newState)
-				markVisited(originalState, checkedStates, newStep+checkedStates[uid])
+			} else if !areStatesEqual(state, originalState) && isVisited(state, visitedStates) {
+				uid := getStateID(state)
+				markVisited(originalState, visitedStates, step+visitedStates[uid])
 				flag = false
 				break
 			}
-			// zmien wartosc procesorow
-			oldState := makeCopy(newState)
-			runProcesor(procesorID, newState)
-			if !compareStates(oldState, newState) {
-				// zwieksz glebokosc drzewa o jeden jesli stan sie zmienil
-				newStep++
+
+			// mutate processors
+			oldState := copyArray(state)
+			processorAction(procesorID, state)
+			if !areStatesEqual(oldState, state) {
+				// go deeper
+				step++
 			}
 		}
 
 		if flag {
-			// wygeneruj wszystkie rundy i wrzuc nowe Data do kolejki
+			// generate new rounds based on calculated state
 			for _, permutation := range permutations {
-				queue.PushBack(Data{makeCopy(newState), permutation, newStep})
+				queue.PushBack(Item{copyArray(state), permutation, step})
 			}
 		}
 
@@ -195,14 +187,14 @@ func worker(originalState, checkedStates []int, permutations [][]int, steps, nPr
 	}
 }
 
-func markVisited(state []int, checkedStates []int, value int) {
-	uuid := stateUUID(state)
-	checkedStates[uuid] = int(math.Max(float64(checkedStates[uuid]), float64(value)))
+func markVisited(state []int, visitedStates []int, value int) {
+	uuid := getStateID(state)
+	visitedStates[uuid] = int(math.Max(float64(visitedStates[uuid]), float64(value)))
 }
 
-func isVisited(state []int, checkedStates []int) bool {
-	uuid := stateUUID(state)
-	result := checkedStates[uuid] != -1
+func isVisited(state []int, visitedStates []int) bool {
+	uuid := getStateID(state)
+	result := visitedStates[uuid] != -1
 	return result
 }
 
@@ -211,16 +203,16 @@ func main() {
 
 	numberOfStates := int(math.Pow(float64(n+1), float64(n))) // (n+1)^n
 
-	checkedStates := make([]int, numberOfStates)
-	for i := range checkedStates {
-		checkedStates[i] = -1
+	visitedStates := make([]int, numberOfStates)
+	for i := range visitedStates {
+		visitedStates[i] = -1
 	}
 
-	// generujemy wszystkie mozlwie rundy (permutacje listy [0...n-1])
-	permutations := generateAllPermutations(n)
-	for state := make([]int, n); state != nil; state = incState(state) {
-		worker(makeCopy(state), checkedStates, permutations, 0, n)
+	// generate all possible permutations of launching processors in any order
+	permutations := buildPermutations(n)
+	for state := make([]int, n); state != nil; state = nextState(state) {
+		processState(copyArray(state), visitedStates, permutations, 0, n)
 	}
 
-	fmt.Println("Longest path:", maxSteps(checkedStates))
+	fmt.Println("Found longest path:", findMaxSteps(visitedStates))
 }

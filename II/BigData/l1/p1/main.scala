@@ -14,7 +14,7 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
-    val fileName = "lotr.txt"
+    val fileName = "illiad.txt"
     val fileNameStopWords = "./stopwords_en.txt"
 
     val fileStopWords = Source.fromFile(fileNameStopWords, "UTF-8")

@@ -1,36 +1,38 @@
-use std::cmp;
+fn partition(vec: &mut [i32], lo: i32, hi: i32) -> i32 {
+    let pivot = vec[((lo + hi) / 2) as usize];
+    let mut i: i32 = lo - 1;
+    let mut j: i32 = hi + 1;
+    loop {
+        loop {
+            i += 1;
+            if vec[i as usize] >= pivot {
+                break;
+            }
+        }
+        loop {
+            j -= 1;
+            if vec[j as usize] <= pivot {
+                break;
+            }
+        }
+
+        if i >= j {
+            return j;
+        }
+        vec.swap(i as usize, j as usize);
+    }
+}
+
+fn quicksort_helper(vec: &mut [i32], lo: i32, hi: i32) {
+    if lo < hi {
+        let p = partition(vec, lo, hi);
+        quicksort_helper(vec, lo, p);
+        quicksort_helper(vec, p + 1, hi);
+    }
+}
 
 pub fn quicksort(vec: &mut [i32]) {
-    let len: usize = vec.len();
-    if len <= 1 {
-        return;
-    }
-
-    let pivot: usize = 0;
-    vec.swap(pivot, len / 2);
-
-    let mut left: usize = 1;
-    let mut right: usize = vec.len() - 1;
-
-    loop {
-        while left < len && &vec[left] < &vec[pivot] {
-            left += 1
-        }
-        while right > 0 && &vec[right] > &vec[pivot] {
-            right -= 1
-        }
-        if left >= right {
-            break;
-        }
-        vec.swap(left, right);
-        left += 1;
-        right -= 1;
-    }
-
-    vec.swap(pivot, right);
-
-    quicksort(&mut vec[0..cmp::min(left - 1, right)]);
-    quicksort(&mut vec[cmp::max(left, right + 1)..]);
+    quicksort_helper(vec, 0, (vec.len() - 1) as i32)
 }
 
 #[cfg(test)]

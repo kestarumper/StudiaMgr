@@ -38,7 +38,6 @@ mod tests {
     use super::quicksort;
     use rand::Rng;
 
-
     #[test]
     fn test_random() {
         let mut rng = rand::thread_rng();

@@ -43,3 +43,28 @@ fn merge(arr1: &[i32], arr2: &[i32], ret: &mut [i32]) {
         ret[index..].copy_from_slice(&arr2[right..]);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::mergesort;
+    use rand::Rng;
+
+    #[test]
+    fn test_random() {
+        let mut rng = rand::thread_rng();
+
+        for _ in 0u64..10_000u64 {
+            let len: usize = rng.gen::<usize>();
+            let mut vector = ::std::iter::repeat(())
+                .map(|()| rng.gen::<i32>())
+                .take((len % 64) + 1)
+                .collect::<Vec<i32>>();
+
+            mergesort(&mut vector);
+
+            for i in 0..vector.len() - 1 {
+                assert!(vector[i] <= vector[i + 1])
+            }
+        }
+    }
+}

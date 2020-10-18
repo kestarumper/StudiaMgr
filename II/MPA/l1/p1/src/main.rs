@@ -14,18 +14,24 @@ pub fn make_array(capacity: usize, min: i32, max: i32) -> Vec<i32> {
         .collect::<Vec<i32>>();
 }
 
-// pub fn main() {
-//     let arr: &mut [i32] = &mut make_array(usize::pow(10, 6))[..];
-//     mergesort(arr);
-//     println!("{:?}", arr);
-// }
+fn assert_sorted(vec: &[i32]) {
+    for i in 0..vec.len() - 2 {
+        assert!(vec[i] <= vec[i + 1])
+    }
+}
 
 pub fn main() {
-    let arr: &mut [i32] = &mut make_array(usize::pow(10, 6), -1000, 1000)[..];
-    quicksort(arr);
-    println!("{:?}", arr);
+    let arr: &mut [i32] = &mut make_array(usize::pow(10, 1), -1000, 1000)[..];
+    let qc_compares = quicksort(arr);
 
-    for i in 0..arr.len() - 2 {
-        assert!(arr[i] <= arr[i + 1])
-    }
+    assert_sorted(arr);
+
+    println!("Total QS compares: {}", qc_compares);
+
+    let arr2: &mut [i32] = &mut make_array(usize::pow(10, 1), -1000, 1000)[..];
+    let ms_compares = mergesort(arr2);
+
+    assert_sorted(arr2);
+
+    println!("Total MS compares: {}", ms_compares);
 }

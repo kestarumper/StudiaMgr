@@ -1,38 +1,44 @@
-fn partition(vec: &mut [i32], lo: i32, hi: i32) -> i32 {
+fn partition(vec: &mut [i32], lo: i32, hi: i32) -> (i32, usize) {
+    let mut compares: usize = 0;
     let pivot = vec[((lo + hi) / 2) as usize];
     let mut i: i32 = lo - 1;
     let mut j: i32 = hi + 1;
     loop {
         loop {
             i += 1;
+            compares += 1;
             if vec[i as usize] >= pivot {
                 break;
             }
         }
         loop {
             j -= 1;
+            compares += 1;
             if vec[j as usize] <= pivot {
                 break;
             }
         }
 
+        compares += 1;
         if i >= j {
-            return j;
+            return (j, compares);
         }
         vec.swap(i as usize, j as usize);
     }
 }
 
-fn quicksort_helper(vec: &mut [i32], lo: i32, hi: i32) {
+fn quicksort_helper(vec: &mut [i32], lo: i32, hi: i32) -> usize {
     if lo < hi {
-        let p = partition(vec, lo, hi);
-        quicksort_helper(vec, lo, p);
-        quicksort_helper(vec, p + 1, hi);
+        let (p, compares) = partition(vec, lo, hi);
+        let c1 = quicksort_helper(vec, lo, p);
+        let c2 = quicksort_helper(vec, p + 1, hi);
+        return compares + c1 + c2;
     }
+    return 0;
 }
 
-pub fn quicksort(vec: &mut [i32]) {
-    quicksort_helper(vec, 0, (vec.len() - 1) as i32)
+pub fn quicksort(vec: &mut [i32]) -> usize {
+    return quicksort_helper(vec, 0, (vec.len() - 1) as i32);
 }
 
 #[cfg(test)]

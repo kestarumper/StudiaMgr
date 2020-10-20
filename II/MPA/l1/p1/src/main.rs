@@ -65,8 +65,8 @@ pub fn main() {
     let nmax = usize::pow(10, 4) + 1;
     let step = 100;
     let repeat = 1000;
-    let result = &experiments(nmin, nmax, step, repeat, quicksort);
-    // let result = &experiments(nmin, nmax, step, repeat, mergesort);
+    // let result = &experiments(nmin, nmax, step, repeat, quicksort);
+    let result = &experiments(nmin, nmax, step, repeat, mergesort);
 
     if let Err(err) = write_to_csv(&result, "experiment.csv") {
         println!("There was an error while saving to csv file");

@@ -6,7 +6,7 @@ fn merge(arr1: &[i32], arr2: &[i32], ret: &mut [i32]) -> usize {
 
     // Compare element and insert back to result array.
     while left < arr1.len() && right < arr2.len() {
-        compares += 3;
+        compares += 1;
         if arr1[left] <= arr2[right] {
             ret[index] = arr1[left];
             left += 1;
@@ -19,11 +19,9 @@ fn merge(arr1: &[i32], arr2: &[i32], ret: &mut [i32]) -> usize {
 
     // Copy the reset elements to returned array.
     // `memcpy` may be more performant than for-loop assignment.
-    compares += 1;
     if left < arr1.len() {
         ret[index..].copy_from_slice(&arr1[left..]);
     }
-    compares += 1;
     if right < arr2.len() {
         ret[index..].copy_from_slice(&arr2[right..]);
     }
@@ -34,7 +32,6 @@ fn merge(arr1: &[i32], arr2: &[i32], ret: &mut [i32]) -> usize {
 pub fn mergesort(arr: &mut [i32]) -> usize {
     let mut compares: usize = 0;
 
-    compares += 1;
     let mid = arr.len() / 2;
     if mid == 0 {
         return compares;

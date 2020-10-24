@@ -30,9 +30,10 @@ object Main {
       .map(word => (word, 1))
 
     val grouped = words.groupBy(x => x._1)
-    val reduced = grouped.mapValues(x => x.length)
+    val reduced = grouped.mapValues(x => x.length).toSeq
+    val sorted = reduced.sortWith((a, b) => a._2 > b._2).take(100)
 
-    return reduced.toSeq;
+    return sorted;
   }
 
   def getChapters(input: String): Seq[(String, String)] = {
@@ -40,6 +41,34 @@ object Main {
     val re = pattern.r;
     val chapters = re.findAllIn(input).matchData.map(m => m.group(1)).toSeq
     return chapters.zip(input.split(pattern).toSeq);
+  }
+
+  def addTermFrequencies(
+      wordCount: Seq[(String, Int)],
+      chapterStats: Seq[(String, Seq[(String, Int)])]
+  ): Seq[(String, Int, Double)] = {
+    val sumOfTerms = wordCount.map(word => word._2).sum;
+    val numberOfChapters = chapterStats.length;
+
+    val termFrequencies =
+      wordCount.map(word => {
+        val tf = word._2.toFloat / sumOfTerms;
+        val idf = math.log(
+          numberOfChapters.toFloat / (chapterStats.count(chapter =>
+            chapter._2.map(stat => stat._1).contains(word._1)
+          ) + 1)
+        );
+
+        val result = (
+          word._1,
+          word._2,
+          tf * idf
+        );
+
+        result;
+      });
+
+    termFrequencies;
   }
 
   def main(args: Array[String]): Unit = {
@@ -52,16 +81,37 @@ object Main {
 
     val file = Source.fromFile(fileName, "UTF-8")
     val fileContent = file.mkString
-
-    getChapters(fileContent).foreach { tuple =>
-      writeFile("chapters/" + tuple._1 + ".txt", tuple._2.split("\n"));
-    }
-
-    val reduced = countWords(fileContent, stopWords);
-
-    val sorted = reduced.sortWith((a, b) => a._2 > b._2).take(1000)
     file.close
 
-    writeFile("wordcloud.csv", sorted.map(x => x._2 + "," + x._1))
+    val chapters = getChapters(fileContent)
+
+    val chapterStats = chapters.map(chapter => {
+      val chapterName = chapter._1
+      val chapterContent = chapter._2
+
+      writeFile("chapters/" + chapterName + ".txt", chapterContent.split("\n"));
+
+      val wordCount = countWords(chapterContent, stopWords);
+
+      (chapterName, wordCount)
+    })
+
+    val chapterStats2 = chapterStats.map(cs => {
+      val wordCount = cs._2;
+      (cs._1, addTermFrequencies(wordCount, chapterStats));
+    })
+
+    val sorted = chapterStats2.map(cs =>
+      (cs._1, cs._2.sortWith((a, b) => a._3 > b._3).take(100))
+    );
+
+    sorted.foreach(chapter => {
+      val chapterName = chapter._1;
+      val stats = chapter._2;
+      writeFile(
+        "wordclouds/" + chapterName + ".csv",
+        stats.map(x => x._3 + "," + x._1)
+      )
+    })
   }
 }

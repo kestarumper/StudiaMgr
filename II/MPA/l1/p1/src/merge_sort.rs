@@ -17,8 +17,7 @@ fn merge(arr1: &[i32], arr2: &[i32], ret: &mut [i32]) -> usize {
         index += 1;
     }
 
-    // Copy the reset elements to returned array.
-    // `memcpy` may be more performant than for-loop assignment.
+    // Copy the elements to returned array.
     if left < arr1.len() {
         ret[index..].copy_from_slice(&arr1[left..]);
     }

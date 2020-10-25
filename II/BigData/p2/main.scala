@@ -71,6 +71,18 @@ object Main {
     termFrequencies;
   }
 
+  def findChaptersHighestTFIDFWord(
+      word: String,
+      chapters: Seq[(String, Seq[(String, Int, Double)])]
+  ): Seq[String] = {
+    val matchingChapters =
+      chapters
+        .filter(chapter => chapter._2.map(w => w._1).contains(word))
+        .map(chapter => (chapter._1, chapter._2.find(w => w._1 == word).get))
+        .sortBy(item => item._2._3)
+    return matchingChapters.map(chapt => chapt._1);
+  }
+
   def main(args: Array[String]): Unit = {
     val fileName = "lotr.txt"
     val fileNameStopWords = "./stopwords_en.txt"
@@ -105,12 +117,23 @@ object Main {
       (cs._1, cs._2.sortWith((a, b) => a._3 > b._3).take(100))
     );
 
+    val highestTFIDFWordsPerChapter =
+      sorted.map(stats => (stats._1, stats._2.take(20).map(word => word._1)))
+
+    highestTFIDFWordsPerChapter.foreach { item =>
+      println(item._1 + "\n\t" + item._2.mkString("\n\t"))
+    }
+
+    println("Search word: ")
+    val searchWord = scala.io.StdIn.readLine()
+    findChaptersHighestTFIDFWord(searchWord, sorted).foreach { println }
+
     sorted.foreach(chapter => {
       val chapterName = chapter._1;
       val stats = chapter._2;
       writeFile(
         "wordclouds/" + chapterName + ".csv",
-        stats.map(x => x._3 + "," + x._1)
+        stats.map(x => x._2 + "," + x._1)
       )
     })
   }

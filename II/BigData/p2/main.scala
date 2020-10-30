@@ -101,7 +101,7 @@ object Main {
       val chapterName = chapter._1
       val chapterContent = chapter._2
 
-      writeFile("chapters/" + chapterName + ".txt", chapterContent.split("\n"));
+      // writeFile("chapters/" + chapterName + ".txt", chapterContent.split("\n"));
 
       val wordCount = countWords(chapterContent, stopWords);
 
@@ -133,8 +133,19 @@ object Main {
       val stats = chapter._2;
       writeFile(
         "wordclouds/" + chapterName + ".csv",
-        stats.map(x => x._2 + "," + x._1)
+        stats.map(x => math.ceil(x._3 * 1000).toInt + "," + x._1)
       )
     })
+
+    val wholeBookWords = sorted
+      .flatMap(chapter => chapter._2)
+      .groupBy(word => word._1)
+      .mapValues(words => (words.map(w => w._3).sum * 1000).toInt)
+      .toSeq
+
+    writeFile(
+      "wordcloud.csv",
+      wholeBookWords.sortBy(x => -x._2).map(x => x._2 + "," + x._1)
+    )
   }
 }

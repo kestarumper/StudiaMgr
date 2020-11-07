@@ -4,7 +4,7 @@ from nltk.tokenize import RegexpTokenizer
 import csv
 
 tokenizer = RegexpTokenizer(r'\w+')
-fname = "lotr.txt"  # Should be some file on your system
+fname = "lotr.txt"
 conf = SparkConf().setAppName("Book").setMaster('local')
 sc = SparkContext(conf=conf)
 

@@ -14,10 +14,13 @@ stopWords = stopwords.words("english")
 
 
 def lineToWords(line):
-    words = list(filter(lambda w: w not in stopWords,
-                        tokenizer.tokenize(line.lower())))
+    words = tokenizer.tokenize(line.lower())
     pairs = zip(words[:-1], words[1:])
     return pairs
+
+
+def filterStopWords(pair):
+    return (pair[0] not in stopWords) and (pair[1] not in stopWords)
 
 
 def topFive(words):
@@ -33,23 +36,23 @@ def paragraph(words, n):
     word, next5 = random.sample(words.items(), 1)[0]
     result.append(word)
     for _ in range(n):
-        nextWord = random.sample(next5, 1)[0]
-        result.append(nextWord)
-        nextOfNext = words[nextWord]
-        next5 = nextOfNext
+        try:
+            nextWord = random.sample(next5, 1)[0]
+            result.append(nextWord)
+            nextOfNext = words[nextWord]
+            next5 = nextOfNext
+            pass
+        except:
+            pass
     return ' '.join(result)
 
 
-def writeCSVToFile(data, fname):
-    with open(fname, 'w') as out:
-        csv_out = csv.writer(out)
-        csv_out.writerow(['weight', 'word'])
-        csv_out.writerows(data)
-
-
 lines = sc.textFile(fname)
-pairs = lines.flatMap(lineToWords)
-grouped = pairs.groupByKey().mapValues(topFive)
+pairs = lines.flatMap(lineToWords).filter(
+    filterStopWords).map(lambda p: (p, 1))
+reduced = pairs.reduceByKey(add).sortBy(
+    lambda p: p[1]).map(lambda p: (p[0][0], p[0][1]))
+grouped = reduced.groupByKey().mapValues(topFive)
 
 mapped = grouped.collectAsMap()
 # print(mapped)

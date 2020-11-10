@@ -3,6 +3,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 import csv
 from operator import add
+import random
 
 tokenizer = RegexpTokenizer(r'\w+')
 fname = "lotr.txt"
@@ -27,6 +28,18 @@ def topFive(words):
     return list(map(lambda x: x[0], sorted(wordDict.items(), key=lambda x: x[1], reverse=True)[:5]))
 
 
+def paragraph(words, n):
+    result = []
+    word, next5 = random.sample(words.items(), 1)[0]
+    result.append(word)
+    for _ in range(n):
+        nextWord = random.sample(next5, 1)[0]
+        result.append(nextWord)
+        nextOfNext = words[nextWord]
+        next5 = nextOfNext
+    return ' '.join(result)
+
+
 def writeCSVToFile(data, fname):
     with open(fname, 'w') as out:
         csv_out = csv.writer(out)
@@ -38,6 +51,15 @@ lines = sc.textFile(fname)
 pairs = lines.flatMap(lineToWords)
 grouped = pairs.groupByKey().mapValues(topFive)
 
-print(grouped.sample(False, 0.001).collect())
+mapped = grouped.collectAsMap()
+# print(mapped)
+print("\n\n")
+print(paragraph(mapped, 100))
+
+print("\n\n")
+print(paragraph(mapped, 100))
+
+print("\n\n")
+print(paragraph(mapped, 100))
 
 sc.stop()

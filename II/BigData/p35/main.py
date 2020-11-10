@@ -43,6 +43,9 @@ def paragraph(words, n):
             next5 = nextOfNext
             pass
         except:
+            w, nex = random.sample(words.items(), 1)[0]
+            word = w
+            next5 = nex
             pass
     return ' '.join(result)
 
@@ -56,13 +59,10 @@ grouped = reduced.groupByKey().mapValues(topFive)
 
 mapped = grouped.collectAsMap()
 # print(mapped)
-print("\n\n")
-print(paragraph(mapped, 100))
 
-print("\n\n")
-print(paragraph(mapped, 100))
-
-print("\n\n")
-print(paragraph(mapped, 100))
+while True:
+    print("\n\n")
+    print(paragraph(mapped, 100))
+    input("Press to generate paragraph...")
 
 sc.stop()

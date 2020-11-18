@@ -28,7 +28,7 @@ def comb_operator(x, y):
     distinct = {**x[4], **y[4]}
     return (min_v, max_v, count, avg_v, distinct)
 
-data = np.random.randint(0, 2_000_000, size=1_000_000)
+data = np.random.randint(0, 10_000_000, size=1_000_000)
 distData = sc.parallelize(data)
 
 labels = ["min", "max", "count", "avg", "distinct", "distinct_num"]

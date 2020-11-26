@@ -37,8 +37,8 @@ export class Triangle {
   v0: Vertex;
   v1: Vertex;
   v2: Vertex;
-  radius: number;
-  center: Vertex;
+  radius: number = NaN;
+  center: Vertex | null = null;
 
   constructor(v0: Vertex, v1: Vertex, v2: Vertex) {
     this.v0 = v0;
@@ -86,7 +86,10 @@ export class Triangle {
     this.radius = Math.sqrt(dx * dx + dy * dy);
   }
 
-  inCircumcircle(v) {
+  inCircumcircle(v: Vertex) {
+    if (this.center === null) {
+      throw new Error("Center is null");
+    }
     const dx = this.center.x - v.x;
     const dy = this.center.y - v.y;
     return Math.sqrt(dx * dx + dy * dy) <= this.radius;
@@ -141,7 +144,7 @@ function addVertex(vertex: Vertex, triangles: Triangle[]) {
   return trianglesFiltered;
 }
 
-function uniqueEdges(edges) {
+function uniqueEdges(edges: Edge[]) {
   const uniqueEdges = [];
   for (let i = 0; i < edges.length; ++i) {
     let isUnique = true;

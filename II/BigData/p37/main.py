@@ -22,7 +22,9 @@ def gen_paths(pair):
 def get_triplets(p):
     u, triangles_count = p
     deg = len(neighbours[u])
-    denominator = deg * (deg - 1.0) + 1
+    denominator = deg * (deg - 1.0)
+    if denominator == 0:
+        return (u, 0, deg)
     return (u, 2 * triangles_count / denominator, deg)
 
 

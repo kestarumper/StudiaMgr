@@ -1,3 +1,5 @@
+import { makeCounter } from "./util";
+
 export class Vertex {
   x: number;
   y: number;
@@ -87,6 +89,7 @@ export class Triangle {
   }
 
   inCircumcircle(v: Vertex) {
+    CURRENT_COUNTER.inc();
     if (this.center === null) {
       throw new Error("Center is null");
     }
@@ -137,6 +140,7 @@ function addVertex(vertex: Vertex, triangles: Triangle[]) {
 
   // Create new triangles from the unique edges and new vertex
   uniqEdges.forEach(function (edge) {
+    CURRENT_COUNTER.inc();
     trianglesFiltered.push(new Triangle(edge.v0, edge.v1, vertex));
   });
 
@@ -154,6 +158,7 @@ function uniqueEdges(edges: Edge[]) {
 
     // See if edge is unique
     for (let j = 0; j < edges.length; ++j) {
+      CURRENT_COUNTER.inc();
       if (i != j && edges[i].equals(edges[j])) {
         isUnique = false;
         break;
@@ -167,7 +172,9 @@ function uniqueEdges(edges: Edge[]) {
   return uniqueEdges;
 }
 
+let CURRENT_COUNTER: { inc: () => void, get: () => number };
 export function triangulate(vertices: Vertex[]) {
+  CURRENT_COUNTER = makeCounter();
   // Create bounding 'super' triangle
   const st = superTriangle(vertices);
 
@@ -198,5 +205,9 @@ export function triangulate(vertices: Vertex[]) {
       )
   );
 
-  return { triangles, totalTrianglesCreated };
+  return {
+    triangles,
+    totalTrianglesCreated,
+    iterations: CURRENT_COUNTER.get(),
+  };
 }

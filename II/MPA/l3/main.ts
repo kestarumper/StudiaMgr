@@ -62,10 +62,12 @@ function experiment(length: number, width: number, height: number) {
   // console.timeEnd("random");
 
   // console.time("triangulation");
-  const { triangles, totalTrianglesCreated } = delaunay.triangulate(vertices);
+  const { triangles, totalTrianglesCreated, iterations } = delaunay.triangulate(
+    vertices
+  );
   // console.timeEnd("triangulation");
 
-  return { vertices, triangles, totalTrianglesCreated };
+  return { vertices, triangles, totalTrianglesCreated, iterations };
 }
 
 function experiments() {
@@ -79,16 +81,24 @@ function experiments() {
     n_experiments
   );
 
+  const size_x = 1000;
+  const size_y = 1000;
+
   let n, i;
   try {
     for (n = n_min; n <= n_max; n += n_step) {
       console.log(`N=${n}`);
       for (i = 0; i < n_experiments; i++) {
-        const { totalTrianglesCreated } = experiment(n, 10.0, 10.0);
-        write({
+        const { totalTrianglesCreated, iterations } = experiment(
           n,
-          iterations: totalTrianglesCreated.reduce((a, b) => a + b, 0),
-        });
+          size_x,
+          size_y
+        );
+        write([
+          n,
+          totalTrianglesCreated.reduce((a, b) => a + b, 0),
+          iterations,
+        ]);
       }
     }
   } catch (error) {

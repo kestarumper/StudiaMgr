@@ -1,4 +1,5 @@
 import Delaunay, { Point } from "./DelaunayFast";
+import { createExperimentStream } from "./util";
 
 function randomVertices(length: number, width: number, height: number) {
   const vertices: Point[] = Array.from({ length }, () => [
@@ -35,23 +36,49 @@ function draw(
 }
 
 function experiment(length: number, width: number, height: number) {
-  console.time("random");
+  // console.time("random");
   const vertices = randomVertices(length, width, height);
-  console.timeEnd("random");
+  // console.timeEnd("random");
 
-  console.time("triangulation");
+  // console.time("triangulation");
   const delaunay = new Delaunay(vertices);
-  const faces = delaunay.triangulate();
-  console.timeEnd("triangulation");
-  return faces;
+  const { faces, iterations } = delaunay.triangulate();
+  // console.timeEnd("triangulation");
+  return { faces, iterations };
 }
 
 const n_vertices = 10000;
 
 function experiments() {
-  const n_experiments = 10000;
-  for (let i = 0; i < n_experiments; i++) {
-    const faces = experiment(n_vertices, 1000, 1000);
+  const n_min = 100;
+  const n_step = 100;
+  const n_max = 10000;
+
+  const n_experiments = 1000;
+  const { write, close } = createExperimentStream(
+    "delaunay_fast.csv",
+    n_experiments
+  );
+
+  const size_x = 1000;
+  const size_y = 1000;
+
+  let n, i;
+  try {
+    for (n = n_min; n <= n_max; n += n_step) {
+      console.log(`N=${n}`);
+      for (i = 0; i < n_experiments; i++) {
+        const { iterations } = experiment(n, size_x, size_y);
+        write([n, iterations]);
+      }
+    }
+  } catch (error) {
+    console.error(
+      `Error while performing experiment n=${n}, iter=${i}.`,
+      error
+    );
+  } finally {
+    close();
   }
 }
 
@@ -67,7 +94,7 @@ if (typeof window !== "undefined") {
   }
 
   const render = () => {
-    const faces = experiment(n_vertices, canvas.width, canvas.height);
+    const { faces } = experiment(n_vertices, canvas.width, canvas.height);
     draw(ctx, canvas, faces);
 
     setTimeout(render, 10);

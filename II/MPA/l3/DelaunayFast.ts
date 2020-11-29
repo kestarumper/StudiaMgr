@@ -1,5 +1,8 @@
+import { makeCounter } from "./util";
+
 export type Point = [number, number];
 
+let CURRENT_COUNTER: { inc: () => void; get: () => number };
 export default class Delaunay {
   points: Point[];
 
@@ -7,7 +10,8 @@ export default class Delaunay {
     this.points = points || [];
   }
 
-  triangulate(): Point[] {
+  triangulate() {
+    CURRENT_COUNTER = makeCounter();
     const pts = this.points;
 
     // Initial sorting of the points
@@ -21,7 +25,7 @@ export default class Delaunay {
       if (pts[i][0] === pts[i - 1][0] && pts[i][1] === pts[i - 1][1])
         pts.splice(i, 1); // Costly operation, but there shouldn't be that many duplicates
 
-    if (pts.length < 2) return [];
+    if (pts.length < 2) return { faces: [], iterations: 0 };
 
     var quadEdge = delaunay(pts).le;
 
@@ -35,6 +39,8 @@ export default class Delaunay {
 
     var curr = quadEdge;
     do {
+      CURRENT_COUNTER.inc();
+
       queue.push(curr.sym);
       curr.mark = true;
       curr = curr.lnext;
@@ -46,6 +52,8 @@ export default class Delaunay {
         // Stores the edges for a visited triangle. Also pushes sym (neighbour) edges on stack to visit later.
         curr = edge;
         do {
+          CURRENT_COUNTER.inc();
+
           faces.push(curr.orig);
           if (!curr.sym.mark) queue.push(curr.sym);
 
@@ -55,7 +63,7 @@ export default class Delaunay {
       }
     } while (queueIndex < queue.length);
 
-    return faces;
+    return { faces, iterations: CURRENT_COUNTER.get() };
   }
 }
 
@@ -274,6 +282,8 @@ function delaunay(s: Point[]): { le: QuadEdge; re: QuadEdge } {
 
     // Compute the lower common tangent of L and R
     do {
+      CURRENT_COUNTER.inc();
+
       if (leftOf(rdi.orig, ldi)) ldi = ldi.lnext;
       else if (rightOf(ldi.orig, rdi)) rdi = rdi.rprev;
       else break;
@@ -290,6 +300,8 @@ function delaunay(s: Point[]): { le: QuadEdge; re: QuadEdge } {
       var lcand = basel.sym.onext;
       if (valid(lcand, basel)) {
         while (inCircle(basel.dest, basel.orig, lcand.dest, lcand.onext.dest)) {
+          CURRENT_COUNTER.inc();
+
           t = lcand.onext;
           deleteEdge(lcand);
           lcand = t;
@@ -300,6 +312,8 @@ function delaunay(s: Point[]): { le: QuadEdge; re: QuadEdge } {
       var rcand = basel.oprev;
       if (valid(rcand, basel)) {
         while (inCircle(basel.dest, basel.orig, rcand.dest, rcand.oprev.dest)) {
+          CURRENT_COUNTER.inc();
+
           t = rcand.oprev;
           deleteEdge(rcand);
           rcand = t;

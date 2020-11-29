@@ -121,7 +121,6 @@ function superTriangle(vertices: Vertex[]): Triangle {
 
 function addVertex(vertex: Vertex, triangles: Triangle[]) {
   const edges: Edge[] = [];
-
   // Remove triangles with circumcircles containing the vertex
   const trianglesFiltered = triangles.filter(function (triangle) {
     if (triangle.inCircumcircle(vertex)) {
@@ -141,7 +140,11 @@ function addVertex(vertex: Vertex, triangles: Triangle[]) {
     trianglesFiltered.push(new Triangle(edge.v0, edge.v1, vertex));
   });
 
-  return trianglesFiltered;
+  const newTrianglesDiff = Math.abs(
+    trianglesFiltered.length - triangles.length
+  );
+
+  return { triangles: trianglesFiltered, diff: newTrianglesDiff };
 }
 
 function uniqueEdges(edges: Edge[]) {
@@ -164,16 +167,19 @@ function uniqueEdges(edges: Edge[]) {
   return uniqueEdges;
 }
 
-export function triangulate(vertices: Vertex[]): Triangle[] {
+export function triangulate(vertices: Vertex[]) {
   // Create bounding 'super' triangle
   const st = superTriangle(vertices);
 
   // Initialize triangles while adding bounding triangle
   let triangles = [st];
+  const totalTrianglesCreated: number[] = [];
 
   // Triangulate each vertex
   vertices.forEach(function (vertex) {
-    triangles = addVertex(vertex, triangles);
+    const { triangles: newTriangles, diff } = addVertex(vertex, triangles);
+    triangles = newTriangles;
+    totalTrianglesCreated.push(diff);
   });
 
   // Remove triangles that share edges with super triangle
@@ -192,5 +198,5 @@ export function triangulate(vertices: Vertex[]): Triangle[] {
       )
   );
 
-  return triangles;
+  return { triangles, totalTrianglesCreated };
 }

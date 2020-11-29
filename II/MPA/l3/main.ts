@@ -1,13 +1,10 @@
 import * as delaunay from "./Delaunay";
+import { createExperimentStream, Experiment } from "./util";
 
 function randomVertices(length: number, width: number, height: number) {
   const vertices = Array.from(
     { length },
-    () =>
-      new delaunay.Vertex(
-        Math.floor(Math.random() * width),
-        Math.floor(Math.random() * height)
-      )
+    () => new delaunay.Vertex(Math.random() * width, Math.random() * height)
   );
 
   // Vertice for each corner
@@ -60,21 +57,47 @@ function draw(
 }
 
 function experiment(length: number, width: number, height: number) {
-  console.time("random");
+  // console.time("random");
   const vertices = randomVertices(length, width, height);
-  console.timeEnd("random");
+  // console.timeEnd("random");
 
-  console.time("triangulation");
-  const triangles = delaunay.triangulate(vertices);
-  console.timeEnd("triangulation");
-  return { vertices, triangles };
+  // console.time("triangulation");
+  const { triangles, totalTrianglesCreated } = delaunay.triangulate(vertices);
+  // console.timeEnd("triangulation");
+
+  return { vertices, triangles, totalTrianglesCreated };
 }
 
 function experiments() {
-  const n_vertices = 10000;
-  const n_experiments = 10000;
-  for (let i = 0; i < n_experiments; i++) {
-    const { vertices, triangles } = experiment(n_vertices, 1000, 1000);
+  const n_min = 100;
+  const n_step = 100;
+  const n_max = 1000;
+
+  const n_experiments = 100;
+  const { write, close } = createExperimentStream(
+    "delaunay_slow.csv",
+    n_experiments
+  );
+
+  let n, i;
+  try {
+    for (n = n_min; n <= n_max; n += n_step) {
+      console.log(`N=${n}`);
+      for (i = 0; i < n_experiments; i++) {
+        const { totalTrianglesCreated } = experiment(n, 10.0, 10.0);
+        write({
+          n,
+          iterations: totalTrianglesCreated.reduce((a, b) => a + b, 0),
+        });
+      }
+    }
+  } catch (error) {
+    console.error(
+      `Error while performing experiment n=${n}, iter=${i}.`,
+      error
+    );
+  } finally {
+    close();
   }
 }
 

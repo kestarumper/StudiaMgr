@@ -1,6 +1,7 @@
 import fs from "fs";
 
-export type Experiment = number[];
+export type Experiment = string[] | number[];
+export type Counter = { inc: (n?: number) => void, get: () => number };
 
 export function createExperimentStream(fname: string, flushEvery: number) {
   const writeStream = fs.openSync(fname, "w");
@@ -16,11 +17,11 @@ export function createExperimentStream(fname: string, flushEvery: number) {
   return { write, close };
 }
 
-export function makeCounter() {
+export function makeCounter(): Counter {
   let counter = 0;
   return {
-    inc: () => {
-      counter += 1;
+    inc: (n: number = 1) => {
+      counter += n;
     },
     get: () => counter,
   };

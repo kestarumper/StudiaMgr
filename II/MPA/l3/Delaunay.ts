@@ -1,4 +1,4 @@
-import { makeCounter } from "./util";
+import { Counter, makeCounter } from "./util";
 
 export class Vertex {
   x: number;
@@ -89,7 +89,7 @@ export class Triangle {
   }
 
   inCircumcircle(v: Vertex) {
-    CURRENT_COUNTER.inc();
+    ITERATION_COUNTER.inc();
     if (this.center === null) {
       throw new Error("Center is null");
     }
@@ -135,12 +135,14 @@ function addVertex(vertex: Vertex, triangles: Triangle[]) {
     return true;
   });
 
+  const badTriangles = triangles.length - trianglesFiltered.length;
+
   // Get unique edges
   const uniqEdges = uniqueEdges(edges);
 
   // Create new triangles from the unique edges and new vertex
   uniqEdges.forEach(function (edge) {
-    CURRENT_COUNTER.inc();
+    ITERATION_COUNTER.inc();
     trianglesFiltered.push(new Triangle(edge.v0, edge.v1, vertex));
   });
 
@@ -148,7 +150,7 @@ function addVertex(vertex: Vertex, triangles: Triangle[]) {
     trianglesFiltered.length - triangles.length
   );
 
-  return { triangles: trianglesFiltered, diff: newTrianglesDiff };
+  return { triangles: trianglesFiltered, diff: newTrianglesDiff, badTriangles };
 }
 
 function uniqueEdges(edges: Edge[]) {
@@ -158,7 +160,7 @@ function uniqueEdges(edges: Edge[]) {
 
     // See if edge is unique
     for (let j = 0; j < edges.length; ++j) {
-      CURRENT_COUNTER.inc();
+      ITERATION_COUNTER.inc();
       if (i != j && edges[i].equals(edges[j])) {
         isUnique = false;
         break;
@@ -172,21 +174,26 @@ function uniqueEdges(edges: Edge[]) {
   return uniqueEdges;
 }
 
-let CURRENT_COUNTER: { inc: () => void, get: () => number };
+let ITERATION_COUNTER: Counter;
 export function triangulate(vertices: Vertex[]) {
-  CURRENT_COUNTER = makeCounter();
+  ITERATION_COUNTER = makeCounter();
   // Create bounding 'super' triangle
   const st = superTriangle(vertices);
 
   // Initialize triangles while adding bounding triangle
   let triangles = [st];
   const totalTrianglesCreated: number[] = [];
+  const totalBadTriangles: number[] = [];
 
   // Triangulate each vertex
   vertices.forEach(function (vertex) {
-    const { triangles: newTriangles, diff } = addVertex(vertex, triangles);
+    const { triangles: newTriangles, diff, badTriangles } = addVertex(
+      vertex,
+      triangles
+    );
     triangles = newTriangles;
     totalTrianglesCreated.push(diff);
+    totalBadTriangles.push(badTriangles);
   });
 
   // Remove triangles that share edges with super triangle
@@ -208,6 +215,7 @@ export function triangulate(vertices: Vertex[]) {
   return {
     triangles,
     totalTrianglesCreated,
-    iterations: CURRENT_COUNTER.get(),
+    totalBadTriangles,
+    iterations: ITERATION_COUNTER.get(),
   };
 }

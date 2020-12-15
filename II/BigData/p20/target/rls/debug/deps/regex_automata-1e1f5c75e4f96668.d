@@ -1,0 +1,11 @@
+/home/adrian/magister/II/BigData/p20/target/rls/debug/deps/regex_automata-1e1f5c75e4f96668.rmeta: /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/lib.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/classes.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/dense.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/dfa.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/regex.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/sparse.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/state_id.rs
+
+/home/adrian/magister/II/BigData/p20/target/rls/debug/deps/regex_automata-1e1f5c75e4f96668.d: /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/lib.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/classes.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/dense.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/dfa.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/regex.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/sparse.rs /home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/state_id.rs
+
+/home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/lib.rs:
+/home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/classes.rs:
+/home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/dense.rs:
+/home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/dfa.rs:
+/home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/regex.rs:
+/home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/sparse.rs:
+/home/adrian/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-automata-0.1.9/src/state_id.rs:

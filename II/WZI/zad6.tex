@@ -1,0 +1,67 @@
+\documentclass{homeworg}
+\usepackage{epsdice}
+
+\title{
+    Problem online - wypożyczanie nart \\
+    \large Wybrane zagadnienia informatyki
+}
+\author{Adrian Mucha}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Zadanie $\epsdice{6}$}
+Rozważmy algorytm $A$ dla problemu wypożyczania nart, który w każdym kroku kupuje narty z prawdopodobieństwem $\frac{1}{B}$ (kupno nart kosztuje $B$ a pożyczenie $1$, po zakupie nart nie ponosimy już żadnych kosztów). Pokaż, że współczynnik konkurencyjności A jest nie mniejszy niż $2 - \frac{1}{B}$ przeciwko adwersarzowi aktywnemu.
+
+\subsubsection*{Współczynnik konkurencyjności}
+Jeśli dla każdych możliwych danych algorytm online daje wynik co najwyżej $c$ razy gorszy niż optymalny, mówimy, że algorytm jest $c$-\textbf{konkurencyjny}. Liczba $c$ nazywa się \textbf{współczynnikiem konkurencyjności} algorytmu.
+
+\section*{Rozwiązanie}
+Łatwo możemy zauważyć, że optymalną strategią aktywnego adwersarza jest przerwanie urlopu w momencie gdy narty zostaną zakupione w $k$-tym dniu. W każdym dniu możemy podjąć decyzję o kupnie nart (robimy to z prawdopodobieństwem $\frac{1}{B}$), jeżeli to zrobimy to gra się kończy i nasz koszt całkowity to $(k - 1) + B$.
+
+Ten model możemy opisać rozkładem prawdopodobieństwa geometrycznego (pierwszy sukces w $k$-tej próbie w procesie Bernoulliego). Niech
+
+\begin{itemize}
+    \item $X \sim Geo(\frac{1}{B})$ będzie zmienną losową oznaczającą koszt całkowity (koszt w dniu kupna nart)
+    \item $x_k = (k - 1) + B$
+    \item $p_k = P(X = k) = \frac{1}{B}(1 - \frac{1}{B})^{k-1}$ będzie prawdopodobieństwem kupna nart w $k$-tym dniu.
+\end{itemize}
+
+Wtedy:
+
+\begin{align*}
+    \mathbb{E}[X] &= \sum_{i=1}^{\infty} p_i x_i = \sum_{i=1}^{\infty}\frac{1}{B}\left(1 - \frac{1}{B}\right)^{i-1} \cdot ((i - 1) + B) \\
+    &= \frac{1}{B}\sum_{i=0}^{\infty}\left(1 - \frac{1}{B}\right)^i \cdot (B + i) \\
+    &= \frac{1}{B}\sum_{i=0}^{\infty}i\left(1 - \frac{1}{B}\right)^i + \sum_{i=0}^{\infty}\left(1 - \frac{1}{B}\right)^i = \star
+\end{align*}
+
+Do rozwiązania $\star$ ($|p| < 1$):
+\begin{align*}
+    \sum_{i=0}^{\infty} p^i &= \frac{1}{1 - p} \\
+    \sum_{i=0}^{\infty} ip^{i-1} &= \frac{1}{(1-p)^2} \tag*{pochodna $\frac{\partial}{\partial p}$} \\
+    \sum_{i=0}^{\infty} ip^i &= \frac{p}{(1-p)^2} \\
+\end{align*}
+
+Wracając:
+
+\begin{align*}
+    \star &= \frac{1}{B} \cdot \frac{1 - \frac{1}{B}}{(1 - 1 + \frac{1}{B})^2} + \frac{1}{1 - 1 + \frac{1}{B}} \\
+    &= \frac{1}{B} \cdot \frac{1 - \frac{1}{B}}{(\frac{1}{B})^2} + \frac{1}{\frac{1}{B}} \\
+    &= B - 1 + B \\
+    &= 2B - 1
+\end{align*}
+
+Ponieważ algorytm optymalny nie przekroczy $B$ (kosztu całkowitego)
+\begin{itemize}
+    \item bo narty możemy wypożyczać codziennie jeżeli trwa mniej niż $B$ dni
+    \item lub narty można kupić na samym początku jeżeli będzie trwał więcej niż $B$ dni
+\end{itemize}
+
+to współczynnik konkurencyjności $c$ wynosi:
+
+$$ c = \frac{2B - 1}{B} = 2 - \frac{1}{B} $$
+
+\end{document}

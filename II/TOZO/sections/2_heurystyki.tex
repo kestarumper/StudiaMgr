@@ -1,0 +1,18 @@
+\section{Znane heurystyki}
+Poniżej przedstawiono przegląd podstawowych heurystyk 
+
+\subsection{One-Time Tree Construction (OTTC)}
+
+Jest to zachłanny algorytm oparty na heurystyce która oblicza średnicę drzewa rozpinającego w każdym kroku i upewnia się, że następny wierzchołek nie przekroczy ograniczenia. A następnie do budowanego drzewa rozpinającego w każdym kroku dodaje krwędź o najniższym koszcie, który nie łamie obostrzeń na średnicę. Dodanie wierzchołka wymaga pracy $\mathcal{O}(n^2)$, a całość wykonywana jest $n-1$ razy, więc całkowity czas pracy algorytmu rozpoczynającego w pojedynczym wierzchołku to $\mathcal{O}(n^3)$. Aby znaleźć najniższe kosztem BDST, algorytm OTTC uruchamiany jest dla każdego wierzchołka grafu ($n$ razy), więc całkowita złożoność wynosi $\mathcal{O}(n^4)$. 
+
+\subsection{Center-Based Tree Construction (CBTC)}
+W drzewie o średnicy $D$, żaden wierzchołek nie nie znajduje się dalej niż $\frac{D}{2}$ skoków (lub krawędzi) od korzenia. Dzięki temu zabiegowi otrzymujemy szybszy algorytm bazujący na algorytmie Prima, który poprawia OTTC dzieki budowaniu BDST od środka drzewa. Zapamiętywanie stopnia wierzchołków i zapewnianie, że żaden nie przekroczy głębokości $\floor{\frac{D}{2}}$ pozwala zaoszczędzić ciągłego przeliczania średnicy drzewa przed dołączeniem wierzchołka do BDST. Otrzymujemy nieco lepszą złożoność $\mathcal{O}(n^3)$ w porównaniu do OTTC (tutaj również należy rozważyć algorytm startując z każdego wierzchołka osobno i wybrać drzewo o najniższym koszcie).
+
+\subsection{Randomized Tree Construction (RTC)}
+W losowej konstrukcji drzewa korzeń (centrum) jest wybierany na początku jako losowy wierzchołek (jeśli $D$ jest parzyste) lub losowane są dwa wierzchołki połączone ze sobą (jeśli $D$ jest nieparzyste). Każdy następny dołączany wierzchołek jest również wybierany losowo w sposób zachłanny, taki że przyłączenie wierzchołka nie przekroczy ograniczenia $D$ na średnicę drzewa. Jest to identyczny w implementacji algorytm jak CBTC z tą różnicą że wprowadzono element losowości przy wybieraniu wierzchołków. Również posiada tę samą złożoność $\mathcal{O}(n^3)$.
+
+\subsection{Pozostałe heurystyki}
+\begin{itemize}
+    \item Po skonstruowaniu BDST sprawdzane jest dla każdego wierzchołka $v \in V$ którego głębokość jest większa niż $1$ czy można go odłączyć i połączyć z innym wierzchołkiem BDST mającym niższy stopień głębokości krawędzią o mniejszym koszcie.
+    \item 
+\end{itemize}

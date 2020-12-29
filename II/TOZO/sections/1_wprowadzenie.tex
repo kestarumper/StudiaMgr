@@ -1,7 +1,7 @@
 \section{Wprowadzenie}
 Mając ważony, nieskierowany graf $G$ i dodatnią liczbę $D$ w problemie \textit{Bounded-Diameter Minimum Spanning Tree (BDMST)} szukamy najniższego kosztem drzewa rozpinającego spośród wszystkich drzew rozpinających $G$, których ścieżki składają się z co najwyżej $D$ krawędzi. Formalnie \textit{BDST} jest drzewem $T \subset E$ na $G = (V, E)$, którego średnica jest nie większa niż $D$. \textit{BDMST} ma na celu znalezienia drzewa rozpinającego o minimalnym koszcie $w(T) = \sum_{e\in T} w(e)$. Zawężając do grafów Euklidesowych, czyli takich w których wierzchołki są punktami na przestrzeni Euklidesowej a wagi krawędzi reprezentują dystans między parami wierzchołków nazywamy \textit{Euclidean BDMST}.
 
-Problem BDMST jest NP-trudny, oraz trudny w aproksymacji co motywuje w poszukiwaniach efektywnej strategii opartej na heurystykach, które potrafią szybko znaleźć BDST o niskim koszcie.
+Problem BDMST jest NP-trudny dla $4 \leq D < |V| - 1$, oraz trudny w aproksymacji co motywuje w poszukiwaniach efektywnej strategii opartej na heurystykach, które potrafią szybko znaleźć BDST o niskim koszcie.
 
 Oczywistym zastosowaniem \textit{EBDMST} jest znalezienie najtańszej sieci kabli lub rur by połączyć zbiór miejsc zakładając, że koszt połączenia zależny jest od jego długości.
 

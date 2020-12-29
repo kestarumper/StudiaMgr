@@ -6,4 +6,10 @@ C.~Patvardhan, V.~Prem Prakash, and Anand Srivastav.
   minimum spanning tree problem.
 \newblock {\em Informatica (Slovenia)}, 39(3), 2015.
 
+\bibitem{DBLP:journals/soco/SinghG07}
+Alok Singh and Ashok~Kumar Gupta.
+\newblock Improved heuristics for the bounded-diameter minimum spanning tree
+  problem.
+\newblock {\em Soft Comput.}, 11(10):911--921, 2007.
+
 \end{thebibliography}

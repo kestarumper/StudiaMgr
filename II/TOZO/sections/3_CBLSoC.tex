@@ -1,1 +1,7 @@
 \section{Heurystyki CBLSoC-lite oraz CBLSoC}
+
+Center-Based Least Sum of Costs \textit{Lite} wybiera wierzchołek na korzeń (lub dwa wierzchołki w przypadku parzystej średnicy) z najmniejszym kosztem do reszty wierzchołków $v_0 = \argmin_v\left\{v\in V | \sum_{u \in N_G(v)} w((v, u))\right\}$. Podążając tym podejściem, kolejne wierzchołki również są wybierane na podstawie najniższej sumy kosztów do reszty wierzchołków z uwzględnieniem heurystyki CBTC, a zatem upewnianiem się, że żaden wierzchołek nie przekroczy głębokości $\floor{\frac{D}{2}}$. Otrzymany algorytm (wersja \textit{Lite}) wykonuje pracę $\mathcal{O}(n^2)$. 
+
+CBLSoC jest wariacją pierwszego, gdyż różni się tym, że wybór korzenia nie odbywa się na podstawie najniższego kosztu lecz powtarza się algorytm \textit{Lite} $n$ razy dla każdego wierzchołka grafu. Całkowity czas działania algorytmu wynosi więc $\mathcal{O}(n^3)$. 
+
+Podobnie jak w CBTC i RTC otrzymujemy jednakowe złożoności natomiast wynikowe drzewa rozpinające posiadają niższe koszty.

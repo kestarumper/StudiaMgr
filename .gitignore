@@ -7,4 +7,4 @@
 **/.vscode
 **/__pycache__
 **/*.bbl
-**/*.bgl
+**/*.blg

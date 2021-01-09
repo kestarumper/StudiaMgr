@@ -6,3 +6,13 @@ Problem BDMST jest NP-trudny dla $4 \leq D < |V| - 1$, oraz trudny w aproksymacj
 Oczywistym zastosowaniem \textit{EBDMST} jest znalezienie najtańszej sieci kabli lub rur by połączyć zbiór miejsc zakładając, że koszt połączenia zależny jest od jego długości.
 
 %Innym zastosowaniem jest rozwiązanie aproksymacyjne Euklidesowego problemu Komiwojażera (\textit{Euclidean traveling salesman problem}). Realistycznie można rozwiązać ten problem 2-aproksymacją poprzez policzenie \textit{EBDMST} i poruszanie się po brzegu obejmującym całe drzewo.
+
+\subsection{NP-zupełność}
+
+W książce \cite[p.~206]{10.5555/574848} Garey and Johnson pokazali, że Bounded diameter spanning tree problem jest NP-trudny.
+
+Mając ważony graf nieskierowany $G = (V, E)$ oraz dwa parametry $D$ i $C$, decyzja \textit{czy drzewo rozpinające o koszcie $C$ oraz średnicy ograniczonej z góry przez $D$ istnieje} jest NP-zupełny \cite{DBLP:conf/compgeom/HoL89}.
+
+BDBCST jest NP. Najcięższą ścieżką musi być ścieżką łączącą dwa liście, więc możemy zgadnąć $n-1$ krawędzi i sprawdzić czy drzewo spełnia ograniczenia w czasie wielomianowym.
+
+

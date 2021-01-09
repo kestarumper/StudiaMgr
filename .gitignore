@@ -6,3 +6,5 @@
 **/*.synctex.gz
 **/.vscode
 **/__pycache__
+**/*.bbl
+**/*.bgl

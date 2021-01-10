@@ -7,14 +7,20 @@ Oczywistym zastosowaniem \textit{EBDMST} jest znalezienie najtańszej sieci kabl
 
 %Innym zastosowaniem jest rozwiązanie aproksymacyjne Euklidesowego problemu Komiwojażera (\textit{Euclidean traveling salesman problem}). Realistycznie można rozwiązać ten problem 2-aproksymacją poprzez policzenie \textit{EBDMST} i poruszanie się po brzegu obejmującym całe drzewo.
 
-\subsection{NP-zupełność}
-
+\subsection{Definicja}
 W książce \cite[p.~206]{10.5555/574848} Garey and Johnson pokazali, że Bounded Diameter Spanning Tree (BDST) problem jest NP-trudny.
 
 Mając ważony graf nieskierowany $G = (V, E)$ oraz dwa parametry $D$ i $C$, decyzja \textit{czy drzewo rozpinające o koszcie $C$ oraz średnicy ograniczonej z góry przez $D$ istnieje} jest NP-zupełny. Jako pierwsi opisali ten problem i dowiedli NP-zupełności autorzy pracy \cite{DBLP:conf/compgeom/HoL89}.
 
 Formalnie, mając graf $G$, funkcję kosztu $W(e) \in \mathbb{Z}^+, \forall_{e\in E}$, oraz nieujemne liczby całkowite $C$ i $D$, \underline{stwierdzić czy istnieje} drzewo rozpinające $T$, takie że $\sum_{e\in T} W(e) \leq C$ oraz $\sum_{e\in p} W(e) \leq D$ gdzie $p$ jest zbiorem wszystkich ścieżek w $T$. Ten problem nazywać będziemy Bounded Diameter Bounded Cost Spanning Tree (BDBCST).
 
+\subsection{Przykłady}
+
+Najprostszym grafem o zadanej maksymalnej średnicy $D$ drzewa rozpinającego jest \textit{graf liniowy} zawierający nie więcej niż $D + 1$ ($|V| \leq D + 1$, $|E| \leq D$) wierzchołków o funkcji kosztu $W(u, v) = \floor{\frac{D}{C}}$.
+
+Przykładem negatywnym będzie więc graf w którym istnieje ścieżka między dwoma liśćmi dłuższa niż $D$, lub graf którego drzewo rozpinające zawiera krawędź $e_0$ której koszt przekracza ograniczenie $W(e_0) > C$.
+
+\section{NP-zupełność}
 \begin{theorem}
     BDBCST jest NP-zupełny
 

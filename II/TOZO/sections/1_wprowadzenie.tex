@@ -9,10 +9,72 @@ Oczywistym zastosowaniem \textit{EBDMST} jest znalezienie najtańszej sieci kabl
 
 \subsection{NP-zupełność}
 
-W książce \cite[p.~206]{10.5555/574848} Garey and Johnson pokazali, że Bounded diameter spanning tree problem jest NP-trudny.
+W książce \cite[p.~206]{10.5555/574848} Garey and Johnson pokazali, że Bounded Diameter Spanning Tree (BDST) problem jest NP-trudny.
 
-Mając ważony graf nieskierowany $G = (V, E)$ oraz dwa parametry $D$ i $C$, decyzja \textit{czy drzewo rozpinające o koszcie $C$ oraz średnicy ograniczonej z góry przez $D$ istnieje} jest NP-zupełny \cite{DBLP:conf/compgeom/HoL89}.
+Mając ważony graf nieskierowany $G = (V, E)$ oraz dwa parametry $D$ i $C$, decyzja \textit{czy drzewo rozpinające o koszcie $C$ oraz średnicy ograniczonej z góry przez $D$ istnieje} jest NP-zupełny. Jako pierwsi opisali ten problem i dowiedli NP-zupełności autorzy pracy \cite{DBLP:conf/compgeom/HoL89}.
 
-BDBCST jest NP. Najcięższą ścieżką musi być ścieżką łączącą dwa liście, więc możemy zgadnąć $n-1$ krawędzi i sprawdzić czy drzewo spełnia ograniczenia w czasie wielomianowym.
+Formalnie, mając graf $G$, funkcję kosztu $W(e) \in \mathbb{Z}^+, \forall_{e\in E}$, oraz nieujemne liczby całkowite $C$ i $D$, \underline{stwierdzić czy istnieje} drzewo rozpinające $T$, takie że $\sum_{e\in T} W(e) \leq C$ oraz $\sum_{e\in p} W(e) \leq D$ gdzie $p$ jest zbiorem wszystkich ścieżek w $T$. Ten problem nazywać będziemy Bounded Diameter Bounded Cost Spanning Tree (BDBCST).
 
+\begin{theorem}
+    BDBCST jest NP-zupełny
+
+    \begin{proof}
+        BDBCST jest NP. Najcięższą ścieżką musi być ścieżką łączącą dwa liście, więc możemy zgadnąć $n-1$ krawędzi i sprawdzić czy drzewo spełnia ograniczenia w czasie wielomianowym.
+        
+        Weźmy klauzule $C = \{C_1, C_2, \ldots, C_q\}$ z problemu \texttt{3SAT} na zbiorze zmiennych $\{X_1, X_2, \ldots, X_n\}$. Skonstruujemy graf $G = (V, E)$ i funkcję $W$ w taki sposób, że $C$ jest spełnialne wtedy i tylko wtedy gdy istnieje drzewo rozpinające $T$ dla grafu $G$, takie że $\sum_{e\in T} W(e) \leq 3n + 3q + 5$ oraz $\sum_{e\in p} W(e) \leq 10$ gdzie $p$ jest zbiorem ścieżek w drzewie $T$.
+
+        $G$ konstruujemy w następujący sposób. $G$ zawiera następujące typy wierzchołków:
+        \begin{itemize}
+            \item ustanawiający prawdę wierzchołek $t$
+            \item wierzchołki zmiennych $\{x_1, \bar{x}_1, x_2, \bar{x}_2, \ldots, x_n, \bar{x}_n\}$
+            \item wierzchołki klauzul $\{c_1, c_2, \ldots, c_q\}$
+            \item specjalny wierzchołek $s$
+        \end{itemize}
+        $G$ zawiera następujące krawędzie:
+        \begin{itemize}
+            \item krawędzie przypisania (waga $2$) $\{(t, x) | \forall x\}$
+            \item krawędzie regulujące (waga $1$) $\{(x_i, \bar{x}_i) | i \in [1,n]\}$
+            \item krawędzie powstrzymujące (waga $3$) $\{(u_i, c_j) | u_i = \begin{cases}
+                x_i,        & \text{jeśli } X_i \in C_j\\
+                \bar{x}_i,  & \text{jeśli }  \bar{X}_i \in C_j
+            \end{cases}\}$
+            \item krawędź $(t, s$) - waga $5$
+        \end{itemize}
+        Ta konstrukcja jest możliwa w czasie wielomianowym.
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.5\textwidth]{graph_proof.png}
+            \caption{Konstrukcja grafu $G$ w dowodzie twierdzenia 1}
+            \label{fig:graph_proof_construct}
+        \end{figure}
+
+        Następnie załóżmy, że $C$ jest spełnialne. Istnieje więc przypisanie takie, że każda klauzula w $C$ zawiera conajmniej jeden prawdziwy literał. Możemy wybrać takie drzewo rozpinające $T$ składające się z następujących krawędzi:
+        \begin{itemize}
+            \item $(t, s)$
+            \item $(t, x_i)$ dla każdego $i$ gdzie $X_i$ jest przypisany jako \texttt{TRUE} lub $(t, \bar{x}_i)$ w p.p.
+            \item wszystkie krawędzie regulujące
+            \item krawędzie powstrzymujące $(x_{i_j}, c_i)$, gdzie $X_{i_j}$ jest pierwszym literałem \texttt{TRUE} w klauzuli $C_i$.
+        \end{itemize}
+        Łatwo zauważyć, że $\sum_{e\in T} W(e) = 3n + 3q + 5$. Waga ścieżki od liścia do wierzchołka $t$ wynosi co najwyżej $5$, więc nie istnieje ścieżka w $T$ z wagą większą niż $10$.
+
+        Załóżmy że mamy drzewo rozpinające $T$ takie, że $\sum_{e\in T} W(e) \leq 3n +3q + 5$ oraz żadna ścieżka $p$ w $T$ nie jest dłuższa niż $10$. W $T$ jest $2n + q + 2$ wierzchołków i $2n + q + 1$ krawędzi. $T$ musi zawierać krawędź $(t, s)$, ponieważ $(t, s)$ jest jedyną krawędzią łączącą $s$. Wierzchołki klauzul są połączone jedynie za pomocą krawędzi powstrzymujących, a jest ich co najmniej $q$ w $T$. Załóżmy, że drzewo rozpinające $T$ składa się z $i$ krawędzi przypisania, $j$ krawędzi regulujących, $k + q$ krawędzi powstrzymujących oraz krawędzi $(t, s)$. Wtedy mamy
+        \begin{align}
+            i, j, k     &\geq 0 \\
+            j           &\leq n \\
+            i + j + k   &= 2n \\
+            2i + j + 3k &\leq 3n 
+        \end{align}
+        Załóżmy, że $j < n$. Odejmując od (4) - $2\times (3)$, mamy $$k \leq j-n < 0$$, czyli sprzeczność. Ponadto, $T$ musi zawierać wszystkie $n$ krawędzi regulujących. Podstawiając $j = n$ otrzymujemy
+        \begin{align}
+            i + k   &= n \\
+            2i + 3k &\leq 2n
+        \end{align}
+        Dalej odejmując od (6) - $2\times (5)$ otrzymujemy $k \leq 0$. Stąd $T$ zawiera dokładnie $q$ krawędzi powstrzymujących, $n$ krawędzi regulujących i $n$ krawędzi przypisania.
+
+        Kolejno twierdzimy, że wszystkie wierzchołki klauzul sąsiadują tylko z tymi wierzchołkami zmiennych które sąsiadują z wierzchołkiem $t$ w drzewie rozpinającym $T$. Teraz załóżmy, że to twierdzenie jest fałszywe. Ponieważ wierzchołki klauzul sąsiadują tylko z wierzchołkami zmiennych, musi więc istnieć wierzchołek ze zmienną $x$ oraz taki wierzchołek z klauzulą $c$, że $x$ sąsiaduje z $c$ ale nie sąsiaduje z $t$ w $T$ (patrz rysunek \ref{fig:graph_proof_construct}). Ścieżka z $c$ do $t$, która musi przebiegać przez $x$, ma więc wagę $6$. Ścieżka z $s$ do $c$ w $T$ musi wtedy ważyć $11$, co jest sprzeczne.
+
+        Ponieważ $T$ zawiera wszystkie krawędzie regulujące, $T$ zawiera dokładnie jedną z krawędzi $(t, x_i)$ i $(t, \bar{x}_i)$ dla każdego $i$. Przypisując \texttt{TRUE} każdej zmiennej sąsiadującej z $t$ oraz \texttt{FALSE} ich zmiennym uzupełniającym, wszystkie klauzule w $C$ będą spełnione, ponieważ kazda zawiera przynajmniej jeden prawdziwy literał. Stąd \texttt{3SAT} jest wielomianowo redukowalny do problemu $BDBCST$. 
+    \end{proof}
+\end{theorem}
 

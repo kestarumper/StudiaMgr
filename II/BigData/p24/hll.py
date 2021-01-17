@@ -71,7 +71,6 @@ class HyperLogLog:
     def add(self, v):
         h = self.h
         b = self.b
-        m = self.m
         M = self.M
 
         x = h(v)

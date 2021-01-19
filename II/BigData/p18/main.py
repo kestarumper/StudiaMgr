@@ -12,7 +12,7 @@ def to_shingles(line, k):
     return [tuple(tokens[i:i+k]) for i in range(len(tokens) - k + 1)]
 
 
-k = 4
+k = 3
 sets = []
 paths = []
 for fpath in [f for f in listdir("chapters") if path.isfile(path.join("chapters", f))]:
@@ -36,4 +36,5 @@ jaccards = {}
 for (s1, s2), (c1, c2) in zip(pairs, chapter_pairs):
     jaccards[(c1, c2)] = '{:f}'.format(jaccard(s1, s2))
 
-print(jaccards)
+for (k, v) in jaccards.items():
+    print("{}:\t{}".format(k, v))

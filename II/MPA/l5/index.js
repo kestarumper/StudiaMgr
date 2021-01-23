@@ -76,14 +76,15 @@ function makeBinaryTree(input) {
   return [min, max];
 
   function recur(level) {
-    max = Math.max(max, level);
     if (i >= input.length || input[i++] === RIGHT_BRACKET) {
-      min = Math.min(min, level);
       return null;
     }
     const node = { left: recur(level + 1), right: null };
     if (i >= input.length || input[i] === RIGHT_BRACKET) {
-      min = Math.min(min, level);
+      if (node.left === null && node.right === null) {
+        min = Math.min(min, level);
+        max = Math.max(max, level);
+      }
       i++;
       return node;
     }
@@ -102,7 +103,7 @@ const n_start = 1000;
 const n_end = 50000;
 const n_step = n_start;
 const repeat = 100;
+console.log("n,min,max");
 for (let n = n_start; n <= n_end; n += n_step) {
   experiment(n, repeat);
 }
-

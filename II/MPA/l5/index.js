@@ -93,17 +93,38 @@ function makeBinaryTree(input) {
   }
 }
 
-function experiment(n, repeat) {
-  Array.from({ length: repeat }, () => randomBalancedSequence(n))
-    .map(makeBinaryTree)
-    .forEach(([min, max]) => console.log(`${n},${min},${max}`));
+function experiment(n, repeat, calcProbabilities = false) {
+  const sequences = Array.from({ length: repeat }, () =>
+    randomBalancedSequence(n)
+  );
+
+  if (calcProbabilities) {
+    const probabilities = sequences.map(seq => seq.join()).reduce(
+      (acc, seq) => Object.assign(acc, { [seq]: acc[seq] + 1 || 1 }),
+      {}
+    );
+
+    const totalCount = sequences.length;
+
+    console.log(
+      Object.entries(probabilities).forEach(([key, value]) =>
+        console.log({ key, value: (value / totalCount).toFixed(3) })
+      )
+    );
+  } else {
+    sequences
+      .map(makeBinaryTree)
+      .forEach(([min, max]) => console.log(`${n},${min},${max}`));
+  }
 }
 
-const n_start = 1000;
-const n_end = 50000;
-const n_step = n_start;
-const repeat = 100;
-console.log("n,min,max");
-for (let n = n_start; n <= n_end; n += n_step) {
-  experiment(n, repeat);
-}
+experiment(7, 50000, true);
+
+// const n_start = 1;
+// const n_end = 100;
+// const n_step = n_start;
+// const repeat = 1000;
+// console.log("n,min,max");
+// for (let n = n_start; n <= n_end; n += n_step) {
+//   experiment(n, repeat);
+// }

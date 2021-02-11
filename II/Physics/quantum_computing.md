@@ -1,0 +1,22 @@
+# Quantum computing
+
+## Kubit
+W tradycyjnych komputerach podstawową jednostką informacji jest bit.
+Bit może znajdować się w dwóch stanach, 1 - włączony oraz 0 - wyłączony. Fizycznie w komputerze te stany są zapisywane za pomocą ładunków elektrycznych w tranzystorach. Innym typem zapisanej informacji są dane na dysku, które do ich przetrzymywania używają magnetyzmu. Inne znów - dyski CD (DVD, BD, itd) przechowują dane jako ciągi wgłębień na swej powierzchni która odbija wiązkę lasera w sposób prosty lub nie.
+
+Najczęściej jednak to, jak informacja jest przechowywana i gdzie, zostaje wyabstrachowane do czystej definicji bitu - czyli 0 lub 1. Tę definicję programiści wykorzystują do pisania programów w których przetwarzają bity.
+
+W podobny sposób komputery kwantowe operują z bitów kwantowych, czyli kubitów. Tak jak zwykły bit, kubit ma stan. W przypadku bitu jest to liczba (0 lub 1), natomiast w przypadku kubitu jest nim wektor - a dokładniej wektor w przestrzeni dwuwymiarowej ([1 0]^T) którą nazywamy przestrzenią stanów.
+
+## Podstawowe stany
+Odpowiednikiem klasycznego bitu 0 jest kwantowy stan `|0>`, który jest odpowiednio reprezentowany przez wektor jako [1 0]. Ten stan jest uznawany za podstawowy stan dla kubitów. Istnieje również stan `|1>`, który odpowiada klasycznemu bitowi 1 i jest reprezentowany jako wektor [0 1]. Istnieje wiele innych możliwych stanów kubitów, które swymi możliwościami przyćmiewają klasyczne bity. Ponieważ stany są wektorami, możemy również posiadać stan `0.6|0> + 0.8|1> = [0.6 0.8]`. Te wektory możemy również reprezenować jako wektory z przestrzeni urojonej. Popularnym terminem stała się superpozycja, która w świecie matematycznym jest tak naprawdę liniową kombinacją bitów `|0>` oraz `|1>`. Amplitudą natomiast nazwiemy współczynnik znajdujący się przy bicie (\alpha przy |0> oraz \beta przy |1>). Ważnym ograniczeniem w definicji kubitów i ich relacji z przestrzenią dwu-wymiarową jest ograniczenie na sumę kwadratów aplitud, która musi wynosić 1 i ma za zadanie normalizację wektorów - umieszcza je na kole jednostkowym.
+
+## Kwantowe bramki logiczne
+Kwantowe bramki logiczne to sposób manipulowania kwantowymi danymi czyli kubitem lub ich zbiorem. Oczwyiście ich typy są analogiczne do klasycznych bramek logicznych takich jak AND, OR, NOT. Za pomocą bramek budujemy algorytmy przetwarzania informacji. Weźmy przykładową bramkę NOT. W naszej notacji chcielibyśmy uzyskać coś w rodzaju przejścia NOT|0> = |1> (i na odwrót). Ponieważ kubity składają się z dwóch czynników ta operacja jest bardziej złożona i w świecie kwantowym nazywana rotacją względem osi X. Z matematycznego punktu widzenia będzie to transformacja typu X(a|0> + b|1>) = a|1> + b|0>. Ostatecznie, ponieważ kubity możemy traktować jako wektory, tę transformację możemy zapisać jako macierz 2x2 [0 1, 1 0].
+
+## Przewody kwantowe
+
+Najprostszym układem jest układ identycznościowy, czyli taki który na wejściu dostaje \phi i jako wyjście również oddaje \phi. Nie jest to jednak trywialne w świecie kwantowym. Dla przykładu stany kwantowe są bardzo niestabilne jeżeli przechowywalibyśmy je w fotonach lub atomach. Przeciwnie zachowują się neutrina, które bardzo dobrze przechowują stan, ale to dlatego że praktycznie nie reagują na inną materię. Stąd przewody kwantowe są bardzo trudne fizycznie w budowie, lecz proste z matematycznego punktu widzenia. Możemy osiągnąć stabilność albo możliwość manipulacji bitami (bramki). Podczas pomiaru przewodu kwantowego bit 0 i 1 znajduje się w tych stanach odpowiednio z prawdopodobieństwem \alpha^2 oraz \beta^2 które sumują się do 1 - stąd normalizacja. Warto również wspomnieć, że po zmierzeniu i zamianie na klasyczny bit, nasz kubit jest porzucany gdyż jego stan po pomiarze może być zmieniony.
+
+## Kwantowy model obliczeniowy
+Kwantowy model obliczeniowy rozpoczyna się z pewną ilością kubitów, na których przeprowadzane są operacje za pomocą różnych bramek kwantowych zapewniających możliwości niedostępne w klasycznym modelu obliczeń. Na końcu, każdy kubit jest mierzony by móc odczytać wynik. Ten model jest dużą abstrakcją a szczegóły implementacyjne można przyrównać do różnych języków programowania i tego jak są tłumaczone z języka rozumianego przez ludzi na kod maszynowy. W konkretnym przypadku, ten model mógłby być zredukowany do kombinacji bramek AND oraz NOT.

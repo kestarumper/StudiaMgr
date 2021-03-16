@@ -1,28 +1,16 @@
-// -------------------------------------------------------------- -*- C++ -*-
-// File: ./examples/src/cpp/color.cpp
-// --------------------------------------------------------------------------
-// Licensed Materials - Property of IBM
-//
-// 5724-Y48 5724-Y49 5724-Y54 5724-Y55 5725-A06 5725-A29
-// Copyright IBM Corporation 1990, 2014. All Rights Reserved.
-//
-// Note to U.S. Government Users Restricted Rights:
-// Use, duplication or disclosure restricted by GSA ADP Schedule
-// Contract with IBM Corp.
-// --------------------------------------------------------------------------
-
 /* ------------------------------------------------------------
 
-Problem Description
+Zadanie 30 pkt. (kamień)
 -------------------
 
-The problem involves choosing colors for the countries on a map in
-such a way that at most four colors (blue, white, yellow, green) are
-used and no neighboring countries are the same color. In this exercise,
-you will find a solution for a map coloring problem with six countries:
-Belgium, Denmark, France, Germany, Luxembourg, and the Netherlands.
+Rozłupać kamień o wadze 40 kilogramów na cztery kawałki, tak aby stosując te
+kawałki jako odważniki, możliwe było odważenie każdej z czterdziestu całkowitych
+wag 1, 2, . . . , 40.
+Napisz program który znajduje wagi tych czterech kawałków kamienia.
 
 ------------------------------------------------------------ */
+
+// This define is here to "fix imports" for my VSCode intelisense
 #define ILOUSESTL
 #include <ilcp/cp.h>
 
@@ -74,13 +62,3 @@ int main(int, const char *[])
   env.end();
   return 0;
 }
-
-/*
-Feasible Solution
-Belgium:     yellow
-Denmark:     blue
-France:      blue
-Germany:     white
-Luxembourg:  green
-Netherlands: blue
-*/

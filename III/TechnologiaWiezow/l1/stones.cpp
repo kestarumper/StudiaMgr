@@ -14,8 +14,6 @@ Napisz program który znajduje wagi tych czterech kawałków kamienia.
 #define ILOUSESTL
 #include <ilcp/cp.h>
 
-const char *Names[] = {"blue", "white", "yellow", "green"};
-
 int main(int, const char *[])
 {
   IloEnv env;

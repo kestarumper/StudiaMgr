@@ -1,0 +1,82 @@
+ ! ----------------------------------------------------------------------------
+ ! Satisfiability problem - 164 variables, 40 constraints
+ ! Initial process time : 0.00s (0.00s extraction + 0.00s propagation)
+ !  . Log search space  : 274.9 (before), 274.9 (after)
+ !  . Memory usage      : 466.3 kB (before), 466.3 kB (after)
+ ! Using parallel search with 4 workers.
+ ! ----------------------------------------------------------------------------
+ !               Branches  Non-fixed    W       Branch decision
+                     1000         26    1   F    -1  = _int18
+                     1000         30    2        28  = _int7
+                     1000          4    3         1  = _int102
+                     1000         31    4        22 != _int1
+                     2000         10    3   F    -1 != _int60
+                     2000         46    1         1  = _int107
+                     2000         46    2        -1  = _int24
+                     2000         83    4        15 != _int5
+                     3000         81    1   F    -1  = _int150
+                     3000         13    2        -1  = _int139
+                     3000          4    3   F    -1  = _int163
+                     3000         89    4   F     8  = _int3
+                     4000         24    1         1  = _int37
+                     4000          4    2   F     0  = _int144
+                     4000          4    3        -1 != _int142
+                     4000         58    4        -1 != _int11
+                     5000          4    1   F     1  = _int3
+                     5000          4    2   F    11  = _int5
+                     5000          4    3         1  = _int149
+                     5000          4    4         1  = _int155
+ ! Time = 0.20s, Average fail depth = 43, Memory usage = 4.1 MB
+ !               Branches  Non-fixed    W       Branch decision
+                     6000          4    1        -1  = _int14
+                     6000          4    2   F     8  = _int5
+                     6000          4    3        -1  = _int88
+                     6000          4    4        21 != _int1
+                     7000          4    1        24 != _int1
+                     7000          4    2   F    23  = _int1
+                     7000          4    3         1  = _int161
+                     7000         42    4   F    18  = _int1
+                     8000          4    3         0  = _int83
+                     8000         36    4        14 != _int1
+                     8000          4    1   F    13  = _int3
+                     8000         15    2   F    -1  = _int120
+                     9000         29    3        -1  = _int30
+                     9000        124    4        -1  = _int108
+                     9000          4    1   F    -1  = _int91
+                    10000          4    4        -1  = _int8
+                     9000         34    2   F     1  = _int147
+                    10000          4    3         1  = _int67
+                    11000          4    4         1 != _int1
+                    10000         34    1         1  = _int61
+ ! Time = 0.35s, Average fail depth = 39, Memory usage = 4.3 MB
+ !               Branches  Non-fixed    W       Branch decision
+                    10000        109    2   F     0  = _int13
+                    11000          4    3        -1 != _int24
+                    12000          4    4         1  = _int91
+                    11000          4    1        11 != _int3
+                    11000         15    2   F     0  = _int28
+                    12000          4    3   F    -1  = _int138
+                    13000          4    4        -1  = _int122
+                    12000         33    1         1  = _int102
+                    12000          4    2   F    12 != _int1
+                    13000         22    1        -1  = _int121
+                    13000         44    2   F    18  = _int1
+                    14000          4    4   F    -1  = _int26
+                    14000         24    1        32 != _int3
+                    14000          4    2         1  = _int130
+                    13000          4    3        -1 != _int121
+ *                  14020  0.46s        2         0  = _int51
+ ! ----------------------------------------------------------------------------
+ ! Search completed, 1 solution found.
+ ! Number of branches     : 55232
+ ! Number of fails        : 24604
+ ! Total memory usage     : 4.4 MB (4.3 MB CP Optimizer + 0.1 MB Concert)
+ ! Time spent in solve    : 0.47s (0.47s engine + 0.00s extraction)
+ ! Search speed (br. / s) : 117514.9
+ ! ----------------------------------------------------------------------------
+
+Feasible Solution
+Kamien 0:	1
+Kamien 1:	9
+Kamien 2:	3
+Kamien 3:	27

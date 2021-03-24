@@ -13,5 +13,8 @@ all:
 stones:
 	g++ -o stones $(CFLAGS) stones.cpp $(LDFLAGS)
 
+board:
+	g++ -o board $(CFLAGS) board.cpp $(LDFLAGS)
+
 clean:
-	rm stones
+	rm stones board

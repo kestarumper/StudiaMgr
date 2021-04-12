@@ -1,0 +1,33 @@
+ ! ----------------------------------------------------------------------------
+ ! Satisfiability problem - 25 variables, 25 constraints
+ ! Initial process time : 0.00s (0.00s extraction + 0.00s propagation)
+ !  . Log search space  : 25.0 (before), 25.0 (after)
+ !  . Memory usage      : 302.9 kB (before), 302.9 kB (after)
+ ! Using parallel search with 4 workers.
+ ! ----------------------------------------------------------------------------
+ !               Branches  Non-fixed    W       Branch decision
+ *                     14  0.01s        1         1  = _int8
+ ! ----------------------------------------------------------------------------
+ ! Search completed, 1 solution found.
+ ! Number of branches     : 14
+ ! Number of fails        : 5
+ ! Total memory usage     : 864.9 kB (809.9 kB CP Optimizer + 55.0 kB Concert)
+ ! Time spent in solve    : 0.01s (0.01s engine + 0.00s extraction)
+ ! Search speed (br. / s) : 1400.0
+ ! ----------------------------------------------------------------------------
+
+Feasible Solution
+Pole	3
+Pole	4
+Pole	5
+Pole	6
+Pole	8
+Pole	9
+Pole	10
+Pole	11
+Pole	16
+Pole	17
+Pole	18
+Pole	20
+Pole	22
+Pole	23
